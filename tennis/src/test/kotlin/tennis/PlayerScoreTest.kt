@@ -7,14 +7,14 @@ class PlayerScoreTest {
     @Test
     fun should_return_love_when_player_is_created() {
         val player: Player = Player("John")
-        assertThat(player.score).isEqualTo(Score.LOVE)
+        assertThat(player.getScore()).isEqualTo(Score.LOVE)
     }
 
     @Test
     fun should_return_fifteen_when_player_win_a_ball() {
         val player: Player = Player("John")
         player.winBall()
-        assertThat(player.score).isEqualTo(Score.FIFTEEN)
+        assertThat(player.getScore()).isEqualTo(Score.FIFTEEN)
     }
 
     @Test
@@ -22,7 +22,7 @@ class PlayerScoreTest {
         val player: Player = Player("John")
         player.winBall()
         player.winBall()
-        assertThat(player.score).isEqualTo(Score.THIRTY)
+        assertThat(player.getScore()).isEqualTo(Score.THIRTY)
     }
 
     @Test
@@ -31,6 +31,6 @@ class PlayerScoreTest {
         player.winBall()
         player.winBall()
         player.winBall()
-        assertThat(player.score).isEqualTo(Score.FORTY)
+        assertThat(player.getScore()).isEqualTo(Score.FORTY)
     }
 }

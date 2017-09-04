@@ -1,7 +1,6 @@
 package tennis
 
 import org.assertj.core.api.Assertions.assertThat
-
 import org.testng.annotations.Test
 
 class GameTest {

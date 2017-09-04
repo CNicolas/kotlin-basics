@@ -1,11 +1,11 @@
 package tennis
 
-import tennis.Score.LOVE
-
 class Player(val name: String) {
-    var score: Score = LOVE
+    var score: Int = 0
 
     fun winBall(): Unit {
-        score = score.next()
+        score++
     }
+
+    fun getScore(): Score = Score.values()[score]
 }
