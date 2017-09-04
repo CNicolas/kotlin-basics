@@ -20,10 +20,7 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-    compile "com.nicolas.app:tennis"
 
     testCompile "org.testng:testng:6.11"
-    testCompile "org.jetbrains.kotlin:kotlin-test"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit"
     testCompile "org.assertj:assertj-core:3.8.0"
 }
