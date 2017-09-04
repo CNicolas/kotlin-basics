@@ -19,12 +19,12 @@ class GameTest {
         val player2: Player = Player("Jack")
         val game: Game = Game(player1, player2)
 
-        player1.winBall()
-        player1.winBall()
-        player1.winBall()
+        game.player1WinBall()
+        game.player1WinBall()
+        game.player1WinBall()
 
-        player2.winBall()
-        player2.winBall()
+        game.player2WinBall()
+        game.player2WinBall()
 
         assertThat(game.getGameScore()).isEqualTo("forty, thirty")
     }
@@ -35,32 +35,67 @@ class GameTest {
         val player2: Player = Player("Jack")
         val game: Game = Game(player1, player2)
 
-        player1.winBall()
-        player1.winBall()
-        player1.winBall()
+        game.player1WinBall()
+        game.player1WinBall()
+        game.player1WinBall()
 
-        player2.winBall()
-        player2.winBall()
-        player2.winBall()
+        game.player2WinBall()
+        game.player2WinBall()
+        game.player2WinBall()
 
         assertThat(game.getGameScore()).isEqualTo("deuce")
     }
 
     @Test
-    fun should_be_advantage_John() {
+    fun John_should_have_advantage() {
         val player1: Player = Player("John")
         val player2: Player = Player("Jack")
         val game: Game = Game(player1, player2)
 
-        player1.winBall()
-        player1.winBall()
-        player1.winBall()
-        player1.winBall()
+        game.player1WinBall()
+        game.player1WinBall()
+        game.player1WinBall()
 
-        player2.winBall()
-        player2.winBall()
-        player2.winBall()
+        game.player2WinBall()
+        game.player2WinBall()
+        game.player2WinBall()
+
+        game.player1WinBall()
 
         assertThat(game.getGameScore()).isEqualTo("advantage John")
+    }
+
+    @Test
+    fun John_should_have_won() {
+        val player1: Player = Player("John")
+        val player2: Player = Player("Jack")
+        val game: Game = Game(player1, player2)
+
+        game.player1WinBall()
+        game.player1WinBall()
+        game.player1WinBall()
+        game.player1WinBall()
+
+        assertThat(game.getGameScore()).isEqualTo("John has won")
+    }
+
+    @Test
+    fun John_should_win_after_winning_two_balls_when_Jack_had_advantage() {
+        val player1: Player = Player("John")
+        val player2: Player = Player("Jack")
+        val game: Game = Game(player1, player2)
+
+        game.player1WinBall()
+        game.player1WinBall()
+        game.player1WinBall()
+
+        game.player2WinBall()
+        game.player2WinBall()
+        game.player2WinBall()
+
+        game.player1WinBall()
+        game.player1WinBall()
+
+        assertThat(game.getGameScore()).isEqualTo("John has won")
     }
 }
