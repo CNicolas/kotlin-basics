@@ -6,7 +6,7 @@ class Game(val player1: Player, val player2: Player) {
     fun player1WinBall(): String {
         if (!isGameWon) {
             if (hasPlayer2Advantage())
-                player2.score = Score.FORTY.ordinal
+                loseFromAdvantageToDeuce(player2)
 
             player1.winBall()
             if (player1.getScore() === Score.ADVANTAGE && player2.getScore().ordinal < Score.FORTY.ordinal) {
@@ -21,7 +21,7 @@ class Game(val player1: Player, val player2: Player) {
     fun player2WinBall(): String {
         if (!isGameWon) {
             if (hasPlayer1Advantage())
-                player1.score = Score.FORTY.ordinal
+                loseFromAdvantageToDeuce(player1)
 
             player2.winBall()
             if (player2.getScore() === Score.ADVANTAGE && player1.getScore().ordinal < Score.FORTY.ordinal) {
@@ -50,6 +50,10 @@ class Game(val player1: Player, val player2: Player) {
             return "${player1.getScore().printableScore} ${player2.name}"
 
         return "${player1.getScore().printableScore}, ${player2.getScore().printableScore}"
+    }
+
+    private fun loseFromAdvantageToDeuce(player: Player) {
+        player.score = Score.FORTY.ordinal
     }
 
     private fun hasPlayer2Won() = player2.getScore() === Score.WON
