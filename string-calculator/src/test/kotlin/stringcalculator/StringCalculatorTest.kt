@@ -12,7 +12,11 @@ class StringCalculatorTest {
                     arrayOf("2", 2),
                     arrayOf("1,2", 3),
                     arrayOf("2,2", 4),
-                    arrayOf("1,2,3", 6))
+                    arrayOf("1,2,3", 6),
+                    arrayOf("1\n2/3", 6),
+                    arrayOf("1\n2/3;4", 10),
+                    arrayOf("1\n2/3;-4", 2),
+                    arrayOf("1\n,2", 3))
 
 
     @Test(dataProvider = "PairProvider")
