@@ -2,7 +2,7 @@ package tennis
 
 import tennis.Score.*
 
-class Game(val player1: Player, val player2: Player) {
+class Game(private val player1: Player, private val player2: Player) {
     fun player1WinBall(): String {
         if (!isGameWon()) {
             if (hasAdvantage(player2))
