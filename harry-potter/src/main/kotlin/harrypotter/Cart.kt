@@ -3,10 +3,19 @@ package harrypotter
 typealias BookPack = List<Book>
 typealias BookPackList = List<BookPack>
 
-class Cart(val books: BookPack) {
+class Cart(private val books: BookPack) {
+    private val discountTable: Map<Int, Double> = hashMapOf(
+            2 to 5.0,
+            3 to 10.0,
+            4 to 20.0,
+            5 to 25.0)
+
     fun priceCart(): Double? {
         val allPacks: MutableList<BookPackList> = ArrayList()
-        (1..minOf(5, books.size)).mapTo(allPacks) { splitCartInBookPacksWithMaximumSize(books, it) }
+
+        val maximumPackSize: Int = minOf(HarryPotterBook.values().size, books.size)
+        (1..maximumPackSize)
+                .mapTo(allPacks) { splitCartInBookPacksWithMaximumSize(books, it) }
 
         val packPrices: List<Double> = allPacks.map {
             it.map { priceOfBookPackAfterDiscount(it) }
@@ -32,25 +41,27 @@ class Cart(val books: BookPack) {
 
     private fun getLargestDistinctBookPack(books: BookPack, maxDistinct: Int): BookPack {
         val distinctBooks: MutableList<Book> = ArrayList()
-        books.forEach {
-            if (distinctBooks.size < maxDistinct && !distinctBooks.contains(it))
-                distinctBooks.add(it)
-        }
+
+        books.forEach { addIfNotPresentAndUnderMaximumPackSize(distinctBooks, maxDistinct, it) }
 
         return distinctBooks
+    }
+
+    private fun addIfNotPresentAndUnderMaximumPackSize(distinctBooks: MutableList<Book>, maxDistinct: Int, it: Book) {
+        if (distinctBooks.size < maxDistinct && !distinctBooks.contains(it))
+            distinctBooks.add(it)
     }
 
     private fun priceOfBookPackAfterDiscount(books: BookPack): Double {
         val basicPriceOfBooks = priceOfBooks(books)
 
-        return when (books.size) {
-            5 -> basicPriceOfBooks * 0.75
-            4 -> basicPriceOfBooks * 0.80
-            3 -> basicPriceOfBooks * 0.90
-            2 -> basicPriceOfBooks * 0.95
-            else -> basicPriceOfBooks.toDouble()
-        }
+        if (discountTable.containsKey(books.size))
+            return basicPriceOfBooks * getDiscount(books)
+
+        return basicPriceOfBooks.toDouble()
     }
+
+    private fun getDiscount(books: BookPack): Double = ((100.0 - discountTable.getValue(books.size)) / 100.0)
 
     private fun priceOfBooks(books: BookPack): Int =
             books.map { it.price }
