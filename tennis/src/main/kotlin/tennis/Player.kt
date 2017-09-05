@@ -1,10 +1,10 @@
 package tennis
 
 class Player(val name: String) {
-    var score: Int = 0
+    var score: Int = Score.LOVE.ordinal
 
-    fun winBall(): Unit {
-        score++
+    fun winBall() {
+        score = Score.values()[score].next().ordinal
     }
 
     fun getScore(): Score = Score.values()[score]

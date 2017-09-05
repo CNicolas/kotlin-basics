@@ -1,17 +1,17 @@
 package tennis
 
+import tennis.Score.*
+
 class Game(val player1: Player, val player2: Player) {
-    var isGameWon: Boolean = false
-
     fun player1WinBall(): String {
-        if (!isGameWon) {
-            if (hasPlayer2Advantage())
+        if (!isGameWon()) {
+            if (hasAdvantage(player2))
                 loseFromAdvantageToDeuce(player2)
-
-            player1.winBall()
-            if (player1.getScore() === Score.ADVANTAGE && player2.getScore().ordinal < Score.FORTY.ordinal) {
+            else
                 player1.winBall()
-                isGameWon = true
+
+            if (isGameBallFor(player1)) {
+                player1.winBall()
             }
         }
 
@@ -19,14 +19,14 @@ class Game(val player1: Player, val player2: Player) {
     }
 
     fun player2WinBall(): String {
-        if (!isGameWon) {
-            if (hasPlayer1Advantage())
+        if (!isGameWon()) {
+            if (hasAdvantage(player1))
                 loseFromAdvantageToDeuce(player1)
-
-            player2.winBall()
-            if (player2.getScore() === Score.ADVANTAGE && player1.getScore().ordinal < Score.FORTY.ordinal) {
+            else
                 player2.winBall()
-                isGameWon = true
+
+            if (isGameBallFor(player2)) {
+                player2.winBall()
             }
         }
 
@@ -34,35 +34,42 @@ class Game(val player1: Player, val player2: Player) {
     }
 
     fun getGameScore(): String {
-        if (hasPlayer1Won())
+        if (hasWon(player1))
             return "${player1.name} has won"
 
-        if (hasPlayer2Won())
+        if (hasWon(player2))
             return "${player2.name} has won"
 
         if (isDeuce())
             return "deuce"
 
-        if (hasPlayer1Advantage())
+        if (hasAdvantage(player1))
             return "${player1.getScore().printableScore} ${player1.name}"
 
-        if (hasPlayer2Advantage())
+        if (hasAdvantage(player2))
             return "${player1.getScore().printableScore} ${player2.name}"
 
         return "${player1.getScore().printableScore}, ${player2.getScore().printableScore}"
     }
 
     private fun loseFromAdvantageToDeuce(player: Player) {
-        player.score = Score.FORTY.ordinal
+        player.score = FORTY.ordinal
     }
 
-    private fun hasPlayer2Won() = player2.getScore() === Score.WON
+    private fun isGameWon() = hasWon(player1) || hasWon(player2)
 
-    private fun hasPlayer1Won() = player1.getScore() === Score.WON
+    private fun hasWon(player: Player): Boolean = player.getScore() === WON
 
-    private fun isDeuce() = player1.getScore() === Score.FORTY && player2.getScore() === Score.FORTY
+    private fun isGameBallFor(player: Player): Boolean {
+        if (player == player1)
+            return player1.getScore() === ADVANTAGE && isUnderDeuce(player2)
+        else
+            return player2.getScore() === ADVANTAGE && isUnderDeuce(player1)
+    }
 
-    private fun hasPlayer1Advantage() = player1.getScore() === Score.ADVANTAGE && player2.getScore() === Score.FORTY
+    private fun isUnderDeuce(player: Player): Boolean = player.getScore().ordinal < FORTY.ordinal
 
-    private fun hasPlayer2Advantage() = player1.getScore() === Score.FORTY && player2.getScore() === Score.ADVANTAGE
+    private fun isDeuce() = player1.getScore() === FORTY && player2.getScore() === FORTY
+
+    private fun hasAdvantage(player: Player): Boolean = player.getScore() === ADVANTAGE
 }

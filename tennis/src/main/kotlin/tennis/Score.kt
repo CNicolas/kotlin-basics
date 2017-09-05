@@ -1,7 +1,12 @@
 package tennis
 
 enum class Score(val printableScore: String) {
-    LOVE("love"), FIFTEEN("fifteen"), THIRTY("thirty"), FORTY("forty"), ADVANTAGE("advantage"), WON("won");
+    LOVE("love"),
+    FIFTEEN("fifteen"),
+    THIRTY("thirty"),
+    FORTY("forty"),
+    ADVANTAGE("advantage"),
+    WON("won");
 
     fun next(): Score {
         if (this === ADVANTAGE) return WON
