@@ -3,9 +3,11 @@ package harrypotter
 typealias BookPack = List<Book>
 typealias BookPackList = List<BookPack>
 
-class Cart(val books: BookPack) {
+class Cart(private val books: BookPack) {
+
     fun priceCart(): Double? {
         val allPacks: MutableList<BookPackList> = ArrayList()
+
         (1..minOf(5, books.size)).mapTo(allPacks) { splitCartInBookPacksWithMaximumSize(books, it) }
 
         val packPrices: List<Double> = allPacks.map {
@@ -32,12 +34,15 @@ class Cart(val books: BookPack) {
 
     private fun getLargestDistinctBookPack(books: BookPack, maxDistinct: Int): BookPack {
         val distinctBooks: MutableList<Book> = ArrayList()
-        books.forEach {
-            if (distinctBooks.size < maxDistinct && !distinctBooks.contains(it))
-                distinctBooks.add(it)
-        }
+
+        books.forEach { addIfNotPresentAndUnderMaximumPackSize(distinctBooks, maxDistinct, it) }
 
         return distinctBooks
+    }
+
+    private fun addIfNotPresentAndUnderMaximumPackSize(distinctBooks: MutableList<Book>, maxDistinct: Int, it: Book) {
+        if (distinctBooks.size < maxDistinct && !distinctBooks.contains(it))
+            distinctBooks.add(it)
     }
 
     private fun priceOfBookPackAfterDiscount(books: BookPack): Double {
