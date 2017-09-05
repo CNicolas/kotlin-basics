@@ -1,25 +1,28 @@
 package harrypotter
 
-class Cart(val books: List<Book>) {
+typealias BookPack = List<Book>
+typealias BookPackList = List<BookPack>
+
+class Cart(val books: BookPack) {
     fun priceCart(): Double? {
-        val allPacks: MutableList<List<List<Book>>> = ArrayList()
-        (1..minOf(5, books.size)).mapTo(allPacks) { splitCartInPacksOfBooksWithMaximumSize(books, it) }
+        val allPacks: MutableList<BookPackList> = ArrayList()
+        (1..minOf(5, books.size)).mapTo(allPacks) { splitCartInBookPacksWithMaximumSize(books, it) }
 
         val packPrices: List<Double> = allPacks.map {
-            it.map { applyDiscountOnPackOfBooks(it) }
+            it.map { priceOfBookPackAfterDiscount(it) }
                     .reduce { pack1price, pack2price -> pack1price + pack2price }
         }
 
         return packPrices.min()
     }
 
-    private fun splitCartInPacksOfBooksWithMaximumSize(books: List<Book>, maxDistinct: Int): List<List<Book>> {
-        val distinctPacks: MutableList<List<Book>> = ArrayList()
+    private fun splitCartInBookPacksWithMaximumSize(books: BookPack, maxDistinct: Int): BookPackList {
+        val distinctPacks: MutableList<BookPack> = ArrayList()
 
         val currentBooks: MutableList<Book> = books.toMutableList()
 
         while (currentBooks.size > 0) {
-            val currentDistinctBooks = getLargestDistinctPackOfBooks(currentBooks, maxDistinct)
+            val currentDistinctBooks = getLargestDistinctBookPack(currentBooks, maxDistinct)
             distinctPacks.add(currentDistinctBooks)
             currentDistinctBooks.forEach { currentBooks.remove(it) }
         }
@@ -27,7 +30,7 @@ class Cart(val books: List<Book>) {
         return distinctPacks.toList()
     }
 
-    private fun getLargestDistinctPackOfBooks(books: List<Book>, maxDistinct: Int): List<Book> {
+    private fun getLargestDistinctBookPack(books: BookPack, maxDistinct: Int): BookPack {
         val distinctBooks: MutableList<Book> = ArrayList()
         books.forEach {
             if (distinctBooks.size < maxDistinct && !distinctBooks.contains(it))
@@ -37,8 +40,9 @@ class Cart(val books: List<Book>) {
         return distinctBooks
     }
 
-    private fun applyDiscountOnPackOfBooks(books: List<Book>): Double {
+    private fun priceOfBookPackAfterDiscount(books: BookPack): Double {
         val basicPriceOfBooks = priceOfBooks(books)
+
         return when (books.size) {
             5 -> basicPriceOfBooks * 0.75
             4 -> basicPriceOfBooks * 0.80
@@ -48,7 +52,7 @@ class Cart(val books: List<Book>) {
         }
     }
 
-    private fun priceOfBooks(books: List<Book>): Int =
+    private fun priceOfBooks(books: BookPack): Int =
             books.map { it.price }
                     .reduce { price1, price2 -> price1 + price2 }
 }

@@ -1,6 +1,6 @@
 package harrypotter
 
-class Book(val name: HarryPotterBook) {
+class Book(private val name: HarryPotterBook) {
     val price: Int = 8
 
     override fun equals(other: Any?): Boolean {
@@ -17,12 +17,4 @@ class Book(val name: HarryPotterBook) {
     override fun hashCode(): Int {
         return name.hashCode()
     }
-}
-
-enum class HarryPotterBook {
-    THE_PHILOSOPHERS_STONE,
-    THE_CHAMBER_OF_SECRETS,
-    THE_PRISONER_OF_AZKABAN,
-    THE_GOBELET_OF_FIRE,
-    THE_ORDER_OF_THE_PHENIX
 }
