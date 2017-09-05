@@ -17,19 +17,19 @@ class HarryPotterTest {
     @Test()
     fun two_equal_books_should_cost_16() {
         val cart = Cart(listOf(Book(THE_PHILOSOPHERS_STONE), Book(THE_PHILOSOPHERS_STONE)))
-        assertThat(cart.priceAfterDiscount()).isEqualTo(16.0)
+        assertThat(cart.priceCart()).isEqualTo(16.0)
     }
 
     @Test()
     fun three_equal_books_should_cost_24() {
         val cart = Cart(listOf(Book(THE_PHILOSOPHERS_STONE), Book(THE_PHILOSOPHERS_STONE), Book(THE_PHILOSOPHERS_STONE)))
-        assertThat(cart.priceAfterDiscount()).isEqualTo(24.0)
+        assertThat(cart.priceCart()).isEqualTo(24.0)
     }
 
     @Test()
     fun two_differents_books_should_cost_5_percent_less() {
         val cart = Cart(listOf(Book(THE_PHILOSOPHERS_STONE), Book(THE_CHAMBER_OF_SECRETS)))
-        assertThat(cart.priceAfterDiscount()).isEqualTo(16 * 0.95)
+        assertThat(cart.priceCart()).isEqualTo(16 * 0.95)
     }
 
     @Test()
@@ -37,7 +37,7 @@ class HarryPotterTest {
         val cart = Cart(listOf(Book(THE_PHILOSOPHERS_STONE),
                 Book(THE_CHAMBER_OF_SECRETS),
                 Book(THE_PRISONER_OF_AZKABAN)))
-        assertThat(cart.priceAfterDiscount()).isEqualTo(24 * 0.90)
+        assertThat(cart.priceCart()).isEqualTo(24 * 0.90)
     }
 
     @Test()
@@ -46,7 +46,7 @@ class HarryPotterTest {
                 Book(THE_CHAMBER_OF_SECRETS),
                 Book(THE_PRISONER_OF_AZKABAN),
                 Book(THE_GOBELET_OF_FIRE)))
-        assertThat(cart.priceAfterDiscount()).isEqualTo(32 * 0.85)
+        assertThat(cart.priceCart()).isEqualTo(32 * 0.80)
     }
 
     @Test()
@@ -56,11 +56,11 @@ class HarryPotterTest {
                 Book(THE_PRISONER_OF_AZKABAN),
                 Book(THE_GOBELET_OF_FIRE),
                 Book(THE_ORDER_OF_THE_PHENIX)))
-        assertThat(cart.priceAfterDiscount()).isEqualTo(40 * 0.75)
+        assertThat(cart.priceCart()).isEqualTo(40 * 0.75)
     }
 
     @Test()
-    fun should_cost_51comma20() {
+    fun should_cost_51_20() {
         val cart = Cart(listOf(Book(THE_PHILOSOPHERS_STONE),
                 Book(THE_PHILOSOPHERS_STONE),
                 Book(THE_CHAMBER_OF_SECRETS),
@@ -69,6 +69,25 @@ class HarryPotterTest {
                 Book(THE_PRISONER_OF_AZKABAN),
                 Book(THE_GOBELET_OF_FIRE),
                 Book(THE_ORDER_OF_THE_PHENIX)))
-        assertThat(cart.priceAfterDiscount()).isEqualTo(51.20)
+        assertThat(cart.priceCart()).isEqualTo(51.20)
+    }
+
+    @Test()
+    fun should_cost_29_60() {
+        val cart = Cart(listOf(
+                Book(THE_PHILOSOPHERS_STONE),
+                Book(THE_PHILOSOPHERS_STONE),
+                Book(THE_CHAMBER_OF_SECRETS),
+                Book(THE_PRISONER_OF_AZKABAN)))
+        assertThat(cart.priceCart()).isEqualTo(29.60)
+    }
+
+    @Test()
+    fun should_cost_23_20() {
+        val cart = Cart(listOf(
+                Book(THE_PHILOSOPHERS_STONE),
+                Book(THE_PHILOSOPHERS_STONE),
+                Book(THE_CHAMBER_OF_SECRETS)))
+        assertThat(cart.priceCart()).isEqualTo(23.20)
     }
 }
