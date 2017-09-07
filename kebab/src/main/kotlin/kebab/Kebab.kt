@@ -1,18 +1,18 @@
 package kebab
 
-import kebab.Ingredient.*
+import kebab.Ingredient.ONION
 
 class Kebab(private var ingredients: List<Ingredient>) {
-    fun isVegetarian(): Boolean = !(ingredients.contains(MEAT) || ingredients.contains(FISH))
+    fun isVegetarian(): Boolean = !(hasMeat() || hasFish())
 
-    fun isPescetarian(): Boolean = !ingredients.contains(MEAT)
+    fun isPescetarian(): Boolean = !hasMeat()
 
     fun doubleCheese() {
         val ingredientsWithDoubleCheese: MutableList<Ingredient> = ingredients.toMutableList()
         var indexDoubleCheesed = 0
-        for ((index, value) in ingredients.withIndex()) {
+        for (value in ingredients) {
             indexDoubleCheesed++
-            if (value === CHEESE) {
+            if (value.ingredientType === IngredientType.CHEESE) {
                 ingredientsWithDoubleCheese.add(indexDoubleCheesed, value)
                 indexDoubleCheesed++
             }
@@ -30,9 +30,6 @@ class Kebab(private var ingredients: List<Ingredient>) {
 
     fun getIngredients() = ingredients
 
-    fun getIngredientsAsString(): String = ingredients.toString()
-
-    override fun toString(): String {
-        return "Kebab(ingredients=$ingredients)"
-    }
+    private fun hasMeat(): Boolean = ingredients.map { it.ingredientType }.contains(IngredientType.MEAT)
+    private fun hasFish(): Boolean = ingredients.map { it.ingredientType }.contains(IngredientType.FISH)
 }
