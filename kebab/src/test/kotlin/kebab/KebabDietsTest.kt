@@ -4,26 +4,33 @@ import kebab.Ingredient.*
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 
-class KebabTest {
+class KebabDietsTest {
 
     @Test
-    fun should_return_true_when_kebab_has__only_salad() {
+    fun should_be_vegetarian_when_kebab_has__only_salad() {
         val kebab = Kebab(listOf(SALAD))
 
         assertThat(kebab.isVegetarian()).isTrue()
     }
 
     @Test
-    fun should_return_false_when_kebab_has_meat() {
+    fun should_not_be_vegetarian_when_kebab_has_meat() {
         val kebab = Kebab(listOf(MEAT))
 
         assertThat(kebab.isVegetarian()).isFalse()
     }
 
     @Test
-    fun should_return_false_when_kebab_has_meat_among_other_ingredients() {
+    fun should_not_be_vegetarian_when_kebab_has_meat_among_other_ingredients() {
         val kebab = Kebab(listOf(CHEESE, SALAD, TOMATO, MEAT))
 
         assertThat(kebab.isVegetarian()).isFalse()
+    }
+
+    @Test
+    fun should_be_pescetarian_when_kebab_has_fish_among_other_ingredients() {
+        val kebab = Kebab(listOf(CHEESE, SALAD, TOMATO, FISH))
+
+        assertThat(kebab.isPescetarian()).isTrue()
     }
 }
