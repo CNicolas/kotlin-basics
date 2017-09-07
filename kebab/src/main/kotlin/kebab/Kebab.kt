@@ -21,6 +21,13 @@ class Kebab(private var ingredients: List<Ingredient>) {
         ingredients = ingredientsWithDoubleCheese
     }
 
+    fun withoutOnions() {
+        val ingredientsWithouOnions = ingredients.toMutableList()
+        ingredientsWithouOnions.removeAll(listOf(ONION))
+
+        ingredients = ingredientsWithouOnions
+    }
+
     fun getIngredients() = ingredients
 
     fun getIngredientsAsString(): String = ingredients.toString()
