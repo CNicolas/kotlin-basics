@@ -36,4 +36,25 @@ class GameOfLifeTest {
         game.turn()
         assertThat(game.stringRepresentation()).isEqualTo(game.stringRepresentation(expectedGrid))
     }
+
+    @Test
+    fun should_have_3_cells_horizontally() {
+        val startingGrid = Array(3) { Array(3) { Cell() } }
+        startingGrid[1][0].beBorn()
+        startingGrid[1][1].beBorn()
+        startingGrid[1][2].beBorn()
+
+        val expectedMiddleGrid = Array(3) { Array(3) { Cell() } }
+        expectedMiddleGrid[0][1].beBorn()
+        expectedMiddleGrid[1][1].beBorn()
+        expectedMiddleGrid[2][1].beBorn()
+
+        val game = GameOfLife(startingGrid)
+
+        assertThat(game.stringRepresentation()).isEqualTo(game.stringRepresentation(startingGrid))
+        game.turn()
+        assertThat(game.stringRepresentation()).isEqualTo(game.stringRepresentation(expectedMiddleGrid))
+        game.turn()
+        assertThat(game.stringRepresentation()).isEqualTo(game.stringRepresentation(startingGrid))
+    }
 }
