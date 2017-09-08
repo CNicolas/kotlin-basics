@@ -11,13 +11,11 @@ class GameOfLife() {
     }
 
     fun turn() {
-        val newGrid = grid
+        val newGrid = Array(size) { Array(size) { Cell() } }
 
         for (line in 0 until size) {
             for (column in 0 until size) {
                 //FOR EACH CELL
-                val currentCell = newGrid[line][column]
-
                 var aliveCells = 0
                 for (nearbyLine in (line - 1)..(line + 1)) {
                     for (nearbyColumn in (column - 1)..(column + 1)) {
@@ -30,9 +28,11 @@ class GameOfLife() {
                 }
 
                 if (aliveCells == 3)
-                    currentCell.beBorn()
+                    newGrid[line][column].beBorn()
+                if (aliveCells == 2)
+                    newGrid[line][column] = grid[line][column]
                 else if (aliveCells < 2 || aliveCells > 3)
-                    currentCell.die()
+                    newGrid[line][column].die()
             }
         }
 

@@ -20,19 +20,20 @@ class GameOfLifeTest {
 
     @Test
     fun should_have_3_cells_vertically() {
-        val startingGrid = Array(5) { Array(5) { Cell() } }
-        startingGrid[2][1].beBorn()
-        startingGrid[2][2].beBorn()
-        startingGrid[2][3].beBorn()
+        val startingGrid = Array(3) { Array(3) { Cell() } }
+        startingGrid[1][0].beBorn()
+        startingGrid[1][1].beBorn()
+        startingGrid[1][2].beBorn()
 
-        val expectedGrid = Array(5) { Array(5) { Cell() } }
-        expectedGrid[1][2].beBorn()
-        expectedGrid[2][2].beBorn()
-        expectedGrid[3][2].beBorn()
+        val expectedGrid = Array(3) { Array(3) { Cell() } }
+        expectedGrid[0][1].beBorn()
+        expectedGrid[1][1].beBorn()
+        expectedGrid[2][1].beBorn()
 
         val game = GameOfLife(startingGrid)
 
         assertThat(game.stringRepresentation()).isEqualTo(game.stringRepresentation(startingGrid))
-        assertThat(game.stringRepresentation(game.turn())).isEqualTo(game.stringRepresentation(expectedGrid))
+        game.turn()
+        assertThat(game.stringRepresentation()).isEqualTo(game.stringRepresentation(expectedGrid))
     }
 }
