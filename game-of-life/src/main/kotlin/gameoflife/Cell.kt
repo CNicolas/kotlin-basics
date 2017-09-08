@@ -16,6 +16,6 @@ class Cell {
     fun isDead() = state === State.DEAD
 
     override fun toString(): String {
-        return if (state === State.ALIVE) "*" else " "
+        return if (state === State.ALIVE) "*" else "0"
     }
 }
