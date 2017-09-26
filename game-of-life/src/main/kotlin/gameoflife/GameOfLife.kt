@@ -16,16 +16,7 @@ class GameOfLife() {
         for (line in 0 until size) {
             for (column in 0 until size) {
                 //FOR EACH CELL
-                var aliveCells = 0
-                for (nearbyLine in (line - 1)..(line + 1)) {
-                    for (nearbyColumn in (column - 1)..(column + 1)) {
-                        if (!(line == nearbyLine && column == nearbyColumn))
-                            if (isCellValid(nearbyLine, nearbyColumn)) {
-                                if (grid[nearbyLine][nearbyColumn].isAlive())
-                                    aliveCells++
-                            }
-                    }
-                }
+                val aliveCells = countAliveCellsAround(line, column)
 
                 if (aliveCells == 3)
                     newGrid[line][column].beBorn()
@@ -37,6 +28,20 @@ class GameOfLife() {
         }
 
         grid = newGrid
+    }
+
+    private fun countAliveCellsAround(line: Int, column: Int): Int {
+        var aliveCells = 0
+        for (nearbyLine in (line - 1)..(line + 1)) {
+            for (nearbyColumn in (column - 1)..(column + 1)) {
+                if (!(line == nearbyLine && column == nearbyColumn))
+                    if (isCellValid(nearbyLine, nearbyColumn)) {
+                        if (grid[nearbyLine][nearbyColumn].isAlive())
+                            aliveCells++
+                    }
+            }
+        }
+        return aliveCells
     }
 
     private fun isCellValid(line: Int, column: Int): Boolean {

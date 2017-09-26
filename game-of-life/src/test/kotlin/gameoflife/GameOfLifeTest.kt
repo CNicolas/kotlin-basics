@@ -57,4 +57,41 @@ class GameOfLifeTest {
         game.turn()
         assertThat(game.stringRepresentation()).isEqualTo(game.stringRepresentation(startingGrid))
     }
+
+    @Test
+    fun should_die_at_the_end() {
+        val startingGrid = Array(4) { Array(4) { Cell() } }
+        startingGrid[0][2].beBorn()
+        startingGrid[0][3].beBorn()
+        startingGrid[1][0].beBorn()
+        startingGrid[1][3].beBorn()
+        startingGrid[2][1].beBorn()
+        startingGrid[2][2].beBorn()
+        startingGrid[3][1].beBorn()
+        startingGrid[3][3].beBorn()
+
+        val game = GameOfLife(startingGrid)
+
+        println(game.stringRepresentation())
+        game.turn()
+        println(game.stringRepresentation())
+        game.turn()
+        println(game.stringRepresentation())
+        game.turn()
+        println(game.stringRepresentation())
+        game.turn()
+        println(game.stringRepresentation())
+        game.turn()
+        println(game.stringRepresentation())
+        game.turn()
+        println(game.stringRepresentation())
+        game.turn()
+        println(game.stringRepresentation())
+        game.turn()
+        println(game.stringRepresentation())
+        game.turn()
+        println(game.stringRepresentation())
+        game.turn()
+
+    }
 }
