@@ -13,6 +13,8 @@ class BankManager(val bank: Bank) {
         }
     }
 
+    fun getAccounts(): List<BankAccount> = bank.accounts.toList()
+
     private fun applyEventExceptCreation(event: BankEvent, targetedBankAccount: BankAccount): BankAccount {
         return when (event) {
             is BankAccountDepositPerformed -> bank.modifyById(targetedBankAccount.id, createBankAccountAfterModifyingBalance(targetedBankAccount, event))
@@ -35,5 +37,4 @@ class BankManager(val bank: Bank) {
                 is BankAccountDepositPerformed -> targetedBankAccount.balance + event.amount
                 else -> throw InvalidParameterException("The event doesn't modify balance")
             }
-
 }
