@@ -1,4 +1,4 @@
 package bankaccount
 
-class BankAccount(val id: Int, val owner: String, val balance: Int) {
+class BankAccount(val id: Int, val owner: String, val balance: Int = 0) {
 }
