@@ -3,17 +3,22 @@ package bankaccount
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 
-class BankCreationTest {
+class BankAccountClosedTest {
     @Test
-    fun should_create_BankAccount_when_BankAccountCreatedEvent_is_send() {
-        val bankManager = BankManager(Bank())
-        val event = BankAccountCreated(1, "John Doe")
+    fun should_close_when_BankAccountClosedEvent_is_send() {
+        val initialBankAccount = BankAccount(1, "John Doe")
+        val bank = Bank()
+        bank.accounts.add(initialBankAccount)
+        val bankManager = BankManager(bank)
 
+        val event = BankAccountClosed(1)
         val bankAccount = bankManager.applyTo(event)
 
         assertThat(bankAccount).isNotNull()
         assertThat(bankAccount.id).isEqualTo(1)
         assertThat(bankAccount.owner).isEqualTo("John Doe")
         assertThat(bankAccount.balance).isEqualTo(0)
+
+        assertThat(bank.accounts).isEmpty()
     }
 }

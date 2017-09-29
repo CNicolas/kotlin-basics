@@ -6,8 +6,10 @@ interface BankEvent {
 
 class BankAccountCreated(override val accountId: Int, val owner: String) : BankEvent
 
-class OwnerChanged(override val accountId: Int, val owner: String) : BankEvent
+class BankAccountClosed(override val accountId: Int) : BankEvent
 
-class DepositPerformed(override val accountId: Int, val amount: Int) : BankEvent
+class BankAccountOwnerChanged(override val accountId: Int, val owner: String) : BankEvent
 
-class WithdrawalPerformed(override val accountId: Int, val amount: Int) : BankEvent
+class BankAccountDepositPerformed(override val accountId: Int, val amount: Int) : BankEvent
+
+class BankAccountWithdrawalPerformed(override val accountId: Int, val amount: Int) : BankEvent
