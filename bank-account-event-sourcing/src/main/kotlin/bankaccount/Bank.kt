@@ -20,4 +20,9 @@ class Bank {
 
         return accountToDelete!!
     }
+
+    fun addAccount(account: BankAccount): BankAccount {
+        accounts.add(account)
+        return accounts.last()
+    }
 }

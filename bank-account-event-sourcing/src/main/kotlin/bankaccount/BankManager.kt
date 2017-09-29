@@ -8,7 +8,7 @@ class BankManager(val bank: Bank) {
 
         return when {
             targetedBankAccount !== null -> applyEventExceptCreation(event, targetedBankAccount)
-            event is BankAccountCreated -> BankAccount(event.accountId, event.owner, 0)
+            event is BankAccountCreated -> bank.addAccount(BankAccount(event.accountId, event.owner, 0))
             else -> throw InvalidParameterException("The bank account has not been found")
         }
     }
