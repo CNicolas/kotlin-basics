@@ -6,17 +6,16 @@ import org.testng.annotations.Test
 class BankAccountWithdrawalTest {
     @Test
     fun should_withdraw_20_on_created_account() {
-        val initialBankAccount = BankAccount(1, "John Doe", 50)
-        val bank = Bank()
-        bank.accounts.add(initialBankAccount)
-        val bankManager = BankManager(bank)
+        val eventHandler = BankEventHandler(BankEventStore())
 
-        val event = BankAccountWithdrawalPerformed(1, 20)
-        val bankAccount = bankManager.applyTo(event)
+        eventHandler.apply(BankAccountCreated(1, "John Doe"))
+        eventHandler.apply(BankAccountWithdrawalPerformed(1, 20))
+
+        val bankAccount = eventHandler.getAccountById(1)
 
         assertThat(bankAccount).isNotNull()
-        assertThat(bankAccount.id).isEqualTo(1)
-        assertThat(bankAccount.owner).isEqualTo("John Doe")
-        assertThat(bankAccount.balance).isEqualTo(30)
+        assertThat(bankAccount?.id).isEqualTo(1)
+        assertThat(bankAccount?.owner).isEqualTo("John Doe")
+        assertThat(bankAccount?.balance).isEqualTo(-20)
     }
 }

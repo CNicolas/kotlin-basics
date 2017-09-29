@@ -31,8 +31,8 @@ class BankAccountOperationsTest {
 
         val bankAccount = eventHandler.getAccountById(1)
 
-        assertThat(bankAccount.id).isEqualTo(1)
-        assertThat(bankAccount.owner).isEqualTo("Jane Doe")
-        assertThat(bankAccount.balance).isEqualTo(20)
+        assertThat(bankAccount?.id).isEqualTo(1)
+        assertThat(bankAccount?.owner).isEqualTo("Jane Doe")
+        assertThat(bankAccount?.balance).isEqualTo(20)
     }
 }
