@@ -3,20 +3,20 @@ package bankaccount
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 
-class DepositTest {
+class WithdrawalTest {
     @Test
-    fun should_deposit_20_on_created_account() {
-        val initialBankAccount = BankAccount(1, "John Doe")
+    fun should_withdraw_20_on_created_account() {
+        val initialBankAccount = BankAccount(1, "John Doe", 50)
         val bank = Bank()
         bank.accounts = listOf(initialBankAccount)
         val bankManager = BankManager(bank)
 
-        val event = DepositPerformed(1, 20)
+        val event = WithdrawalPerformed(1, 20)
         val bankAccount = bankManager.applyTo(event)
 
         assertThat(bankAccount).isNotNull()
         assertThat(bankAccount.id).isEqualTo(1)
         assertThat(bankAccount.owner).isEqualTo("John Doe")
-        assertThat(bankAccount.balance).isEqualTo(20)
+        assertThat(bankAccount.balance).isEqualTo(30)
     }
 }

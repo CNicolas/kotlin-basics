@@ -1,13 +1,23 @@
 package bankaccount
 
-class BankManager {
-    fun applyTo(event: BankEvent, account: BankAccount?): BankAccount? {
-        if (event is DepositPerformed && account !== null) {
-            return BankAccount(account.id, account.owner, account.balance + event.amount)
-        } else if (event is BankAccountCreated) {
-            return BankAccount(event.accountId, event.owner, 0)
-        }
+import java.security.InvalidParameterException
 
-        return null
+class BankManager(val bank: Bank) {
+    fun applyTo(event: BankEvent): BankAccount {
+        val targetedBankAccount = bank.getBankAccountById(event.accountId)
+
+        return when {
+            targetedBankAccount !== null -> applyEventExceptCreation(event, targetedBankAccount)
+            event is BankAccountCreated -> BankAccount(event.accountId, event.owner, 0)
+            else -> throw InvalidParameterException("The bank account has not been found")
+        }
+    }
+
+    private fun applyEventExceptCreation(event: BankEvent, targetedBankAccount: BankAccount): BankAccount {
+        return when (event) {
+            is DepositPerformed -> BankAccount(targetedBankAccount.id, targetedBankAccount.owner, targetedBankAccount.balance + event.amount)
+            is WithdrawalPerformed -> BankAccount(targetedBankAccount.id, targetedBankAccount.owner, targetedBankAccount.balance - event.amount)
+            else -> throw InvalidParameterException("The bank account already exists")
+        }
     }
 }
