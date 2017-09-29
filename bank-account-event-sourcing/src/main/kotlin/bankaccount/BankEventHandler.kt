@@ -1,6 +1,6 @@
 package bankaccount
 
-class BankEventHandler(val eventStore: BankEventStore) {
+class BankEventHandler(private val eventStore: BankEventStore) {
     fun apply(event: BankEvent) {
         eventStore.events.add(event)
     }
