@@ -17,6 +17,7 @@ class BankManager(val bank: Bank) {
         return when (event) {
             is DepositPerformed -> BankAccount(targetedBankAccount.id, targetedBankAccount.owner, targetedBankAccount.balance + event.amount)
             is WithdrawalPerformed -> BankAccount(targetedBankAccount.id, targetedBankAccount.owner, targetedBankAccount.balance - event.amount)
+            is OwnerChanged -> BankAccount(targetedBankAccount.id, event.owner, targetedBankAccount.balance)
             else -> throw InvalidParameterException("The bank account already exists")
         }
     }

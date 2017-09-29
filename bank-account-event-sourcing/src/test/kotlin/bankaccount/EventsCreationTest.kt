@@ -3,7 +3,7 @@ package bankaccount
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 
-class EventsTest {
+class EventsCreationTest {
     @Test
     fun should_create_BankAccountCreated_event() {
         val event = BankAccountCreated(123, "John Doe")
