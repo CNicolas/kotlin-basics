@@ -2,7 +2,7 @@ package bankaccount
 
 import java.security.InvalidParameterException
 
-class BankManager(val bank: Bank) {
+class BankCommands(val bank: Bank) {
     fun applyTo(event: BankEvent): BankAccount {
         val targetedBankAccount = bank.getBankAccountById(event.accountId)
 
