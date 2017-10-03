@@ -31,6 +31,8 @@ class BankAccountDepositPerformed(override val accountId: Int,
     companion object
 }
 
-class BankAccountWithdrawalPerformed(override val accountId: Int, val amount: Int, override val date: LocalDate = LocalDate.now()) : BankEvent {
+class BankAccountWithdrawalPerformed(override val accountId: Int,
+                                     val amount: Int,
+                                     override val date: LocalDate = LocalDate.now()) : BankEvent {
     companion object
 }
