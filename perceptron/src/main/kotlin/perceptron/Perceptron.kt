@@ -1,30 +1,48 @@
 package perceptron
 
 class Perceptron {
+    lateinit var weights: DoubleArray
 
-    fun train(data: Array<InputValue>, iterations: Int): Array<Double> {
-        val weights: Array<Double> = Array(data.size, { 0.0 })
+    fun run(data: Array<Trainer>, iterations: Int): DoubleArray {
+        val weights = DoubleArray(data[0].inputs.size, { 0.0 })
 
         for (iteration in 1..iterations) {
-            data.forEach { input ->
-                val prediction = signOf(scalarProduct(weights, input.inputVector))
-
-                if (prediction != input.classe.classe) {
-                    if (input.classe == LearningClasse.GOOD) {
-                        weights.mapIndexed { index, weight -> weight + input.inputVector[index] }
-                    } else {
-                        weights.mapIndexed { index, weight -> weight - input.inputVector[index] }
-                    }
-                }
+            data.forEach {
+                train(weights, it)
             }
         }
+
+        this.weights = weights
 
         return weights
     }
 
-    private fun signOf(scalarProduct: Double): Int = if (scalarProduct > 0.0) 1 else -1
+    fun decide(point: DoubleArray): Trainer {
+        val scalarProduct = scalarProduct(weights, point)
+        val prediction = activate(scalarProduct)
 
-    private fun scalarProduct(weights: Array<Double>, inputVector: Array<Double>): Double {
+        return Trainer(point, prediction)
+    }
+
+    private fun train(weights: DoubleArray, input: Trainer) {
+        val scalarProduct = scalarProduct(weights, input.inputs)
+        val prediction = activate(scalarProduct)
+
+        if (prediction != input.classe) {
+            if (input.classe == LearningClasse.GOOD) {
+                for (i in 0 until weights.size)
+                    weights[i] += input.inputs[i]
+            } else {
+                for (i in 0 until weights.size)
+                    weights[i] -= input.inputs[i]
+            }
+        }
+    }
+
+    private fun activate(scalarProduct: Double): LearningClasse =
+            if (scalarProduct > 0.0) LearningClasse.GOOD else LearningClasse.BAD
+
+    private fun scalarProduct(weights: DoubleArray, inputVector: DoubleArray): Double {
         return (0 until weights.size).sumByDouble { weights[it] * inputVector[it] }
     }
 }
