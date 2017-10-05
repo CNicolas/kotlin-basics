@@ -3,7 +3,7 @@ package perceptron
 class Perceptron {
     lateinit var weights: DoubleArray
 
-    fun run(data: Array<Trainer>, iterations: Int): DoubleArray {
+    fun <T> run(data: Array<Trainer<T>>, iterations: Int): DoubleArray {
         val weights = DoubleArray(data[0].inputs.size, { 0.0 })
 
         for (iteration in 1..iterations) {
@@ -15,28 +15,28 @@ class Perceptron {
         return weights
     }
 
-    fun decide(point: DoubleArray): Trainer {
-        val prediction = calculatePrediction(weights, point)
+//    fun <T> decide(point: Array<T>): Trainer<T> {
+//        val prediction = calculatePrediction(weights, point)
+//
+//        return Trainer(point, prediction)
+//    }
 
-        return Trainer(point, prediction)
-    }
-
-    private fun train(weights: DoubleArray, input: Trainer) {
-        val prediction = calculatePrediction(weights, input.inputs)
+    private fun <T> train(weights: DoubleArray, input: Trainer<T>) {
+        val prediction = calculatePrediction(weights, input)
 
         if (prediction != input.classe) {
             if (input.classe == LearningClasse.GOOD) {
                 for (i in 0 until weights.size)
-                    weights[i] += input.inputs[i]
+                    weights[i] += input.toDouble(i)
             } else {
                 for (i in 0 until weights.size)
-                    weights[i] -= input.inputs[i]
+                    weights[i] -= input.toDouble(i)
             }
         }
     }
 
-    private fun calculatePrediction(weights: DoubleArray, dataVector: DoubleArray): LearningClasse {
-        val scalarProduct = scalarProduct(weights, dataVector)
+    private fun <T> calculatePrediction(weights: DoubleArray, trainer: Trainer<T>): LearningClasse {
+        val scalarProduct = scalarProduct(weights, trainer)
 
         return activate(scalarProduct)
     }
@@ -44,7 +44,7 @@ class Perceptron {
     private fun activate(scalarProduct: Double): LearningClasse =
             if (scalarProduct > 0.0) LearningClasse.GOOD else LearningClasse.BAD
 
-    private fun scalarProduct(weights: DoubleArray, inputVector: DoubleArray): Double {
-        return (0 until weights.size).sumByDouble { weights[it] * inputVector[it] }
+    private fun <T> scalarProduct(weights: DoubleArray, trainer: Trainer<T>): Double {
+        return (0 until weights.size).sumByDouble { weights[it] * trainer.toDouble(it) }
     }
 }
