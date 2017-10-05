@@ -7,9 +7,7 @@ class Perceptron {
         val weights = DoubleArray(data[0].inputs.size, { 0.0 })
 
         for (iteration in 1..iterations) {
-            data.forEach {
-                train(weights, it)
-            }
+            data.forEach { train(weights, it) }
         }
 
         this.weights = weights
@@ -18,15 +16,13 @@ class Perceptron {
     }
 
     fun decide(point: DoubleArray): Trainer {
-        val scalarProduct = scalarProduct(weights, point)
-        val prediction = activate(scalarProduct)
+        val prediction = calculatePrediction(weights, point)
 
         return Trainer(point, prediction)
     }
 
     private fun train(weights: DoubleArray, input: Trainer) {
-        val scalarProduct = scalarProduct(weights, input.inputs)
-        val prediction = activate(scalarProduct)
+        val prediction = calculatePrediction(weights, input.inputs)
 
         if (prediction != input.classe) {
             if (input.classe == LearningClasse.GOOD) {
@@ -37,6 +33,12 @@ class Perceptron {
                     weights[i] -= input.inputs[i]
             }
         }
+    }
+
+    private fun calculatePrediction(weights: DoubleArray, dataVector: DoubleArray): LearningClasse {
+        val scalarProduct = scalarProduct(weights, dataVector)
+
+        return activate(scalarProduct)
     }
 
     private fun activate(scalarProduct: Double): LearningClasse =
