@@ -4,24 +4,26 @@ import java.util.*
 
 class Labyrinthe(val size: Int) {
     private lateinit var board: Array<Array<Case>>
+    var start: Coordinates
+    var end: Coordinates
 
     init {
         initializeBoard()
 
         val r = Random()
 
-        createOpening(r.nextInt(size - 2) + 1, 0)
-        createOpening(r.nextInt(size - 2) + 1, size - 1)
+        start = createOpening(r.nextInt(size - 2) + 1, 0)
+        end = createOpening(r.nextInt(size - 2) + 1, size - 1)
     }
 
     constructor(size: Int, startX: Int, startY: Int, endX: Int, endY: Int) : this(size) {
         initializeBoard()
 
-        createOpening(startX, startY)
-        createOpening(endX, endY)
+        start = createOpening(startX, startY)
+        end = createOpening(endX, endY)
     }
 
-    fun getCaseByCoordinates(x: Int, y: Int) = board[x][y]
+    fun getCaseByCoordinates(coordinates: Coordinates) = board[coordinates.x][coordinates.y]
 
     private fun initializeBoard() {
         if (size < 3) {
@@ -43,12 +45,14 @@ class Labyrinthe(val size: Int) {
         board = creatingBoard
     }
 
-    private fun createOpening(x: Int, y: Int) {
+    private fun createOpening(x: Int, y: Int): Coordinates {
         if (isOnEdge(x, y)) {
             board[x][y] = Case.PATH
         } else {
             throw IllegalArgumentException("Bad coordinates for opening : $x $y")
         }
+
+        return Coordinates(x, y)
     }
 
     private fun isFirstOrLast(index: Int) = (index == 0 || index == size - 1)
