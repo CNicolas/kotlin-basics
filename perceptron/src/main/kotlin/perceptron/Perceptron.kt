@@ -34,6 +34,7 @@ class Perceptron {
     private fun <T> train(weights: DoubleArray, input: Trainer<T>) {
         val prediction = calculatePrediction(weights, input)
 
+        // Apply correction
         if (prediction != input.classe) {
             if (input.classe == LearningClasse.GOOD) {
                 for (i in 0 until weights.size)
