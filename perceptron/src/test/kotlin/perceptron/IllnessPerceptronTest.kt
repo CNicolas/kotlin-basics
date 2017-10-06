@@ -7,7 +7,7 @@ import perceptron.trainers.BooleanTrainer
 import perceptron.trainers.Trainer
 import java.util.*
 
-class PerceptronInApplicationTest {
+class IllnessPerceptronTest {
 
     private fun illness(diagnostic: Diagnostic): Double {
         return when {
