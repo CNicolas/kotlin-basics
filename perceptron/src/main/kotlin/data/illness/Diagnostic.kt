@@ -13,7 +13,5 @@ class Diagnostic {
     var eye: Boolean = false
     var headAche: Boolean = false
 
-    fun toArray(): Array<Boolean> {
-        return arrayOf(soreThroat, cold, lungs, bronchi, back, waist, neck, eye, headAche)
-    }
+    fun toArray(): Array<Boolean> = arrayOf(soreThroat, cold, lungs, bronchi, back, waist, neck, eye, headAche)
 }

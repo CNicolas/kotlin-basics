@@ -1,15 +1,16 @@
-package perceptron
+package perceptron.trainers
 
+import perceptron.LearningClasse
 import java.util.*
 
-data class DoubleTrainer(override val inputs: Array<Double>, override val classe: LearningClasse) : Trainer<Double> {
-    override fun toDouble(index: Int): Double = inputs[index]
+data class BooleanTrainer(override val inputs: Array<Boolean>, override val classe: LearningClasse) : Trainer<Boolean> {
+    override fun toDouble(index: Int): Double = if (inputs[index]) 1.0 else 0.0
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DoubleTrainer
+        other as BooleanTrainer
 
         if (!Arrays.equals(inputs, other.inputs)) return false
         if (classe != other.classe) return false
@@ -22,5 +23,4 @@ data class DoubleTrainer(override val inputs: Array<Double>, override val classe
         result = 31 * result + classe.hashCode()
         return result
     }
-
 }

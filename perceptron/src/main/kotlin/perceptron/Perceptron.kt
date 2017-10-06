@@ -1,5 +1,9 @@
 package perceptron
 
+import perceptron.trainers.BooleanTrainer
+import perceptron.trainers.DoubleTrainer
+import perceptron.trainers.Trainer
+
 class Perceptron {
     lateinit var weights: DoubleArray
 
@@ -15,11 +19,17 @@ class Perceptron {
         return weights
     }
 
-//    fun <T> decide(point: Array<T>): Trainer<T> {
-//        val prediction = calculatePrediction(weights, point)
-//
-//        return Trainer(point, prediction)
-//    }
+    fun decide(dataVector: Array<Double>): DoubleTrainer {
+        val prediction = calculatePrediction(weights, DoubleTrainer(dataVector, LearningClasse.BAD))
+
+        return DoubleTrainer(dataVector, prediction)
+    }
+
+    fun decide(dataVector: Array<Boolean>): BooleanTrainer {
+        val prediction = calculatePrediction(weights, BooleanTrainer(dataVector, LearningClasse.BAD))
+
+        return BooleanTrainer(dataVector, prediction)
+    }
 
     private fun <T> train(weights: DoubleArray, input: Trainer<T>) {
         val prediction = calculatePrediction(weights, input)
