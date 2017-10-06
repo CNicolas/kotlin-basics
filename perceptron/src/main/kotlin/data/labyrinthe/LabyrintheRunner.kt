@@ -7,6 +7,7 @@ class LabyrintheRunner(val labyrinthe: Labyrinthe, val player: Player) {
 
     init {
         playerPos = labyrinthe.start
+        labyrinthe.setPlayerLocation(playerPos)
     }
 
     fun run(): Int {
@@ -15,18 +16,22 @@ class LabyrintheRunner(val labyrinthe: Labyrinthe, val player: Player) {
         println("${player.name} starts in $playerPos")
 
         while (!hasFinished) {
+            println(labyrinthe)
+
             if (!moveOnClock()) {
                 throw Exception("Stuck !!! " + playerPos)
             }
 
+            labyrinthe.setPlayerLocation(playerPos)
             steps++
-
-            println("$playerPos after $steps steps.")
 
             if (playerPos == labyrinthe.end) {
                 hasFinished = true
             }
         }
+
+        labyrinthe.setPlayerLocation(playerPos)
+        println(labyrinthe)
 
         return steps
     }

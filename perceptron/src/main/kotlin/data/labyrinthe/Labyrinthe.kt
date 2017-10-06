@@ -14,6 +14,9 @@ class Labyrinthe(val size: Int) {
 
         start = createOpening(r.nextInt(size - 2) + 1, 0)
         end = createOpening(r.nextInt(size - 2) + 1, size - 1)
+
+        board[start.x][start.y] = Case.START
+        board[end.x][end.y] = Case.END
     }
 
     constructor(size: Int, startX: Int, startY: Int, endX: Int, endY: Int) : this(size) {
@@ -21,9 +24,15 @@ class Labyrinthe(val size: Int) {
 
         start = createOpening(startX, startY)
         end = createOpening(endX, endY)
+
+        board[start.x][start.y] = Case.START
+        board[end.x][end.y] = Case.END
     }
 
     fun getCaseByCoordinates(coordinates: Coordinates) = board[coordinates.x][coordinates.y]
+    fun setPlayerLocation(coordinates: Coordinates) {
+        board[coordinates.x][coordinates.y] = Case.PLAYER
+    }
 
     private fun initializeBoard() {
         if (size < 3) {
