@@ -4,7 +4,7 @@ import perceptron.LearningClasse
 import java.util.*
 
 data class BooleanTrainer(override val inputs: Array<Boolean>, override val classe: LearningClasse) : Trainer<Boolean> {
-    override fun toDouble(index: Int): Double = if (inputs[index]) 1.0 else 0.0
+    override fun toDouble(index: Int): Double = if (inputs[index]) 1.0 else -1.0
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -14,7 +14,7 @@ class PerceptronSimpleTest {
     fun weights_should_be_different_from_0_when_given_doubles() {
         val perceptron = Perceptron()
 
-        val r = Random()
+        val r = Random(42L)
         val trainingData: Array<Trainer<Double>> = Array(2000) {
             val x = r.nextDouble() * 100 * (if (r.nextBoolean()) 1 else -1)
             val y = r.nextDouble() * 100 * (if (r.nextBoolean()) 1 else -1)
