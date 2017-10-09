@@ -29,6 +29,12 @@ class Labyrinthe(val size: Int) {
         board[end.x][end.y] = Case.END
     }
 
+    constructor(board: Array<Array<Case>>) : this(board.size) {
+        if (board.size == board[0].size) {
+            this.board = board
+        }
+    }
+
     fun getCase(coordinates: Coordinates) = board[coordinates.x][coordinates.y]
 
     fun setPlayerLocation(coordinates: Coordinates) {
