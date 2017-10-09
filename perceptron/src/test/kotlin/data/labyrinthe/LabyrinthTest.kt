@@ -1,19 +1,21 @@
 package data.labyrinthe
 
+import data.labyrinthe.runner.BasicLabyrintheRunner
+import data.labyrinthe.runner.DummyLabyrinthRunner
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 
-class LabyrintheTest {
+class LabyrinthTest {
 
     @Test
     fun should_initialize_correctly() {
-        Labyrinthe(10)
+        Labyrinth(10)
     }
 
     @Test
     fun should_finish() {
-        val labyrinthe = Labyrinthe(10)
-        val labyrintheRunner = LabyrintheRunner(labyrinthe)
+        val labyrinthe = Labyrinth(5)
+        val labyrintheRunner = DummyLabyrinthRunner(labyrinthe)
 
         val steps = labyrintheRunner.run()
 
@@ -23,7 +25,7 @@ class LabyrintheTest {
     }
 
     @Test
-    fun should_parse_given_board_to_labyrinthe() {
+    fun should_finish_given_board_to_labyrinthe() {
         val size = 5
         val board = Array(size, { Array(size, { Case.PATH }) })
 
@@ -42,8 +44,8 @@ class LabyrintheTest {
         board[1][2] = Case.WALL
         board[2][2] = Case.WALL
 
-        val labyrinthe = Labyrinthe(board)
-        val labyrintheRunner = LabyrintheRunner(labyrinthe)
+        val labyrinthe = Labyrinth(board)
+        val labyrintheRunner = BasicLabyrintheRunner(labyrinthe)
 
         assertThat(labyrintheRunner.run()).isPositive()
     }

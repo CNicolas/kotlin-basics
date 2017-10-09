@@ -2,7 +2,7 @@ package data.labyrinthe
 
 import java.util.*
 
-class Labyrinthe(val size: Int) {
+class Labyrinth(val size: Int) {
     private lateinit var board: Array<Array<Case>>
     var start: Coordinates
     var end: Coordinates
@@ -42,6 +42,8 @@ class Labyrinthe(val size: Int) {
     }
 
     fun isWall(coordinates: Coordinates) = getCase(coordinates) == Case.WALL
+
+    fun isInLabyrinth(coordinates: Coordinates) = coordinates.x in 1..(size - 1) && coordinates.y in 1..(size - 1)
 
     private fun initializeBoard() {
         if (size < 3) {

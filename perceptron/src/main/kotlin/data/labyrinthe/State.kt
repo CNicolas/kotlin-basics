@@ -6,20 +6,37 @@ class State(val playerPos: Coordinates) {
     private var down: Coordinates = playerPos.down()
     private var left: Coordinates = playerPos.left()
 
-    fun getPossibleDirections(labyrinthe: Labyrinthe): Array<Boolean> {
+    fun getPossibleDirections(labyrinth: Labyrinth): Array<Boolean> {
         val res = Array(4, { false })
 
-        res[0] = labyrinthe.getCase(up) != Case.WALL
-        res[1] = labyrinthe.getCase(right) != Case.WALL
-        res[2] = labyrinthe.getCase(down) != Case.WALL
-        res[3] = labyrinthe.getCase(left) != Case.WALL
+        res[0] = labyrinth.isInLabyrinth(up) && !labyrinth.isWall(up)
+        res[1] = labyrinth.isInLabyrinth(right) && !labyrinth.isWall(right)
+        res[2] = labyrinth.isInLabyrinth(down) && !labyrinth.isWall(down)
+        res[3] = labyrinth.isInLabyrinth(left) && !labyrinth.isWall(left)
 
         return res
     }
 
-    fun show(labyrinthe: Labyrinthe): String {
-        return " " + labyrinthe.getCase(up) + " \n" +
-                labyrinthe.getCase(left) + labyrinthe.getCase(playerPos) + labyrinthe.getCase(right) + "\n" +
-                " " + labyrinthe.getCase(down) + " "
+    fun show(labyrinth: Labyrinth): String {
+        return " " + labyrinth.getCase(up) + " \n" +
+                labyrinth.getCase(left) + labyrinth.getCase(playerPos) + labyrinth.getCase(right) + "\n" +
+                " " + labyrinth.getCase(down) + " "
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as State
+
+        if (playerPos != other.playerPos) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return playerPos.hashCode()
+    }
+
+
 }
