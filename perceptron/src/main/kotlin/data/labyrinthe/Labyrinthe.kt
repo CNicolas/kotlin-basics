@@ -29,10 +29,13 @@ class Labyrinthe(val size: Int) {
         board[end.x][end.y] = Case.END
     }
 
-    fun getCaseByCoordinates(coordinates: Coordinates) = board[coordinates.x][coordinates.y]
+    fun getCase(coordinates: Coordinates) = board[coordinates.x][coordinates.y]
+
     fun setPlayerLocation(coordinates: Coordinates) {
         board[coordinates.x][coordinates.y] = Case.PLAYER
     }
+
+    fun isWall(coordinates: Coordinates) = getCase(coordinates) == Case.WALL
 
     private fun initializeBoard() {
         if (size < 3) {

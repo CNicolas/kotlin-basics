@@ -7,19 +7,18 @@ class LabyrintheTest {
 
     @Test
     fun should_initialize_correctly() {
-        val labyrinthe = Labyrinthe(10)
-
-        println(labyrinthe)
+        Labyrinthe(10)
     }
 
     @Test
     fun should_finish() {
         val labyrinthe = Labyrinthe(5)
-        println(labyrinthe)
+        val labyrintheRunner = LabyrintheRunner(labyrinthe)
 
-        val player = Player("John")
-        val labyrintheRunner = LabyrintheRunner(labyrinthe, player)
+        val steps = labyrintheRunner.run()
 
-        assertThat(labyrintheRunner.run()).isPositive()
+        println(steps)
+
+        assertThat(steps).isPositive()
     }
 }

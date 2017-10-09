@@ -1,102 +1,60 @@
 package data.labyrinthe
 
-class LabyrintheRunner(val labyrinthe: Labyrinthe, val player: Player) {
+class LabyrintheRunner(val labyrinthe: Labyrinthe) {
     var playerPos: Coordinates
-
-    private var steps: Int = 0
+    private val states: MutableList<State> = mutableListOf()
 
     init {
         playerPos = labyrinthe.start
-        labyrinthe.setPlayerLocation(playerPos)
+        states.add(State(playerPos))
     }
 
     fun run(): Int {
-        var hasFinished = false
+        return goToCoordinates(labyrinthe.end)
+    }
 
-        println("${player.name} starts in $playerPos")
+    private fun goToCoordinates(coordinates: Coordinates): Int {
+        var steps = 0
 
-        while (!hasFinished) {
-            println(labyrinthe)
+        while (playerPos != coordinates) {
+            if (steps > 0) labyrinthe.setPlayerLocation(playerPos)
 
-            if (!moveOnClock()) {
-                throw Exception("Stuck !!! " + playerPos)
+            if (playerPos.x > coordinates.x && !labyrinthe.isWall(playerPos.up())) {
+                moveUp()
+            } else if (playerPos.x < coordinates.x && !labyrinthe.isWall(playerPos.down())) {
+                moveDown()
+            } else {
+                if (playerPos.y > coordinates.y && !labyrinthe.isWall(playerPos.left())) {
+                    moveLeft()
+                } else if (playerPos.y < coordinates.y && !labyrinthe.isWall(playerPos.right())) {
+                    moveRight()
+                }
             }
 
-            labyrinthe.setPlayerLocation(playerPos)
             steps++
-
-            if (playerPos == labyrinthe.end) {
-                hasFinished = true
-            }
+            println(labyrinthe)
         }
-
-        labyrinthe.setPlayerLocation(playerPos)
-        println(labyrinthe)
 
         return steps
     }
 
-    private fun moveOnClock(): Boolean {
-        if (moveRight()) {
-            return true
-        }
-        if (moveDown()) {
-            return true
-        }
-        if (moveLeft()) {
-            return true
-        }
-
-        return moveUp()
+    private fun moveUp() {
+        playerPos = playerPos.up()
+        states.add(data.labyrinthe.State(playerPos))
     }
 
-    private fun moveUp(): Boolean {
-        val up = playerPos.up()
-
-        if (isNextCaseWall(up)) {
-            return false
-        }
-
-        playerPos = up
-
-        return true
+    private fun moveRight() {
+        playerPos = playerPos.right()
+        states.add(data.labyrinthe.State(playerPos))
     }
 
-    private fun moveLeft(): Boolean {
-        val left = playerPos.left()
-
-        if (isNextCaseWall(left)) {
-            return false
-        }
-
-        playerPos = left
-
-        return true
+    private fun moveDown() {
+        playerPos = playerPos.down()
+        states.add(data.labyrinthe.State(playerPos))
     }
 
-    private fun moveDown(): Boolean {
-        val down = playerPos.down()
-
-        if (isNextCaseWall(down)) {
-            return false
-        }
-
-        playerPos = down
-
-        return true
+    private fun moveLeft() {
+        playerPos = playerPos.left()
+        states.add(data.labyrinthe.State(playerPos))
     }
-
-    private fun moveRight(): Boolean {
-        val right = playerPos.right()
-
-        if (isNextCaseWall(right)) {
-            return false
-        }
-
-        playerPos = right
-
-        return true
-    }
-
-    private fun isNextCaseWall(left: Coordinates) = labyrinthe.getCaseByCoordinates(left) == Case.WALL
 }
