@@ -12,7 +12,7 @@ class LabyrintheTest {
 
     @Test
     fun should_finish() {
-        val labyrinthe = Labyrinthe(5)
+        val labyrinthe = Labyrinthe(10)
         val labyrintheRunner = LabyrintheRunner(labyrinthe)
 
         val steps = labyrintheRunner.run()

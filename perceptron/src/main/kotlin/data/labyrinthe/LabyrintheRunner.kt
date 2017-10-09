@@ -28,6 +28,8 @@ class LabyrintheRunner(val labyrinthe: Labyrinthe) {
                     moveLeft()
                 } else if (playerPos.y < coordinates.y && !labyrinthe.isWall(playerPos.right())) {
                     moveRight()
+                } else {
+                    throw IllegalStateException("WTF ? I'm stuck here : $playerPos")
                 }
             }
 
