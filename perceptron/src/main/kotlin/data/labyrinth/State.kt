@@ -1,4 +1,4 @@
-package data.labyrinthe
+package data.labyrinth
 
 class State(private val playerPos: Coordinates, labyrinth: Labyrinth) {
     var upAccessible: Boolean

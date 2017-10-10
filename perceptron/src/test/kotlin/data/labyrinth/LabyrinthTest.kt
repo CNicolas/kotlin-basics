@@ -1,7 +1,7 @@
-package data.labyrinthe
+package data.labyrinth
 
-import data.labyrinthe.runner.DummyLabyrinthRunner
-import data.labyrinthe.runner.RandomLabyrinthRunner
+import data.labyrinth.runner.DummyLabyrinthRunner
+import data.labyrinth.runner.RandomLabyrinthRunner
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 

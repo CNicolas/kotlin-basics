@@ -1,4 +1,4 @@
-package data.labyrinthe
+package data.labyrinth
 
 import java.util.*
 

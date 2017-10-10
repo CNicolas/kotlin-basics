@@ -1,8 +1,8 @@
-package data.labyrinthe.runner
+package data.labyrinth.runner
 
-import data.labyrinthe.Coordinates
-import data.labyrinthe.Labyrinth
-import data.labyrinthe.State
+import data.labyrinth.Coordinates
+import data.labyrinth.Labyrinth
+import data.labyrinth.State
 
 abstract class LabyrinthRunner(val labyrinth: Labyrinth) {
     var playerPos: Coordinates
