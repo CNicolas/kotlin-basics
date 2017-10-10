@@ -2,7 +2,7 @@ package data.labyrinth.runner
 
 import data.labyrinth.Coordinates
 import data.labyrinth.Labyrinth
-import data.labyrinth.State
+import data.labyrinth.LabyrinthRunnerState
 import java.util.*
 
 class RandomLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
@@ -11,6 +11,6 @@ class RandomLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
         val accessibleCoordinates = states.last().getAccessibleCoordinates()
 
         playerPos = accessibleCoordinates[r.nextInt(accessibleCoordinates.size)]
-        states.add(State(playerPos, labyrinth))
+        states.add(LabyrinthRunnerState(playerPos, labyrinth))
     }
 }

@@ -2,15 +2,15 @@ package data.labyrinth.runner
 
 import data.labyrinth.Coordinates
 import data.labyrinth.Labyrinth
-import data.labyrinth.State
+import data.labyrinth.LabyrinthRunnerState
 
 abstract class LabyrinthRunner(val labyrinth: Labyrinth) {
     var playerPos: Coordinates
-    protected val states: MutableList<State> = mutableListOf()
+    protected val states: MutableList<LabyrinthRunnerState> = mutableListOf()
 
     init {
         playerPos = labyrinth.start
-        states.add(State(playerPos, labyrinth))
+        states.add(LabyrinthRunnerState(playerPos, labyrinth))
     }
 
     fun run(print: Boolean = false): Int {
@@ -35,21 +35,21 @@ abstract class LabyrinthRunner(val labyrinth: Labyrinth) {
 
     protected fun moveUp() {
         playerPos = playerPos.up()
-        states.add(State(playerPos, labyrinth))
+        states.add(LabyrinthRunnerState(playerPos, labyrinth))
     }
 
     protected fun moveRight() {
         playerPos = playerPos.right()
-        states.add(State(playerPos, labyrinth))
+        states.add(LabyrinthRunnerState(playerPos, labyrinth))
     }
 
     protected fun moveDown() {
         playerPos = playerPos.down()
-        states.add(State(playerPos, labyrinth))
+        states.add(LabyrinthRunnerState(playerPos, labyrinth))
     }
 
     protected fun moveLeft() {
         playerPos = playerPos.left()
-        states.add(State(playerPos, labyrinth))
+        states.add(LabyrinthRunnerState(playerPos, labyrinth))
     }
 }
