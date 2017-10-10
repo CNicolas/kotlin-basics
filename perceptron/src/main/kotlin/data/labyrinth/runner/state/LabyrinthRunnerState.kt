@@ -14,7 +14,14 @@ class LabyrinthRunnerState(private val playerPos: Coordinates, labyrinth: Labyri
     var downCoordinates: Coordinates = playerPos.down()
     var leftCoordinates: Coordinates = playerPos.left()
 
+    val directions: List<DirectionState>
+
     init {
+        directions = listOf(DirectionState(Direction.UP, upCoordinates, labyrinth),
+                DirectionState(Direction.RIGHT, rightCoordinates, labyrinth),
+                DirectionState(Direction.DOWN, downCoordinates, labyrinth),
+                DirectionState(Direction.LEFT, leftCoordinates, labyrinth))
+
         upAccessible = labyrinth.isInLabyrinth(upCoordinates) && !labyrinth.isWall(upCoordinates)
         rightAccessible = labyrinth.isInLabyrinth(rightCoordinates) && !labyrinth.isWall(rightCoordinates)
         downAccessible = labyrinth.isInLabyrinth(downCoordinates) && !labyrinth.isWall(downCoordinates)

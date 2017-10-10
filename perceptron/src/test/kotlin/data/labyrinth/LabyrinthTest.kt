@@ -14,7 +14,7 @@ class LabyrinthTest {
     }
 
     @Test
-    fun should_finish() {
+    fun should_finish_using_Dummy_Runner() {
         val labyrinth = LabyrinthFactory.createRandomEmptyLabyrinthOfSize(5)
         val labyrintheRunner = DummyLabyrinthRunner(labyrinth)
 
@@ -38,6 +38,18 @@ class LabyrinthTest {
     }
 
     @Test
+    fun should_finish_using_Memory_Runner() {
+        val labyrinth = LabyrinthFactory.createRandomEmptyLabyrinthOfSize(5)
+        val labyrintheRunner = MemoryLabyrinthRunner(labyrinth)
+
+        val steps = labyrintheRunner.run(true)
+
+        println(steps)
+
+        assertThat(steps).isPositive()
+    }
+
+    @Test
     fun should_finish_labyrinth_with_obstacles_using_Random_Runner() {
         val labyrinth = LabyrinthFactory.createTestingLabyrinthWithObstacle()
         val labyrintheRunner = RandomLabyrinthRunner(labyrinth)
@@ -48,25 +60,13 @@ class LabyrinthTest {
 
         assertThat(steps).isPositive()
     }
-//
-//    @Test
-//    fun should_finish_labyrinth_with_obstacles_using_Manual_Runner() {
-//        val labyrinth = prepareTestingBoard()
-//        val labyrintheRunner = ManualLabyrinthRunner(labyrinth)
-//
-//        val steps = labyrintheRunner.run(true)
-//
-//        println(steps)
-//
-//        assertThat(steps).isPositive()
-//    }
 
     @Test
     fun should_finish_labyrinth_with_obstacles_using_Memory_Runner() {
         val labyrinth = LabyrinthFactory.createTestingLabyrinthWithObstacle()
         val labyrintheRunner = MemoryLabyrinthRunner(labyrinth)
 
-        val steps = labyrintheRunner.run()
+        val steps = labyrintheRunner.run(true)
 
         println(steps)
 
