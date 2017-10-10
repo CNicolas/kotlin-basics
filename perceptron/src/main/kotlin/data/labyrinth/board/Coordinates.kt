@@ -1,4 +1,4 @@
-package data.labyrinth
+package data.labyrinth.board
 
 class Coordinates(val x: Int, val y: Int) {
     fun up() = Coordinates(x - 1, y)

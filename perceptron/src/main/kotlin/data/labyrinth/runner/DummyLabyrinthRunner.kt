@@ -1,7 +1,7 @@
 package data.labyrinth.runner
 
-import data.labyrinth.Coordinates
-import data.labyrinth.Labyrinth
+import data.labyrinth.board.Coordinates
+import data.labyrinth.board.Labyrinth
 
 class DummyLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
     override fun moveOnceTowards(coordinates: Coordinates) {

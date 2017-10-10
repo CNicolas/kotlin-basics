@@ -1,5 +1,8 @@
 package data.labyrinth
 
+import data.labyrinth.board.Case
+import data.labyrinth.board.Coordinates
+import data.labyrinth.board.Labyrinth
 import java.util.*
 
 class LabyrinthFactory {

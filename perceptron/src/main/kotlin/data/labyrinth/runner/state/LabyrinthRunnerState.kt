@@ -1,4 +1,7 @@
-package data.labyrinth
+package data.labyrinth.runner.state
+
+import data.labyrinth.board.Coordinates
+import data.labyrinth.board.Labyrinth
 
 class LabyrinthRunnerState(private val playerPos: Coordinates, labyrinth: Labyrinth) {
     var upAccessible: Boolean
