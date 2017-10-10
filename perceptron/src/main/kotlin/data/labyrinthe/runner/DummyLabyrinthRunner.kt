@@ -3,7 +3,7 @@ package data.labyrinthe.runner
 import data.labyrinthe.Coordinates
 import data.labyrinthe.Labyrinth
 
-class DummyLabyrinthRunner(labyrinth: Labyrinth) : LabyrintheRunner(labyrinth) {
+class DummyLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
     override fun moveOnceTowards(coordinates: Coordinates) {
         when {
             playerPos.x > coordinates.x && !labyrinth.isWall(playerPos.up()) -> moveUp()

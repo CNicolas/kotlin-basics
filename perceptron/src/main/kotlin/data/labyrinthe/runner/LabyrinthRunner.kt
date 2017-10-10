@@ -4,16 +4,16 @@ import data.labyrinthe.Coordinates
 import data.labyrinthe.Labyrinth
 import data.labyrinthe.State
 
-abstract class LabyrintheRunner(val labyrinth: Labyrinth) {
+abstract class LabyrinthRunner(val labyrinth: Labyrinth) {
     var playerPos: Coordinates
     protected val states: MutableList<State> = mutableListOf()
 
     init {
         playerPos = labyrinth.start
-        states.add(State(playerPos))
+        states.add(State(playerPos, labyrinth))
     }
 
-    fun run(): Int {
+    fun run(print: Boolean = false): Int {
         var steps = 0
 
         while (playerPos != labyrinth.end) {
@@ -22,8 +22,11 @@ abstract class LabyrintheRunner(val labyrinth: Labyrinth) {
             moveOnceTowards(labyrinth.end)
 
             steps++
-            println(labyrinth)
+
+            if (print) println(labyrinth)
         }
+
+        if (!print) println(labyrinth)
 
         return steps
     }
@@ -32,21 +35,21 @@ abstract class LabyrintheRunner(val labyrinth: Labyrinth) {
 
     protected fun moveUp() {
         playerPos = playerPos.up()
-        states.add(State(playerPos))
+        states.add(State(playerPos, labyrinth))
     }
 
     protected fun moveRight() {
         playerPos = playerPos.right()
-        states.add(State(playerPos))
+        states.add(State(playerPos, labyrinth))
     }
 
     protected fun moveDown() {
         playerPos = playerPos.down()
-        states.add(State(playerPos))
+        states.add(State(playerPos, labyrinth))
     }
 
     protected fun moveLeft() {
         playerPos = playerPos.left()
-        states.add(State(playerPos))
+        states.add(State(playerPos, labyrinth))
     }
 }

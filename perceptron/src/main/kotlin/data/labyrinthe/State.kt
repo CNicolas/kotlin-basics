@@ -1,26 +1,32 @@
 package data.labyrinthe
 
-class State(val playerPos: Coordinates) {
-    private var up: Coordinates = playerPos.up()
-    private var right: Coordinates = playerPos.right()
-    private var down: Coordinates = playerPos.down()
-    private var left: Coordinates = playerPos.left()
+class State(private val playerPos: Coordinates, labyrinth: Labyrinth) {
+    var upAccessible: Boolean
+    var rightAccessible: Boolean
+    var downAccessible: Boolean
+    var leftAccessible: Boolean
 
-    fun getPossibleDirections(labyrinth: Labyrinth): Array<Boolean> {
-        val res = Array(4, { false })
+    private var upCoordinates: Coordinates = playerPos.up()
+    private var rightCoordinates: Coordinates = playerPos.right()
+    private var downCoordinates: Coordinates = playerPos.down()
+    private var leftCoordinates: Coordinates = playerPos.left()
 
-        res[0] = labyrinth.isInLabyrinth(up) && !labyrinth.isWall(up)
-        res[1] = labyrinth.isInLabyrinth(right) && !labyrinth.isWall(right)
-        res[2] = labyrinth.isInLabyrinth(down) && !labyrinth.isWall(down)
-        res[3] = labyrinth.isInLabyrinth(left) && !labyrinth.isWall(left)
-
-        return res
+    init {
+        upAccessible = labyrinth.isInLabyrinth(upCoordinates) && !labyrinth.isWall(upCoordinates)
+        rightAccessible = labyrinth.isInLabyrinth(rightCoordinates) && !labyrinth.isWall(rightCoordinates)
+        downAccessible = labyrinth.isInLabyrinth(downCoordinates) && !labyrinth.isWall(downCoordinates)
+        leftAccessible = labyrinth.isInLabyrinth(leftCoordinates) && !labyrinth.isWall(leftCoordinates)
     }
 
-    fun show(labyrinth: Labyrinth): String {
-        return " " + labyrinth.getCase(up) + " \n" +
-                labyrinth.getCase(left) + labyrinth.getCase(playerPos) + labyrinth.getCase(right) + "\n" +
-                " " + labyrinth.getCase(down) + " "
+    fun getAccessibleCoordinates(): Array<Coordinates> {
+        val res = arrayListOf<Coordinates>()
+
+        if (upAccessible) res.add(upCoordinates)
+        if (rightAccessible) res.add(rightCoordinates)
+        if (downAccessible) res.add(downCoordinates)
+        if (leftAccessible) res.add(leftCoordinates)
+
+        return res.toArray(arrayOf(upCoordinates))
     }
 
     override fun equals(other: Any?): Boolean {
@@ -37,6 +43,4 @@ class State(val playerPos: Coordinates) {
     override fun hashCode(): Int {
         return playerPos.hashCode()
     }
-
-
 }
