@@ -29,119 +29,132 @@ class MemoryLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
                 coordinates.x == playerPos.x && coordinates.y == playerPos.y + 1 -> moveRightAndSaveChoice()
                 coordinates.x == playerPos.x + 1 && coordinates.y == playerPos.y -> moveDownAndSaveChoice()
                 coordinates.x == playerPos.x && coordinates.y == playerPos.y - 1 -> moveLeftAndSaveChoice()
-                else -> makeAChoice(currentState)
+                else -> makeAChoice(currentState, coordinates)
             }
         }
     }
 
-    private fun makeAChoice(currentState: LabyrinthRunnerState) {
+    private fun makeAChoice(currentState: LabyrinthRunnerState, coordinates: Coordinates) {
         val lastChoice = choices.last()
 
         when (lastChoice) {
-            UP -> makeAChoiceFromDown(currentState)
-            RIGHT -> makeAChoiceFromLeft(currentState)
-            DOWN -> makeAChoiceFromUp(currentState)
-            else -> makeAChoiceFromRight(currentState)
+            UP -> makeAChoiceFromDown(currentState, coordinates)
+            RIGHT -> makeAChoiceFromLeft(currentState, coordinates)
+            DOWN -> makeAChoiceFromUp(currentState, coordinates)
+            else -> makeAChoiceFromRight(currentState, coordinates)
         }
     }
 
-    private fun makeAChoiceFromUp(currentState: LabyrinthRunnerState) {
-        val r = Random()
-
+    private fun makeAChoiceFromUp(currentState: LabyrinthRunnerState, coordinates: Coordinates) {
         val intelligentDirections = currentState.directions
-                .filter { it.isAccessible && it.direction != Direction.UP }
+                .filter { it.isAccessible && it.direction != UP }
 
         when {
             intelligentDirections.size == 1 -> when {
-                intelligentDirections[0].direction == Direction.RIGHT -> moveRightAndSaveChoice()
+                intelligentDirections[0].direction == RIGHT -> moveRightAndSaveChoice()
                 intelligentDirections[0].direction == DOWN -> moveDownAndSaveChoice()
-                intelligentDirections[0].direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                intelligentDirections[0].direction == LEFT -> moveLeftAndSaveChoice()
             }
             intelligentDirections.size > 1 -> {
-                val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
+                val chosen = chooseBetweenAccessibleDirections(intelligentDirections, coordinates)
 
-                when {
-                    chosen.direction == Direction.RIGHT -> moveRightAndSaveChoice()
-                    chosen.direction == DOWN -> moveDownAndSaveChoice()
-                    chosen.direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                when (chosen) {
+                    RIGHT -> moveRightAndSaveChoice()
+                    DOWN -> moveDownAndSaveChoice()
+                    LEFT -> moveLeftAndSaveChoice()
+                    UP -> throw IllegalStateException("I won't go back (here $playerPos) : $choices")
                 }
             }
             else -> throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
         }
     }
 
-    private fun makeAChoiceFromRight(currentState: LabyrinthRunnerState) {
-        val r = Random()
-
+    private fun makeAChoiceFromRight(currentState: LabyrinthRunnerState, coordinates: Coordinates) {
         val intelligentDirections = currentState.directions
-                .filter { it.isAccessible && it.direction != Direction.RIGHT }
+                .filter { it.isAccessible && it.direction != RIGHT }
 
         when {
             intelligentDirections.size == 1 -> when {
-                intelligentDirections[0].direction == Direction.UP -> moveUpAndSaveChoice()
+                intelligentDirections[0].direction == UP -> moveUpAndSaveChoice()
                 intelligentDirections[0].direction == DOWN -> moveDownAndSaveChoice()
-                intelligentDirections[0].direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                intelligentDirections[0].direction == LEFT -> moveLeftAndSaveChoice()
             }
             intelligentDirections.size > 1 -> {
-                val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
+                val chosen = chooseBetweenAccessibleDirections(intelligentDirections, coordinates)
 
-                when {
-                    chosen.direction == Direction.UP -> moveUpAndSaveChoice()
-                    chosen.direction == DOWN -> moveDownAndSaveChoice()
-                    chosen.direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                when (chosen) {
+                    UP -> moveUpAndSaveChoice()
+                    DOWN -> moveDownAndSaveChoice()
+                    LEFT -> moveLeftAndSaveChoice()
+                    RIGHT -> throw IllegalStateException("I won't go back (here $playerPos) : $choices")
                 }
             }
             else -> throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
         }
     }
 
-    private fun makeAChoiceFromDown(currentState: LabyrinthRunnerState) {
-        val r = Random()
-
-        val intelligentDirections: List<DirectionState> = currentState.directions
+    private fun makeAChoiceFromDown(currentState: LabyrinthRunnerState, coordinates: Coordinates) {
+        val intelligentDirections = currentState.directions
                 .filter { it.isAccessible && it.direction != DOWN }
 
         when {
             intelligentDirections.size == 1 -> when {
-                intelligentDirections[0].direction == Direction.UP -> moveUpAndSaveChoice()
-                intelligentDirections[0].direction == Direction.RIGHT -> moveRightAndSaveChoice()
-                intelligentDirections[0].direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                intelligentDirections[0].direction == UP -> moveUpAndSaveChoice()
+                intelligentDirections[0].direction == RIGHT -> moveRightAndSaveChoice()
+                intelligentDirections[0].direction == LEFT -> moveLeftAndSaveChoice()
             }
             intelligentDirections.size > 1 -> {
-                val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
+                val chosen = chooseBetweenAccessibleDirections(intelligentDirections, coordinates)
 
-                when {
-                    chosen.direction == Direction.UP -> moveUpAndSaveChoice()
-                    chosen.direction == Direction.RIGHT -> moveRightAndSaveChoice()
-                    chosen.direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                when (chosen) {
+                    UP -> moveUpAndSaveChoice()
+                    RIGHT -> moveRightAndSaveChoice()
+                    LEFT -> moveLeftAndSaveChoice()
+                    DOWN -> throw IllegalStateException("I won't go back (here $playerPos) : $choices")
                 }
             }
             else -> throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
         }
     }
 
-    private fun makeAChoiceFromLeft(currentState: LabyrinthRunnerState) {
-        val r = Random()
-
+    private fun makeAChoiceFromLeft(currentState: LabyrinthRunnerState, coordinates: Coordinates) {
         val intelligentDirections = currentState.directions
-                .filter { it.isAccessible && it.direction != Direction.LEFT }
+                .filter { it.isAccessible && it.direction != LEFT }
 
         when {
             intelligentDirections.size == 1 -> when {
-                intelligentDirections[0].direction == Direction.UP -> moveUpAndSaveChoice()
-                intelligentDirections[0].direction == Direction.RIGHT -> moveRightAndSaveChoice()
+                intelligentDirections[0].direction == UP -> moveUpAndSaveChoice()
+                intelligentDirections[0].direction == RIGHT -> moveRightAndSaveChoice()
                 intelligentDirections[0].direction == DOWN -> moveDownAndSaveChoice()
             }
             intelligentDirections.size > 1 -> {
-                val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
+                val chosen = chooseBetweenAccessibleDirections(intelligentDirections, coordinates)
 
-                when {
-                    chosen.direction == Direction.UP -> moveUpAndSaveChoice()
-                    chosen.direction == Direction.RIGHT -> moveRightAndSaveChoice()
-                    chosen.direction == DOWN -> moveDownAndSaveChoice()
+                when (chosen) {
+                    UP -> moveUpAndSaveChoice()
+                    RIGHT -> moveRightAndSaveChoice()
+                    DOWN -> moveDownAndSaveChoice()
+                    LEFT -> throw IllegalStateException("I won't go back (here $playerPos) : $choices")
                 }
             }
             else -> throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
+        }
+    }
+
+    private fun chooseBetweenAccessibleDirections(directionStates: List<DirectionState>, coordinates: Coordinates): Direction {
+        val directions = directionStates.map { it.direction }
+
+        return when {
+            playerPos.x > coordinates.x && directions.contains(UP) -> UP
+            playerPos.x < coordinates.x && directions.contains(DOWN) -> DOWN
+            else -> when {
+                playerPos.y > coordinates.y && directions.contains(LEFT) -> LEFT
+                playerPos.y < coordinates.y && directions.contains(RIGHT) -> RIGHT
+                else -> {
+                    val r = Random()
+                    directions[r.nextInt(directions.size)]
+                }
+            }
         }
     }
 
