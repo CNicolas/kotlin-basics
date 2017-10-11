@@ -51,22 +51,22 @@ class MemoryLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
         val intelligentDirections = currentState.directions
                 .filter { it.isAccessible && it.direction != Direction.UP }
 
-        if (intelligentDirections.size == 1) {
-            when {
+        when {
+            intelligentDirections.size == 1 -> when {
                 intelligentDirections[0].direction == Direction.RIGHT -> moveRightAndSaveChoice()
                 intelligentDirections[0].direction == DOWN -> moveDownAndSaveChoice()
                 intelligentDirections[0].direction == Direction.LEFT -> moveLeftAndSaveChoice()
             }
-        } else if (intelligentDirections.size > 1) {
-            val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
+            intelligentDirections.size > 1 -> {
+                val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
 
-            when {
-                chosen.direction == Direction.RIGHT -> moveRightAndSaveChoice()
-                chosen.direction == DOWN -> moveDownAndSaveChoice()
-                chosen.direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                when {
+                    chosen.direction == Direction.RIGHT -> moveRightAndSaveChoice()
+                    chosen.direction == DOWN -> moveDownAndSaveChoice()
+                    chosen.direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                }
             }
-        } else {
-            throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
+            else -> throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
         }
     }
 
@@ -76,22 +76,22 @@ class MemoryLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
         val intelligentDirections = currentState.directions
                 .filter { it.isAccessible && it.direction != Direction.RIGHT }
 
-        if (intelligentDirections.size == 1) {
-            when {
+        when {
+            intelligentDirections.size == 1 -> when {
                 intelligentDirections[0].direction == Direction.UP -> moveUpAndSaveChoice()
                 intelligentDirections[0].direction == DOWN -> moveDownAndSaveChoice()
                 intelligentDirections[0].direction == Direction.LEFT -> moveLeftAndSaveChoice()
             }
-        } else if (intelligentDirections.size > 1) {
-            val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
+            intelligentDirections.size > 1 -> {
+                val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
 
-            when {
-                chosen.direction == Direction.UP -> moveUpAndSaveChoice()
-                chosen.direction == DOWN -> moveDownAndSaveChoice()
-                chosen.direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                when {
+                    chosen.direction == Direction.UP -> moveUpAndSaveChoice()
+                    chosen.direction == DOWN -> moveDownAndSaveChoice()
+                    chosen.direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                }
             }
-        } else {
-            throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
+            else -> throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
         }
     }
 
@@ -101,22 +101,22 @@ class MemoryLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
         val intelligentDirections: List<DirectionState> = currentState.directions
                 .filter { it.isAccessible && it.direction != DOWN }
 
-        if (intelligentDirections.size == 1) {
-            when {
+        when {
+            intelligentDirections.size == 1 -> when {
                 intelligentDirections[0].direction == Direction.UP -> moveUpAndSaveChoice()
                 intelligentDirections[0].direction == Direction.RIGHT -> moveRightAndSaveChoice()
                 intelligentDirections[0].direction == Direction.LEFT -> moveLeftAndSaveChoice()
             }
-        } else if (intelligentDirections.size > 1) {
-            val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
+            intelligentDirections.size > 1 -> {
+                val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
 
-            when {
-                chosen.direction == Direction.UP -> moveUpAndSaveChoice()
-                chosen.direction == Direction.RIGHT -> moveRightAndSaveChoice()
-                chosen.direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                when {
+                    chosen.direction == Direction.UP -> moveUpAndSaveChoice()
+                    chosen.direction == Direction.RIGHT -> moveRightAndSaveChoice()
+                    chosen.direction == Direction.LEFT -> moveLeftAndSaveChoice()
+                }
             }
-        } else {
-            throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
+            else -> throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
         }
     }
 
@@ -126,22 +126,22 @@ class MemoryLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
         val intelligentDirections = currentState.directions
                 .filter { it.isAccessible && it.direction != Direction.LEFT }
 
-        if (intelligentDirections.size == 1) {
-            when {
+        when {
+            intelligentDirections.size == 1 -> when {
                 intelligentDirections[0].direction == Direction.UP -> moveUpAndSaveChoice()
                 intelligentDirections[0].direction == Direction.RIGHT -> moveRightAndSaveChoice()
                 intelligentDirections[0].direction == DOWN -> moveDownAndSaveChoice()
             }
-        } else if (intelligentDirections.size > 1) {
-            val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
+            intelligentDirections.size > 1 -> {
+                val chosen = intelligentDirections[r.nextInt(intelligentDirections.size)]
 
-            when {
-                chosen.direction == Direction.UP -> moveUpAndSaveChoice()
-                chosen.direction == Direction.RIGHT -> moveRightAndSaveChoice()
-                chosen.direction == DOWN -> moveDownAndSaveChoice()
+                when {
+                    chosen.direction == Direction.UP -> moveUpAndSaveChoice()
+                    chosen.direction == Direction.RIGHT -> moveRightAndSaveChoice()
+                    chosen.direction == DOWN -> moveDownAndSaveChoice()
+                }
             }
-        } else {
-            throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
+            else -> throw IllegalStateException("My choices were bad (here $playerPos) : $choices")
         }
     }
 

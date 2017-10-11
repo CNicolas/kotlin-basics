@@ -39,7 +39,7 @@ class LabyrinthTest {
 
     @Test
     fun should_finish_using_Memory_Runner() {
-        val labyrinth = LabyrinthFactory.createRandomEmptyLabyrinthOfSize(5)
+        val labyrinth = LabyrinthFactory.createTestingLabyrinthWithoutObstacles()
         val labyrintheRunner = MemoryLabyrinthRunner(labyrinth)
 
         val steps = labyrintheRunner.run(true)

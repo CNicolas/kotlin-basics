@@ -28,6 +28,21 @@ class LabyrinthFactory {
             return labyrinth
         }
 
+        fun createTestingLabyrinthWithoutObstacles(): Labyrinth {
+            val size = 5
+
+            val board = initBoardBorderWalls(size)
+
+            board[3][0] = Case.START
+            board[1][4] = Case.END
+
+            val labyrinth = Labyrinth(board)
+            labyrinth.start = Coordinates(3, 0)
+            labyrinth.end = Coordinates(1, 4)
+
+            return labyrinth
+        }
+
         fun createTestingLabyrinthWithObstacle(): Labyrinth {
             val size = 5
 
