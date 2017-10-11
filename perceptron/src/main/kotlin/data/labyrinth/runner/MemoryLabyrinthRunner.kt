@@ -17,18 +17,20 @@ class MemoryLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {
 
         if (!started) {
             when {
-                playerPos.x > coordinates.x && currentState.upAccessible -> makeAChoiceFromDown(currentState)
-                playerPos.x < coordinates.x && currentState.downAccessible -> makeAChoiceFromUp(currentState)
-                playerPos.y > coordinates.y && currentState.leftAccessible -> makeAChoiceFromRight(currentState)
-                playerPos.y < coordinates.y && currentState.rightAccessible -> makeAChoiceFromLeft(currentState)
-                else -> makeAChoice(currentState)
+                currentState.upAccessible -> moveUpAndSaveChoice()
+                currentState.downAccessible -> moveDownAndSaveChoice()
+                currentState.leftAccessible -> moveLeftAndSaveChoice()
+                currentState.rightAccessible -> moveRightAndSaveChoice()
             }
             started = true
         } else {
-//            if (coordinates.x == playerPos.x && coordinates.y == playerPos.y + 1) {
-//                moveRightAndSaveChoice()
-//            } else if (coordinates.x == playerPos.x + 1 && coordinates.y == playerPos.y)
-            makeAChoice(currentState)
+            when {
+                coordinates.x == playerPos.x - 1 && coordinates.y == playerPos.y -> moveUpAndSaveChoice()
+                coordinates.x == playerPos.x && coordinates.y == playerPos.y + 1 -> moveRightAndSaveChoice()
+                coordinates.x == playerPos.x + 1 && coordinates.y == playerPos.y -> moveDownAndSaveChoice()
+                coordinates.x == playerPos.x && coordinates.y == playerPos.y - 1 -> moveLeftAndSaveChoice()
+                else -> makeAChoice(currentState)
+            }
         }
     }
 
