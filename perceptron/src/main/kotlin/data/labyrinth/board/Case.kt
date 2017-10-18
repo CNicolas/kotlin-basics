@@ -3,7 +3,7 @@ package data.labyrinth.board
 enum class Case(private val representation: String) {
     PATH(" "),
     WALL("@"),
-    PLAYER("P"),
+    PLAYER("¤"),
     START("S"),
     END("E");
 
