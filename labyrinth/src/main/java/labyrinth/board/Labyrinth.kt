@@ -1,4 +1,4 @@
-package data.labyrinth.board
+package labyrinth.board
 
 class Labyrinth(private val board: Array<Array<Case>>) {
     val size = board.size

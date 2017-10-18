@@ -1,8 +1,8 @@
-package data.labyrinth
+package labyrinth
 
-import data.labyrinth.runner.DummyLabyrinthRunner
-import data.labyrinth.runner.MemoryLabyrinthRunner
-import data.labyrinth.runner.RandomLabyrinthRunner
+import labyrinth.runner.DummyLabyrinthRunner
+import labyrinth.runner.MemoryLabyrinthRunner
+import labyrinth.runner.RandomLabyrinthRunner
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 
@@ -37,7 +37,7 @@ class LabyrinthTest {
         assertThat(steps).isPositive()
     }
 
-    @Test
+    @org.testng.annotations.Test
     fun should_finish_using_Memory_Runner() {
         val labyrinth = LabyrinthFactory.createTestingLabyrinthWithoutObstacles()
         val labyrintheRunner = MemoryLabyrinthRunner(labyrinth)
@@ -46,10 +46,10 @@ class LabyrinthTest {
 
         println(steps)
 
-        assertThat(steps).isPositive()
+        org.assertj.core.api.Assertions.assertThat(steps).isPositive()
     }
 
-    @Test
+    @org.testng.annotations.Test
     fun should_finish_labyrinth_with_obstacles_using_Random_Runner() {
         val labyrinth = LabyrinthFactory.createTestingLabyrinthWithObstacle()
         val labyrintheRunner = RandomLabyrinthRunner(labyrinth)
@@ -58,10 +58,10 @@ class LabyrinthTest {
 
         println(steps)
 
-        assertThat(steps).isPositive()
+        org.assertj.core.api.Assertions.assertThat(steps).isPositive()
     }
 
-    @Test
+    @org.testng.annotations.Test
     fun should_finish_labyrinth_with_obstacles_using_Memory_Runner() {
         val labyrinth = LabyrinthFactory.createTestingLabyrinthWithObstacle()
         val labyrintheRunner = MemoryLabyrinthRunner(labyrinth)
@@ -70,10 +70,10 @@ class LabyrinthTest {
 
         println(steps)
 
-        assertThat(steps).isPositive()
+        org.assertj.core.api.Assertions.assertThat(steps).isPositive()
     }
 
-    @Test
+    @org.testng.annotations.Test
     fun should_finish_big_labyrinth_with_obstacles_using_Memory_Runner() {
         val labyrinth = LabyrinthFactory.createBigTestingLabyrinthWithObstacle()
         val labyrintheRunner = MemoryLabyrinthRunner(labyrinth)
@@ -82,6 +82,6 @@ class LabyrinthTest {
 
         println(steps)
 
-        assertThat(steps).isPositive()
+        org.assertj.core.api.Assertions.assertThat(steps).isPositive()
     }
 }

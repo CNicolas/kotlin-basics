@@ -1,11 +1,11 @@
-package data.labyrinth.runner
+package labyrinth.runner
 
-import data.labyrinth.board.Coordinates
-import data.labyrinth.board.Labyrinth
-import data.labyrinth.runner.state.Direction
-import data.labyrinth.runner.state.Direction.*
-import data.labyrinth.runner.state.DirectionState
-import data.labyrinth.runner.state.LabyrinthRunnerState
+import labyrinth.board.Coordinates
+import labyrinth.board.Labyrinth
+import labyrinth.runner.state.Direction
+import labyrinth.runner.state.Direction.*
+import labyrinth.runner.state.DirectionState
+import labyrinth.runner.state.LabyrinthRunnerState
 import java.util.*
 
 class MemoryLabyrinthRunner(labyrinth: Labyrinth) : LabyrinthRunner(labyrinth) {

@@ -1,9 +1,9 @@
-package data.labyrinth
+package labyrinth
 
-import data.labyrinth.board.Case
-import data.labyrinth.board.Case.*
-import data.labyrinth.board.Coordinates
-import data.labyrinth.board.Labyrinth
+import labyrinth.board.Case
+import labyrinth.board.Case.*
+import labyrinth.board.Coordinates
+import labyrinth.board.Labyrinth
 import java.util.*
 
 class LabyrinthFactory {

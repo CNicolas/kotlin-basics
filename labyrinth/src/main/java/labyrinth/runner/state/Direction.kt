@@ -1,4 +1,4 @@
-package data.labyrinth.runner.state
+package labyrinth.runner.state
 
 enum class Direction {
     UP, RIGHT, DOWN, LEFT;

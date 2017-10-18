@@ -1,4 +1,4 @@
-package data.labyrinth.board
+package labyrinth.board
 
 enum class Case(private val representation: String) {
     PATH(" "),
