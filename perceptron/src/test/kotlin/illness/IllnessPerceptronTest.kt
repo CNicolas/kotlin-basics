@@ -1,8 +1,9 @@
-package perceptron
+package illness
 
-import data.illness.Diagnostic
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
+import perceptron.LearningClasse
+import perceptron.Perceptron
 import perceptron.trainers.BooleanTrainer
 import perceptron.trainers.Trainer
 import java.util.*
