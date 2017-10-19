@@ -1,6 +1,6 @@
 package helloworld
 
-class MainApp {
+class Main {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
