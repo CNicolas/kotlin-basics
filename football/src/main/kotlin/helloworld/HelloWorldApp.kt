@@ -1,9 +1,10 @@
 package helloworld
 
 import javafx.application.Application
+import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.Button
-import javafx.scene.layout.StackPane
+import javafx.scene.layout.GridPane
 import javafx.stage.Stage
 
 class HelloWorldApp : Application() {
@@ -16,8 +17,9 @@ class HelloWorldApp : Application() {
         btn.text = "Say 'Hello World'"
         btn.setOnAction { print("Hello World\n") }
 
-        val rootPane = StackPane()
-        rootPane.children.add(btn)
+        val rootPane = GridPane()
+        rootPane.alignment = Pos.CENTER
+        rootPane.add(btn, 0, 1)
 
         primaryStage?.title = "Hello World !"
         primaryStage?.scene = Scene(rootPane, 300.0, 250.0)

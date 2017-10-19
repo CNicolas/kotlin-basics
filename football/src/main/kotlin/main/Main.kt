@@ -1,4 +1,6 @@
-package helloworld
+package main
+
+import helloworld.HelloWorldApp
 
 class Main {
     companion object {
