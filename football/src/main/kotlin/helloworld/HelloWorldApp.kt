@@ -18,11 +18,12 @@ class HelloWorldApp : Application() {
         btn.setOnAction { print("Hello World\n") }
 
         val rootPane = GridPane()
-        rootPane.alignment = Pos.CENTER
-        rootPane.add(btn, 0, 1)
+        rootPane.alignment = Pos.TOP_LEFT
+        rootPane.add(btn, 0, 0, 2, 1)
+        rootPane.add(Button("Another Button's text"), 3, 1, 3, 2)
 
         primaryStage?.title = "Hello World !"
-        primaryStage?.scene = Scene(rootPane, 300.0, 250.0)
+        primaryStage?.scene = Scene(rootPane, 500.0, 300.0)
         primaryStage?.show()
     }
 }
