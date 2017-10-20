@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import java.net.URL?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="football.controllers.FieldController">
+
+    <Line fx:id="mediane"
+          startX="250"
+          endX="250"
+          endY="300"
+          styleClass="fieldLine"/>
+
+    <Circle fx:id="centralRound"
+            centerX="250"
+            centerY="150"
+            radius="50"
+            fill="transparent"
+            styleClass="fieldLine"/>
+
+    <Rectangle fx:id="leftSurface"
+               x="-1"
+               y="100"
+               width="50"
+               height="100"
+               fill="transparent"
+               styleClass="fieldLine"/>
+
+    <Rectangle fx:id="rightSurface"
+               x="451"
+               y="100"
+               width="50"
+               height="100"
+               fill="transparent"
+               styleClass="fieldLine"/>
+
+    <stylesheets>
+        <URL value="@field.css"/>
+    </stylesheets>
+</AnchorPane>
