@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.*?>
 <?import java.net.URL?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="football.controllers.FieldController">
+            fx:controller="football.controllers.FieldController"
+            onMouseClicked="#handleClic">
 
+    <!-- region fieldLines -->
     <Line fx:id="mediane"
           startX="250"
           endX="250"
           endY="300"
           styleClass="fieldLine"/>
-
     <Circle fx:id="centralRound"
             centerX="250"
             centerY="150"
             radius="50"
             fill="transparent"
             styleClass="fieldLine"/>
-
     <Rectangle fx:id="leftSurface"
                x="-1"
                y="100"
@@ -29,7 +27,6 @@
                height="100"
                fill="transparent"
                styleClass="fieldLine"/>
-
     <Rectangle fx:id="rightSurface"
                x="451"
                y="100"
@@ -37,6 +34,31 @@
                height="100"
                fill="transparent"
                styleClass="fieldLine"/>
+    <!-- endregion fieldLines -->
+
+    <Circle fx:id="ball"
+            translateX="250"
+            translateY="150"
+            fill="yellow"
+            radius="5"/>
+
+    <Circle fx:id="team1player1"
+            translateX="-10"
+            translateY="-10"
+            radius="7"/>
+    <Circle fx:id="team1player2"
+            translateX="-10"
+            translateY="-10"
+            radius="7"/>
+
+    <Circle fx:id="team2player1"
+            translateX="-10"
+            translateY="-10"
+            radius="7"/>
+    <Circle fx:id="team2player2"
+            translateX="-10"
+            translateY="-10"
+            radius="7"/>
 
     <stylesheets>
         <URL value="@field.css"/>

@@ -1,4 +1,4 @@
 package football.game
 
-class Player {
+class Player(val x: Double, val y: Double) {
 }
