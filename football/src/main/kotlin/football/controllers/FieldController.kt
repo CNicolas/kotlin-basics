@@ -26,19 +26,30 @@ class FieldController {
 
     @FXML
     fun handleClic(event: MouseEvent) {
-        val distanceToArrival = distance(team1player1!!.translateX, team1player1!!.translateY, event.x, event.y)
+        moveTo(team1player1!!, event.x, event.y)
+
+        print("${isTouchingBall(team1player1!!.translateX, team1player1!!.translateY)}\n")
+    }
+
+    private fun moveTo(player: Circle, x: Double, y: Double) {
+        val distanceToArrival = distance(player.translateX, player.translateY, x, y)
         val duration = (distanceToArrival * 1000) / pixelsByMillisecond
 
-        val transition = TranslateTransition(Duration(duration), team1player1)
-        transition.toX = event.x
-        transition.toY = event.y
+        val transition = TranslateTransition(Duration(duration), player)
+        transition.toX = x
+        transition.toY = y
         transition.play()
 
-        team1player1!!.translateX = event.x
-        team1player1!!.translateY = event.y
+        player.translateX = x
+        player.translateY = y
     }
 
     private fun distance(fromX: Double, fromY: Double, toX: Double, toY: Double): Double {
         return Math.sqrt(Math.pow(toX - fromX, 2.0) + Math.pow(toY - fromY, 2.0))
+    }
+
+    private fun isTouchingBall(x: Double, y: Double): Boolean {
+        val maxDistanceToTouch = 10
+        return Math.abs(x - ball!!.translateX) < maxDistanceToTouch && Math.abs(y - ball!!.translateY) < maxDistanceToTouch
     }
 }
