@@ -1,5 +1,7 @@
 package football.controllers
 
+import football.game.Game
+import football.helpers.distance
 import javafx.animation.TranslateTransition
 import javafx.fxml.FXML
 import javafx.scene.input.MouseEvent
@@ -10,6 +12,8 @@ import javafx.util.Duration
 
 
 class FieldController {
+    lateinit var game: Game
+
     private val pixelsByMillisecond = 100.0
     private val strengthInPixels = 50.0
 
@@ -30,6 +34,24 @@ class FieldController {
         moveTo(team1player1!!, event.x, event.y)
     }
 
+    fun initializePlayersPositionAndColors() {
+        team1player1!!.fill = game.team1.color
+        team1player1!!.translateX = game.team1.player1.x
+        team1player1!!.translateY = game.team1.player1.y
+
+        team1player2!!.fill = game.team1.color
+        team1player2!!.translateX = game.team1.player2.x
+        team1player2!!.translateY = game.team1.player2.y
+
+        team2player1!!.fill = game.team2.color
+        team2player1!!.translateX = game.team2.player1.x
+        team2player1!!.translateY = game.team2.player1.y
+
+        team2player2!!.fill = game.team2.color
+        team2player2!!.translateX = game.team2.player2.x
+        team2player2!!.translateY = game.team2.player2.y
+    }
+
     private fun moveTo(player: Circle, x: Double, y: Double) {
         val distanceToArrival = distance(player.translateX, player.translateY, x, y)
         val duration = (distanceToArrival * 1000) / pixelsByMillisecond
@@ -45,10 +67,6 @@ class FieldController {
         if (isTouchingBall(player.translateX, player.translateY)) {
             pushBall(500.0, 150.0)
         }
-    }
-
-    private fun distance(fromX: Double, fromY: Double, toX: Double, toY: Double): Double {
-        return Math.sqrt(Math.pow(toX - fromX, 2.0) + Math.pow(toY - fromY, 2.0))
     }
 
     private fun isTouchingBall(x: Double, y: Double): Boolean {

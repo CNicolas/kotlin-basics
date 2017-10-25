@@ -1,5 +1,6 @@
 package football
 
+import football.controllers.FieldController
 import football.game.Game
 import football.game.Player
 import football.game.Team
@@ -7,10 +8,8 @@ import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
-import javafx.scene.layout.AnchorPane
 import javafx.scene.paint.Color
 import javafx.scene.paint.Color.FORESTGREEN
-import javafx.scene.shape.Circle
 import javafx.stage.Stage
 
 class FootballFXMLApp : Application() {
@@ -28,24 +27,15 @@ class FootballFXMLApp : Application() {
     }
 
     override fun start(primaryStage: Stage?) {
-        val root = FXMLLoader.load<Parent>(javaClass.classLoader.getResource("field.fxml"))
+        val fxmlLoader = FXMLLoader(javaClass.classLoader.getResource("field.fxml"))
+        val root = fxmlLoader.load<Parent>()
 
-        if (root is AnchorPane) {
-            setupTeamPlayer(root, game.team1, 1, 1)
-            setupTeamPlayer(root, game.team1, 1, 2)
-            setupTeamPlayer(root, game.team2, 2, 1)
-            setupTeamPlayer(root, game.team2, 2, 2)
-        }
+        val controller = fxmlLoader.getController<FieldController>()
+        controller.game = game
+        controller.initializePlayersPositionAndColors()
 
         primaryStage?.title = "Football"
         primaryStage?.scene = Scene(root, 500.0, 300.0, FORESTGREEN)
         primaryStage?.show()
-    }
-
-    private fun setupTeamPlayer(root: AnchorPane, team: Team, teamNumber: Int, playerNumber: Int) {
-        val playerCircle = root.children.find { it.id == "team${teamNumber}player$playerNumber" } as Circle
-        playerCircle.fill = team.color
-        playerCircle.translateX = if (playerNumber == 1) team.player1.x else team.player2.x
-        playerCircle.translateY = if (playerNumber == 1) team.player1.y else team.player2.y
     }
 }
