@@ -64,19 +64,20 @@ class FieldController {
         player.translateX = x
         player.translateY = y
 
-        if (isTouchingBall(player.translateX, player.translateY)) {
-            pushBall(500.0, 150.0)
+        transition.setOnFinished {
+            if (isTouchingBall(player.translateX, player.translateY)) {
+                pushBall(500.0, 150.0)
+            }
         }
     }
 
     private fun isTouchingBall(x: Double, y: Double): Boolean {
-        val maxDistanceToTouch = 15
+        val maxDistanceToTouch = 10
         return Math.abs(x - ball!!.translateX) < maxDistanceToTouch && Math.abs(y - ball!!.translateY) < maxDistanceToTouch
     }
 
     private fun pushBall(toX: Double, toY: Double) {
         val duration = (strengthInPixels * 1000) / pixelsByMillisecond
-
         val (realX, realY) = moveBallTowards(toX, toY)
 
         val transition = TranslateTransition(Duration(duration), ball!!)
