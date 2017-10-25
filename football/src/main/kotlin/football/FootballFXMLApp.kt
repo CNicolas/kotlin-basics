@@ -2,6 +2,7 @@ package football
 
 import football.controllers.FieldController
 import football.game.Game
+import football.game.Game.Companion.createGame
 import football.game.Player
 import football.game.Team
 import javafx.application.Application
@@ -19,7 +20,7 @@ class FootballFXMLApp : Application() {
         val team1 = Team(Color.BLUE, Player(150.0, 75.0), Player(150.0, 225.0))
         val team2 = Team(Color.RED, Player(350.0, 75.0), Player(350.0, 225.0))
 
-        game = Game(team1, team2)
+        game = createGame(team1, team2)
     }
 
     fun launchLaunch(args: Array<String>) {
@@ -31,7 +32,6 @@ class FootballFXMLApp : Application() {
         val root = fxmlLoader.load<Parent>()
 
         val controller = fxmlLoader.getController<FieldController>()
-        controller.game = game
         controller.initializePlayersPositionAndColors()
 
         primaryStage?.title = "Football"

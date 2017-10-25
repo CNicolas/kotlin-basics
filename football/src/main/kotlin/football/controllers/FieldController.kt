@@ -1,5 +1,6 @@
 package football.controllers
 
+import football.game.Coordinates
 import football.game.Game
 import football.helpers.distance
 import javafx.animation.TranslateTransition
@@ -12,8 +13,6 @@ import javafx.util.Duration
 
 
 class FieldController {
-    lateinit var game: Game
-
     private val pixelsByMillisecond = 100.0
     private val strengthInPixels = 50.0
 
@@ -35,6 +34,8 @@ class FieldController {
     }
 
     fun initializePlayersPositionAndColors() {
+        val game = Game.instance
+
         team1player1!!.fill = game.team1.color
         team1player1!!.translateX = game.team1.player1.x
         team1player1!!.translateY = game.team1.player1.y
@@ -87,9 +88,11 @@ class FieldController {
 
         ball!!.translateX = realX
         ball!!.translateY = realY
+
+        Game.ballPosition = Coordinates(realX, realY)
     }
 
-    fun moveBallTowards(aimX: Double, aimY: Double): Pair<Double, Double> {
+    private fun moveBallTowards(aimX: Double, aimY: Double): Coordinates {
         var toX = ball!!.translateX
         var toY = ball!!.translateY
 
@@ -98,7 +101,7 @@ class FieldController {
 
             val isArrived = Math.abs(strengthInPixels - currentDistanceTowardsObjective) <= 5
             if (isArrived) {
-                return Pair(toX, toY)
+                return Coordinates(toX, toY)
             }
 
             when {
@@ -106,10 +109,10 @@ class FieldController {
                 toX > aimX -> toX--
                 toY < aimY -> toY++
                 toY > aimY -> toY--
-                else -> return Pair(toX, toY)
+                else -> return Coordinates(toX, toY)
             }
         }
 
-        return Pair(toX, toY)
+        return Coordinates(toX, toY)
     }
 }
