@@ -1,7 +1,7 @@
 package football.controllers
 
 import football.game.Coordinates
-import football.game.Game
+import football.game.GameContext
 import football.helpers.distance
 import javafx.animation.TranslateTransition
 import javafx.fxml.FXML
@@ -38,7 +38,7 @@ class FieldController {
     }
 
     fun initializePlayersPositionAndColors() {
-        val game = Game.instance
+        val game = GameContext.instance
 
         team1player1!!.fill = game.team1.color
         team1player1!!.translateX = game.team1.player1.currentPosition.x
@@ -93,7 +93,7 @@ class FieldController {
         transition.setOnFinished {
             ball!!.translateX = realX
             ball!!.translateY = realY
-            Game.instance.ballPosition = Coordinates(realX, realY)
+            GameContext.instance.ballPosition = Coordinates(realX, realY)
         }
     }
 

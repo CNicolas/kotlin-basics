@@ -1,7 +1,7 @@
 package football.game.strategies
 
 import football.game.Coordinates
-import football.game.Game
+import football.game.GameContext
 import football.game.Player
 import football.game.Team
 import football.helpers.Side
@@ -18,7 +18,7 @@ abstract class AbstractPlayerStrategy(override val team: Team) : PlayerStrategy 
     protected fun setPlayer(name: String, coordinates: Coordinates) {
         player = when {
             team.side == Side.LEFT -> Player(name, coordinates)
-            else -> Player(name, Coordinates(Game.width - coordinates.x, coordinates.y))
+            else -> Player(name, Coordinates(GameContext.width - coordinates.x, coordinates.y))
         }
     }
 
@@ -31,8 +31,13 @@ abstract class AbstractPlayerStrategy(override val team: Team) : PlayerStrategy 
 
     private fun getGoalCenter(side: Side): Coordinates {
         return when (side) {
-            Side.LEFT -> Coordinates(0.0, Game.height / 2)
-            else -> Coordinates(Game.width, Game.height / 2)
+            Side.LEFT -> Coordinates(0.0, GameContext.height / 2)
+            else -> Coordinates(GameContext.width, GameContext.height / 2)
         }
     }
+
+    override fun toString(): String {
+        return "$name $currentPosition"
+    }
+
 }

@@ -1,8 +1,8 @@
 package football
 
 import football.controllers.FieldController
-import football.game.Game
-import football.game.Game.Companion.createGame
+import football.game.GameContext
+import football.game.GameContext.Companion.createGame
 import football.game.Team
 import football.game.strategies.DumbRusher
 import football.game.strategies.StandStill
@@ -38,7 +38,7 @@ class FootballFXMLApp : Application() {
         val controller = fxmlLoader.getController<FieldController>()
         controller.initializePlayersPositionAndColors()
 
-        Game.instance.fieldController = controller
+        GameContext.instance.fieldController = controller
 
         primaryStage?.title = "Football"
         primaryStage?.scene = Scene(root, 500.0, 300.0, FORESTGREEN)

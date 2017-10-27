@@ -12,13 +12,13 @@ class GameRunnerTest {
     @BeforeTest
     fun setup() {
         val team1 = Team(Color.BLUE, Side.LEFT)
-        team1.player1 = DumbRusher(team1)
+        team1.player1 = DumbRusher(team1, Coordinates(0.0, 150.0))
         team1.player2 = StandStill(team1)
         val team2 = Team(Color.RED, Side.RIGHT)
-        team2.player1 = StandStill(team2)
-        team2.player2 = DumbRusher(team2)
+        team2.player1 = StandStill(team2, Coordinates(0.0, 0.0))
+        team2.player2 = DumbRusher(team2, Coordinates(0.0, 0.0))
 
-        Game.createGame(team1, team2)
+        GameContext.createGame(team1, team2)
     }
 
     @Test

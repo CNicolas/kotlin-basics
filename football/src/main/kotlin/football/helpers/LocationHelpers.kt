@@ -1,6 +1,7 @@
 package football.helpers
 
 import football.game.Coordinates
+import java.util.*
 
 enum class Side { LEFT, RIGHT }
 
@@ -9,6 +10,7 @@ fun distance(from: Coordinates, to: Coordinates): Double {
 }
 
 fun moveTowards(from: Coordinates, aim: Coordinates, maxDistance: Double): Coordinates {
+    val r = Random()
     var toX = from.x
     var toY = from.y
 
@@ -21,10 +23,10 @@ fun moveTowards(from: Coordinates, aim: Coordinates, maxDistance: Double): Coord
         }
 
         when {
-            toX < aim.x -> toX++
-            toX > aim.x -> toX--
-            toY < aim.y -> toY++
-            toY > aim.y -> toY--
+            toX < aim.x -> toX += r.nextInt(3)
+            toX > aim.x -> toX -= r.nextInt(3)
+            toY < aim.y -> toY += r.nextInt(3)
+            toY > aim.y -> toY -= r.nextInt(3)
             else -> return Coordinates(toX, toY)
         }
     }

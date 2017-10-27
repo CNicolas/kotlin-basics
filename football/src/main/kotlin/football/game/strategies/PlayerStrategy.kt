@@ -12,6 +12,6 @@ interface PlayerStrategy {
     var currentPosition: Coordinates
     val initialPosition: Coordinates
 
-    fun move(): Coordinates
+    fun move()
     fun shoot(): Coordinates
 }

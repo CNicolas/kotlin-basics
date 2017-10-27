@@ -11,8 +11,8 @@ class StandStill(team: Team, override val initialPosition: Coordinates = Coordin
         setPlayer("Still ${team.side}", initialPosition)
     }
 
-    override fun move(): Coordinates {
-        return initialPosition
+    override fun move() {
+        // Stand still
     }
 
     override fun shoot(): Coordinates {
