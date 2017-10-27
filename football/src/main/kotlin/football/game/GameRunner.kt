@@ -6,9 +6,6 @@ import football.helpers.moveTowards
 class GameRunner(val score: Int = 1, val turns: Int = 100000) {
     fun play() {
         turns@ for (turn in 0 until turns) {
-            print("${GameContext.instance.team1.player1} \n")
-            print("${GameContext.instance.team2.player2} \n")
-
             when {
                 doPlayerTurn(GameContext.instance.team1.player1) -> break@turns
                 doPlayerTurn(GameContext.instance.team1.player2) -> break@turns
@@ -26,8 +23,6 @@ class GameRunner(val score: Int = 1, val turns: Int = 100000) {
             if (score() == score) {
                 print("END = ${GameContext.instance}\n")
                 return true
-            } else {
-//                print("${player.name} : ${player.currentPosition}, ball : ${GameContext.instance.ballPosition}\n")
             }
         }
 
