@@ -23,49 +23,53 @@ class FieldController {
 
     @FXML private var ball: Circle? = null
 
-    @FXML private var team1player1: Circle? = null
-    @FXML private var team1player2: Circle? = null
-    @FXML private var team2player1: Circle? = null
-    @FXML private var team2player2: Circle? = null
+    @FXML
+    var team1player1: Circle? = null
+    @FXML
+    var team1player2: Circle? = null
+    @FXML
+    var team2player1: Circle? = null
+    @FXML
+    var team2player2: Circle? = null
 
     @FXML
     fun handleClic(event: MouseEvent) {
-        moveTo(team1player1!!, event.x, event.y)
+        moveTo(team1player1!!, Coordinates(event.x, event.y))
     }
 
     fun initializePlayersPositionAndColors() {
         val game = Game.instance
 
         team1player1!!.fill = game.team1.color
-        team1player1!!.translateX = game.team1.player1.x
-        team1player1!!.translateY = game.team1.player1.y
+        team1player1!!.translateX = game.team1.player1.currentPosition.x
+        team1player1!!.translateY = game.team1.player1.currentPosition.y
 
         team1player2!!.fill = game.team1.color
-        team1player2!!.translateX = game.team1.player2.x
-        team1player2!!.translateY = game.team1.player2.y
+        team1player2!!.translateX = game.team1.player2.currentPosition.x
+        team1player2!!.translateY = game.team1.player2.currentPosition.y
 
         team2player1!!.fill = game.team2.color
-        team2player1!!.translateX = game.team2.player1.x
-        team2player1!!.translateY = game.team2.player1.y
+        team2player1!!.translateX = game.team2.player1.currentPosition.x
+        team2player1!!.translateY = game.team2.player1.currentPosition.y
 
         team2player2!!.fill = game.team2.color
-        team2player2!!.translateX = game.team2.player2.x
-        team2player2!!.translateY = game.team2.player2.y
+        team2player2!!.translateX = game.team2.player2.currentPosition.x
+        team2player2!!.translateY = game.team2.player2.currentPosition.y
     }
 
-    private fun moveTo(player: Circle, x: Double, y: Double) {
-        val distanceToArrival = distance(player.translateX, player.translateY, x, y)
+    fun moveTo(player: Circle, to: Coordinates) {
+        val distanceToArrival = distance(Coordinates(player.translateX, player.translateY), to)
         val duration = (distanceToArrival * 1000) / pixelsByMillisecond
 
         val transition = TranslateTransition(Duration(duration), player)
-        transition.toX = x
-        transition.toY = y
+        transition.toX = to.x
+        transition.toY = to.y
         transition.play()
 
-        player.translateX = x
-        player.translateY = y
-
         transition.setOnFinished {
+            player.translateX = to.x
+            player.translateY = to.y
+
             if (isTouchingBall(player.translateX, player.translateY)) {
                 pushBall(500.0, 150.0)
             }
@@ -86,10 +90,11 @@ class FieldController {
         transition.toY = realY
         transition.play()
 
-        ball!!.translateX = realX
-        ball!!.translateY = realY
-
-        Game.ballPosition = Coordinates(realX, realY)
+        transition.setOnFinished {
+            ball!!.translateX = realX
+            ball!!.translateY = realY
+            Game.instance.ballPosition = Coordinates(realX, realY)
+        }
     }
 
     private fun moveBallTowards(aimX: Double, aimY: Double): Coordinates {
@@ -97,7 +102,7 @@ class FieldController {
         var toY = ball!!.translateY
 
         for (count in 0 until 1000) {
-            val currentDistanceTowardsObjective = distance(ball!!.translateX, ball!!.translateY, toX, toY)
+            val currentDistanceTowardsObjective = distance(Coordinates(ball!!.translateX, ball!!.translateY), Coordinates(toX, toY))
 
             val isArrived = Math.abs(strengthInPixels - currentDistanceTowardsObjective) <= 5
             if (isArrived) {

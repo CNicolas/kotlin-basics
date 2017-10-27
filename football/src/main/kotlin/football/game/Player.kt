@@ -1,4 +1,4 @@
 package football.game
 
-class Player(val x: Double, val y: Double) {
+data class Player(val name: String, var coordinates: Coordinates) {
 }
