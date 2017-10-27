@@ -2,17 +2,21 @@ package football.controllers
 
 import football.game.Coordinates
 import football.game.GameContext
+import football.game.strategies.PlayerStrategy
 import football.helpers.distance
 import javafx.animation.TranslateTransition
 import javafx.fxml.FXML
-import javafx.scene.input.MouseEvent
 import javafx.scene.shape.Circle
 import javafx.scene.shape.Line
 import javafx.scene.shape.Rectangle
 import javafx.util.Duration
+import java.util.*
 
 
 class FieldController {
+    private val team1PlayerCirclesMap = HashMap<Circle, PlayerStrategy>()
+    private val team2PlayerCirclesMap = HashMap<Circle, PlayerStrategy>()
+
     private val pixelsByMillisecond = 100.0
     private val strengthInPixels = 50.0
 
@@ -23,22 +27,22 @@ class FieldController {
 
     @FXML private var ball: Circle? = null
 
-    @FXML
-    var team1player1: Circle? = null
-    @FXML
-    var team1player2: Circle? = null
-    @FXML
-    var team2player1: Circle? = null
-    @FXML
-    var team2player2: Circle? = null
-
-    @FXML
-    fun handleClic(event: MouseEvent) {
-        moveTo(team1player1!!, Coordinates(event.x, event.y))
-    }
+    @FXML private var team1player1: Circle? = null
+    @FXML private var team1player2: Circle? = null
+    @FXML private var team2player1: Circle? = null
+    @FXML private var team2player2: Circle? = null
 
     fun initializePlayersPositionAndColors() {
         val game = GameContext.instance
+
+        with(team1PlayerCirclesMap) {
+            put(team1player1!!, game.team1.player1)
+            put(team1player2!!, game.team1.player2)
+        }
+        with(team2PlayerCirclesMap) {
+            put(team2player1!!, game.team2.player1)
+            put(team2player2!!, game.team2.player2)
+        }
 
         team1player1!!.fill = game.team1.color
         team1player1!!.translateX = game.team1.player1.currentPosition.x
@@ -57,67 +61,45 @@ class FieldController {
         team2player2!!.translateY = game.team2.player2.currentPosition.y
     }
 
-    fun moveTo(player: Circle, to: Coordinates) {
-        val distanceToArrival = distance(Coordinates(player.translateX, player.translateY), to)
+    fun updatePositions() {
+        updatePlayerPosition(team1PlayerCirclesMap[team1player1]!!, team1player1!!)
+        updatePlayerPosition(team1PlayerCirclesMap[team1player2]!!, team1player2!!)
+        updatePlayerPosition(team2PlayerCirclesMap[team2player1]!!, team2player1!!)
+        updatePlayerPosition(team2PlayerCirclesMap[team2player2]!!, team2player2!!)
+
+        updateBallPosition()
+    }
+
+    private fun updatePlayerPosition(playerStrategy: PlayerStrategy, playerCircle: Circle) {
+        val distanceToArrival = distance(Coordinates(playerCircle.translateX, playerCircle.translateY), playerStrategy.currentPosition)
         val duration = (distanceToArrival * 1000) / pixelsByMillisecond
 
-        val transition = TranslateTransition(Duration(duration), player)
-        transition.toX = to.x
-        transition.toY = to.y
+        val transition = TranslateTransition(Duration(duration), playerCircle)
+        transition.toX = playerStrategy.currentPosition.x
+        transition.toY = playerStrategy.currentPosition.y
         transition.play()
 
         transition.setOnFinished {
-            player.translateX = to.x
-            player.translateY = to.y
+            playerCircle.translateX = playerStrategy.currentPosition.x
+            playerCircle.translateY = playerStrategy.currentPosition.y
 
-            if (isTouchingBall(player.translateX, player.translateY)) {
-                pushBall(500.0, 150.0)
-            }
+            print("${playerStrategy.name} = ${playerStrategy.currentPosition}\n")
         }
     }
 
-    private fun isTouchingBall(x: Double, y: Double): Boolean {
-        val maxDistanceToTouch = 10
-        return Math.abs(x - ball!!.translateX) < maxDistanceToTouch && Math.abs(y - ball!!.translateY) < maxDistanceToTouch
-    }
-
-    private fun pushBall(toX: Double, toY: Double) {
-        val duration = (strengthInPixels * 1000) / pixelsByMillisecond
-        val (realX, realY) = moveBallTowards(toX, toY)
+    private fun updateBallPosition() {
+        val duration = (GameContext.shootingDistance * 1000) / pixelsByMillisecond
 
         val transition = TranslateTransition(Duration(duration), ball!!)
-        transition.toX = realX
-        transition.toY = realY
+        transition.toX = GameContext.instance.ballPosition.x
+        transition.toY = GameContext.instance.ballPosition.y
         transition.play()
 
         transition.setOnFinished {
-            ball!!.translateX = realX
-            ball!!.translateY = realY
-            GameContext.instance.ballPosition = Coordinates(realX, realY)
+            ball!!.translateX = GameContext.instance.ballPosition.x
+            ball!!.translateY = GameContext.instance.ballPosition.y
+
+            print("Ball = ${GameContext.instance.ballPosition}\n")
         }
-    }
-
-    private fun moveBallTowards(aimX: Double, aimY: Double): Coordinates {
-        var toX = ball!!.translateX
-        var toY = ball!!.translateY
-
-        for (count in 0 until 1000) {
-            val currentDistanceTowardsObjective = distance(Coordinates(ball!!.translateX, ball!!.translateY), Coordinates(toX, toY))
-
-            val isArrived = Math.abs(strengthInPixels - currentDistanceTowardsObjective) <= 5
-            if (isArrived) {
-                return Coordinates(toX, toY)
-            }
-
-            when {
-                toX < aimX -> toX++
-                toX > aimX -> toX--
-                toY < aimY -> toY++
-                toY > aimY -> toY--
-                else -> return Coordinates(toX, toY)
-            }
-        }
-
-        return Coordinates(toX, toY)
     }
 }

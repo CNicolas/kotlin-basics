@@ -6,24 +6,25 @@ import football.helpers.moveTowards
 class GameRunner(val score: Int = 1, val turns: Int = 100000) {
     fun play() {
         turns@ for (turn in 0 until turns) {
+            print("$turn\n")
+
             when {
                 doPlayerTurn(GameContext.instance.team1.player1) -> break@turns
                 doPlayerTurn(GameContext.instance.team1.player2) -> break@turns
                 doPlayerTurn(GameContext.instance.team2.player1) -> break@turns
                 doPlayerTurn(GameContext.instance.team2.player2) -> break@turns
             }
+
+            GameContext.instance.fieldController!!.updatePositions()
         }
     }
 
-    fun doPlayerTurn(player: PlayerStrategy): Boolean {
+    private fun doPlayerTurn(player: PlayerStrategy): Boolean {
         player.move()
 
         if (isTouchingBall(player.currentPosition)) {
             pushBall(player.shoot())
-            if (score() == score) {
-                print("END = ${GameContext.instance}\n")
-                return true
-            }
+            return score() == score
         }
 
         return false

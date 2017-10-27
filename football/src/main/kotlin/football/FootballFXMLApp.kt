@@ -3,6 +3,7 @@ package football
 import football.controllers.FieldController
 import football.game.Coordinates
 import football.game.GameContext
+import football.game.GameRunner
 import football.game.Team
 import football.game.strategies.DumbRusher
 import football.game.strategies.StandStill
@@ -43,5 +44,8 @@ class FootballFXMLApp : Application() {
         primaryStage?.title = "Football"
         primaryStage?.scene = Scene(root, 500.0, 300.0, FORESTGREEN)
         primaryStage?.show()
+
+        val runner = GameRunner(turns = 20)
+        runner.play()
     }
 }
