@@ -16,4 +16,8 @@ class DumbRusher(team: Team, override val initialPosition: Coordinates = Coordin
     override fun move(): Coordinates {
         return Game.instance.ballPosition
     }
+
+    override fun shoot(): Coordinates {
+        return getOpponentGoalsCenter()
+    }
 }

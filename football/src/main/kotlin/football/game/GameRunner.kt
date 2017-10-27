@@ -20,7 +20,7 @@ class GameRunner(val score: Int = 1, val turns: Int = 100000) {
 
         player.currentPosition = destination
         if (isTouchingBall(player.currentPosition)) {
-            pushBall(Coordinates(500.0, 150.0))
+            pushBall(player.shoot())
             if (score() == score) {
                 print("END = ${Game.instance}\n")
                 return true
@@ -32,32 +32,8 @@ class GameRunner(val score: Int = 1, val turns: Int = 100000) {
         return false
     }
 
-    //
-//    private fun move(playerStrategy: PlayerStrategy, to: Coordinates) {
-//        val distanceToArrival = distance(playerStrategy.currentPosition, to)
-//        val duration = (distanceToArrival * 1000) / Game.pixelsByMillisecond
-//
-//        playerStrategy.currentPosition = to
-//
-//        launch {
-//            delay(duration.toLong())
-//            if (isTouchingBall(playerStrategy.currentPosition)) {
-//                pushBall(Coordinates(500.0, 150.0))
-//                print("player : ${playerStrategy.currentPosition}, ball : ${Game.instance.ballPosition}")
-//            }
-//        }
-//    }
-
     private fun pushBall(aim: Coordinates) {
-        val duration = (Game.strengthInPixels * 1000) / Game.pixelsByMillisecond
-        val (realX, realY) = moveTowards(Game.instance.ballPosition, aim, Game.strengthInPixels)
-
         Game.instance.ballPosition = moveTowards(Game.instance.ballPosition, aim, Game.strengthInPixels)
-
-//        launch {
-//            delay(duration.toLong())
-//            Game.instance.ballPosition = Coordinates(realX, realY)
-//        }
     }
 
     private fun isTouchingBall(coordinates: Coordinates): Boolean {

@@ -16,10 +16,23 @@ abstract class AbstractPlayerStrategy(override val team: Team) : PlayerStrategy 
         get() = player.name
 
     protected fun setPlayer(name: String, coordinates: Coordinates) {
-        player = if (team.side == Side.LEFT) {
-            Player(name, coordinates)
-        } else {
-            Player(name, Coordinates(Game.width - coordinates.x, coordinates.y))
+        player = when {
+            team.side == Side.LEFT -> Player(name, coordinates)
+            else -> Player(name, Coordinates(Game.width - coordinates.x, coordinates.y))
+        }
+    }
+
+    protected fun getOpponentGoalsCenter(): Coordinates {
+        return when (team.side) {
+            Side.LEFT -> getGoalCenter(Side.RIGHT)
+            else -> getGoalCenter(Side.LEFT)
+        }
+    }
+
+    private fun getGoalCenter(side: Side): Coordinates {
+        return when (side) {
+            Side.LEFT -> Coordinates(0.0, Game.height / 2)
+            else -> Coordinates(Game.width, Game.height / 2)
         }
     }
 }
