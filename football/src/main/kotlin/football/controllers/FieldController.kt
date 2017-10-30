@@ -71,35 +71,35 @@ class FieldController {
     }
 
     private fun updatePlayerPosition(playerStrategy: PlayerStrategy, playerCircle: Circle) {
-        val distanceToArrival = distance(Coordinates(playerCircle.translateX, playerCircle.translateY), playerStrategy.currentPosition)
-        val duration = (distanceToArrival * 1000) / pixelsByMillisecond
+        synchronized(GameContext.instance) {
+            val distanceToArrival = distance(Coordinates(playerCircle.translateX, playerCircle.translateY), playerStrategy.currentPosition)
+            val duration = (distanceToArrival * 1000) / pixelsByMillisecond
 
-        val transition = TranslateTransition(Duration(duration), playerCircle)
-        transition.toX = playerStrategy.currentPosition.x
-        transition.toY = playerStrategy.currentPosition.y
-        transition.play()
+            val transition = TranslateTransition(Duration(duration), playerCircle)
+            transition.toX = playerStrategy.currentPosition.x
+            transition.toY = playerStrategy.currentPosition.y
+            transition.play()
 
-        transition.setOnFinished {
-            playerCircle.translateX = playerStrategy.currentPosition.x
-            playerCircle.translateY = playerStrategy.currentPosition.y
-
-            print("${playerStrategy.name} = ${playerStrategy.currentPosition}\n")
+            transition.setOnFinished {
+                playerCircle.translateX = playerStrategy.currentPosition.x
+                playerCircle.translateY = playerStrategy.currentPosition.y
+            }
         }
     }
 
     private fun updateBallPosition() {
-        val duration = (GameContext.shootingDistance * 1000) / pixelsByMillisecond
+        synchronized(GameContext.instance) {
+            val duration = (GameContext.shootingDistance * 1000) / pixelsByMillisecond
 
-        val transition = TranslateTransition(Duration(duration), ball!!)
-        transition.toX = GameContext.instance.ballPosition.x
-        transition.toY = GameContext.instance.ballPosition.y
-        transition.play()
+            val transition = TranslateTransition(Duration(duration), ball!!)
+            transition.toX = GameContext.instance.ballPosition.x
+            transition.toY = GameContext.instance.ballPosition.y
+            transition.play()
 
-        transition.setOnFinished {
-            ball!!.translateX = GameContext.instance.ballPosition.x
-            ball!!.translateY = GameContext.instance.ballPosition.y
-
-            print("Ball = ${GameContext.instance.ballPosition}\n")
+            transition.setOnFinished {
+                ball!!.translateX = GameContext.instance.ballPosition.x
+                ball!!.translateY = GameContext.instance.ballPosition.y
+            }
         }
     }
 }

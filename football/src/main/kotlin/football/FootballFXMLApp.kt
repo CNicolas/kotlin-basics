@@ -23,7 +23,7 @@ class FootballFXMLApp : Application() {
         team1.player2 = StandStill(team1)
         val team2 = Team(Color.RED, Side.RIGHT)
         team2.player1 = StandStill(team2)
-        team2.player2 = DumbRusher(team2, Coordinates(0.0, 0.0))
+        team2.player2 = StandStill(team2, Coordinates(0.0, 0.0))
 
         GameContext.createGame(team1, team2)
     }

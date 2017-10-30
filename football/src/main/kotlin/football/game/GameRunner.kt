@@ -5,17 +5,21 @@ import football.helpers.moveTowards
 
 class GameRunner(val score: Int = 1, val turns: Int = 100000) {
     fun play() {
-        turns@ for (turn in 0 until turns) {
-            print("$turn\n")
+        var turn = turns
+        var scoreReached = false
 
-            when {
-                doPlayerTurn(GameContext.instance.team1.player1) -> break@turns
-                doPlayerTurn(GameContext.instance.team1.player2) -> break@turns
-                doPlayerTurn(GameContext.instance.team2.player1) -> break@turns
-                doPlayerTurn(GameContext.instance.team2.player2) -> break@turns
+        while (turn > 0 && !scoreReached) {
+            synchronized(GameContext.instance) {
+                when {
+                    doPlayerTurn(GameContext.instance.team1.player1) -> scoreReached = true
+                    doPlayerTurn(GameContext.instance.team1.player2) -> scoreReached = true
+                    doPlayerTurn(GameContext.instance.team2.player1) -> scoreReached = true
+                    doPlayerTurn(GameContext.instance.team2.player2) -> scoreReached = true
+                }
             }
 
             GameContext.instance.fieldController!!.updatePositions()
+            turn--
         }
     }
 
