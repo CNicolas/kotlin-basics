@@ -1,7 +1,5 @@
 package main
 
-import football.FootballApp
-
 class Main {
     companion object {
         @JvmStatic

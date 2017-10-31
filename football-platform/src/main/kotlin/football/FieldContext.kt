@@ -20,7 +20,7 @@ class FieldContext {
         val mediane = Line(width / 2, 0.0, width / 2, height)
         val centerRing = Circle(width / 2, height / 2, 50.0, Color.TRANSPARENT)
         val leftSurface = Rectangle(-1.0, 100.0, 50.0, 100.0)
-        val rightSurface = Rectangle(width - 49.0, 100.0, 50.0, 100.0)
+        val rightSurface = Rectangle(width - 49, 100.0, 50.0, 100.0)
 
         init {
             mediane.stroke = linesColor
@@ -34,8 +34,6 @@ class FieldContext {
             rightSurface.stroke = linesColor
             rightSurface.strokeWidth = 1.0
             rightSurface.fill = Color.TRANSPARENT
-
-            println("initialize fieldContext")
         }
     }
 }

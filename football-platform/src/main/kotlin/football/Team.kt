@@ -15,11 +15,9 @@ class Team(val color: Color, val side: Side) {
                 player2.position = Coordinates(150.0, 200.0)
             }
             Side.RIGHT -> {
-                player1.position = Coordinates(350.0, 200.0)
+                player1.position = Coordinates(350.0, 100.0)
                 player2.position = Coordinates(350.0, 200.0)
             }
         }
-
-        println(player1)
     }
 }
