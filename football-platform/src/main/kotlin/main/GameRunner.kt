@@ -8,7 +8,7 @@ import helpers.Coordinates
 import helpers.hasBall
 import helpers.moveTowards
 
-class GameRunner(val team1: Team, val team2: Team, val score: Int = 1, val turns: Int = 100000) {
+class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns: Int = 100000) {
     fun play() {
         var turn = turns
         var scoreReached = false

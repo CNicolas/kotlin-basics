@@ -41,7 +41,7 @@ class FootballApp : Application() {
         primaryStage?.isResizable = false
         primaryStage?.show()
 
-        val runner = GameRunner(team1, team2, turns = 10)
+        val runner = GameRunner(team1, team2, turns = 20)
         runner.play()
     }
 }

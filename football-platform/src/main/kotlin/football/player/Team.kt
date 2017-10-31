@@ -36,7 +36,7 @@ class Team(val color: Color, val side: Side, strategy1: PlayerStrategy, strategy
     }
 
     override fun toString(): String {
-        return "Team(color=$color, score=$score)"
+        return "Team($side, score = $score)"
     }
 
 
