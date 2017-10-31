@@ -15,8 +15,8 @@ class GameContext private constructor(val team1: Team, val team2: Team) {
 
         val width: Double = 500.0
         val height: Double = 300.0
-        val pixelsByMillisecond = 100.0
-        val shootingDistance = 50.0
+        val movingSpeed = 50.0
+        val shootingDistance = 20.0
         val moveDistanceByTurn = 75.0
 
 

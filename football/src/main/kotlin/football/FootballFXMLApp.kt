@@ -45,7 +45,7 @@ class FootballFXMLApp : Application() {
         primaryStage?.scene = Scene(root, 500.0, 300.0, FORESTGREEN)
         primaryStage?.show()
 
-        val runner = GameRunner(turns = 20)
+        val runner = GameRunner(turns = 200)
         runner.play()
     }
 }

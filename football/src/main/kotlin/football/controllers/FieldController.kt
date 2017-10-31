@@ -4,7 +4,7 @@ import football.game.Coordinates
 import football.game.GameContext
 import football.game.strategies.PlayerStrategy
 import football.helpers.distance
-import javafx.animation.TranslateTransition
+import football.ihm.MovingTransitionWrapper
 import javafx.fxml.FXML
 import javafx.scene.shape.Circle
 import javafx.scene.shape.Line
@@ -16,9 +16,6 @@ import java.util.*
 class FieldController {
     private val team1PlayerCirclesMap = HashMap<Circle, PlayerStrategy>()
     private val team2PlayerCirclesMap = HashMap<Circle, PlayerStrategy>()
-
-    private val pixelsByMillisecond = 100.0
-    private val strengthInPixels = 50.0
 
     @FXML private var mediane: Line? = null
     @FXML private var centralRound: Circle? = null
@@ -62,44 +59,72 @@ class FieldController {
     }
 
     fun updatePositions() {
-        updatePlayerPosition(team1PlayerCirclesMap[team1player1]!!, team1player1!!)
-        updatePlayerPosition(team1PlayerCirclesMap[team1player2]!!, team1player2!!)
-        updatePlayerPosition(team2PlayerCirclesMap[team2player1]!!, team2player1!!)
-        updatePlayerPosition(team2PlayerCirclesMap[team2player2]!!, team2player2!!)
+        chainTransitions(
+                listOf(
+                        createPlayerTransition(team1PlayerCirclesMap[team1player1]!!, team1player1!!),
+                        createPlayerTransition(team1PlayerCirclesMap[team1player2]!!, team1player2!!),
+                        createPlayerTransition(team2PlayerCirclesMap[team2player1]!!, team2player1!!),
+                        createPlayerTransition(team2PlayerCirclesMap[team2player2]!!, team2player2!!),
+                        createBallTransition()
+                )
+        )
+    }
 
-        updateBallPosition()
+    private fun createPlayerTransition(playerStrategy: PlayerStrategy, playerCircle: Circle): MovingTransitionWrapper {
+        val distanceToArrival = distance(Coordinates(playerCircle.translateX, playerCircle.translateY), playerStrategy.currentPosition)
+        val duration = (distanceToArrival * 1000) / GameContext.movingSpeed
+
+        val transitionWrapper = MovingTransitionWrapper(Duration(duration), playerCircle)
+        transitionWrapper.toX = playerStrategy.currentPosition.x
+        transitionWrapper.toY = playerStrategy.currentPosition.y
+
+        transitionWrapper.afterFinished = {
+            playerCircle.translateX = playerStrategy.currentPosition.x
+            playerCircle.translateY = playerStrategy.currentPosition.y
+        }
+
+        return transitionWrapper
+    }
+
+    private fun createBallTransition(): MovingTransitionWrapper {
+        val duration = (GameContext.shootingDistance * 1000) / GameContext.movingSpeed
+
+        val transitionWrapper = MovingTransitionWrapper(Duration(duration), ball!!)
+        transitionWrapper.toX = GameContext.instance.ballPosition.x
+        transitionWrapper.toY = GameContext.instance.ballPosition.y
+
+        transitionWrapper.afterFinished = {
+            ball!!.translateX = GameContext.instance.ballPosition.x
+            ball!!.translateY = GameContext.instance.ballPosition.y
+
+            println(GameContext.instance.ballPosition)
+        }
+
+        return transitionWrapper
+    }
+
+    private fun chainTransitions(transitions: List<MovingTransitionWrapper>) {
+        for (i in 0 until transitions.size - 1) {
+            transitions[i].transition.setOnFinished {
+                transitions[i].afterFinished()
+                transitions[i + 1].play()
+            }
+
+            transitions[i].play()
+        }
     }
 
     private fun updatePlayerPosition(playerStrategy: PlayerStrategy, playerCircle: Circle) {
+        val transition = createPlayerTransition(playerStrategy, playerCircle)
         synchronized(GameContext.instance) {
-            val distanceToArrival = distance(Coordinates(playerCircle.translateX, playerCircle.translateY), playerStrategy.currentPosition)
-            val duration = (distanceToArrival * 1000) / pixelsByMillisecond
-
-            val transition = TranslateTransition(Duration(duration), playerCircle)
-            transition.toX = playerStrategy.currentPosition.x
-            transition.toY = playerStrategy.currentPosition.y
             transition.play()
-
-            transition.setOnFinished {
-                playerCircle.translateX = playerStrategy.currentPosition.x
-                playerCircle.translateY = playerStrategy.currentPosition.y
-            }
         }
     }
 
     private fun updateBallPosition() {
+        val transition = createBallTransition()
         synchronized(GameContext.instance) {
-            val duration = (GameContext.shootingDistance * 1000) / pixelsByMillisecond
-
-            val transition = TranslateTransition(Duration(duration), ball!!)
-            transition.toX = GameContext.instance.ballPosition.x
-            transition.toY = GameContext.instance.ballPosition.y
             transition.play()
-
-            transition.setOnFinished {
-                ball!!.translateX = GameContext.instance.ballPosition.x
-                ball!!.translateY = GameContext.instance.ballPosition.y
-            }
         }
     }
 }
