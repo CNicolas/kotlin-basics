@@ -2,7 +2,9 @@ package main
 
 import football.Ball
 import football.FieldContext
-import football.Team
+import football.player.Team
+import football.strategy.DumbRusher
+import football.strategy.StandStillStrategy
 import helpers.Side
 import javafx.application.Application
 import javafx.scene.Scene
@@ -25,8 +27,8 @@ class FootballApp : Application() {
 
         rootPane.children.add(Ball.instance.circle)
 
-        val team1 = Team(Color.BLUE, Side.LEFT)
-        val team2 = Team(Color.RED, Side.RIGHT)
+        val team1 = Team(Color.BLUE, Side.LEFT, DumbRusher(), StandStillStrategy())
+        val team2 = Team(Color.RED, Side.RIGHT, StandStillStrategy(), StandStillStrategy())
 
         rootPane.children.add(team1.player1.circle)
         rootPane.children.add(team1.player2.circle)
@@ -38,5 +40,8 @@ class FootballApp : Application() {
         primaryStage?.centerOnScreen()
         primaryStage?.isResizable = false
         primaryStage?.show()
+
+        val runner = GameRunner(team1, team2, turns = 10)
+        runner.play()
     }
 }

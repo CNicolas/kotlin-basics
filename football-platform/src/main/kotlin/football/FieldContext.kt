@@ -1,5 +1,6 @@
 package football
 
+import helpers.Coordinates
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 import javafx.scene.shape.Line
@@ -21,6 +22,8 @@ class FieldContext {
         val centerRing = Circle(width / 2, height / 2, 50.0, Color.TRANSPARENT)
         val leftSurface = Rectangle(-1.0, 100.0, 50.0, 100.0)
         val rightSurface = Rectangle(width - 49, 100.0, 50.0, 100.0)
+
+        val ballInitialPosition = Coordinates(width / 2, height / 2)
 
         init {
             mediane.stroke = linesColor
