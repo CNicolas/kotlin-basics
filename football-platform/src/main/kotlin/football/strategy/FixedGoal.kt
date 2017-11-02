@@ -1,26 +1,23 @@
 package football.strategy
 
 import football.FieldContext
-import football.game.Ball
 import football.player.Player
 import helpers.Coordinates
 import helpers.GameSide
 import helpers.ShootingStrength
 import helpers.SideInTeam
 
-class DumbRusher(override val side: SideInTeam) : AbstractPlayerStrategy() {
+class FixedGoal : AbstractPlayerStrategy() {
+    override val side: SideInTeam = SideInTeam.CENTER
     override var initialPosition = Coordinates()
 
-    override fun move(player: Player): Coordinates {
-        val destination = Ball.instance.position
+    override fun move(player: Player): Coordinates = moveTowards(player.position, initialPosition)
 
-        return moveTowards(player.position, destination)
-    }
 
     override fun shoot(player: Player): Coordinates {
         val destination = getOpponentGoalsCenter(player)
 
-        return shootTowards(player.position, destination, ShootingStrength.RUN)
+        return shootTowards(player.position, destination, ShootingStrength.CLEARANCE)
     }
 
     override fun setInitialPosition(gameSide: GameSide): Coordinates {
@@ -34,16 +31,10 @@ class DumbRusher(override val side: SideInTeam) : AbstractPlayerStrategy() {
 
     private fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
-            GameSide.HOME -> FieldContext.width / 3
-            else -> (2 * FieldContext.width) / 3
+            GameSide.HOME -> 30.0
+            else -> FieldContext.width - 30.0
         }
     }
 
-    private fun setInitialY(): Double {
-        return when (side) {
-            SideInTeam.UP -> FieldContext.height / 3
-            SideInTeam.DOWN -> (2 * FieldContext.height) / 3
-            else -> FieldContext.width / 2
-        }
-    }
+    private fun setInitialY(): Double = FieldContext.height / 2
 }

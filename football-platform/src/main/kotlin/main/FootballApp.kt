@@ -7,8 +7,9 @@ import football.game.TransitionsManager
 import football.player.Team
 import football.strategy.DoesNothing
 import football.strategy.DumbRusher
-import football.strategy.Goal
-import helpers.Side
+import football.strategy.FixedGoal
+import helpers.GameSide
+import helpers.SideInTeam
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
@@ -30,8 +31,8 @@ class FootballApp : Application() {
 
         rootPane.children.add(Ball.instance.circle)
 
-        val team1 = Team(Color.BLUE, Side.LEFT, DoesNothing(), DumbRusher())
-        val team2 = Team(Color.RED, Side.RIGHT, DoesNothing(), Goal())
+        val team1 = Team(Color.BLUE, GameSide.HOME, FixedGoal(), DumbRusher(SideInTeam.UP))
+        val team2 = Team(Color.RED, GameSide.AWAY, DoesNothing(SideInTeam.UP), FixedGoal())
 
         rootPane.children.add(team1.player1.circle)
         rootPane.children.add(team1.player2.circle)
@@ -44,7 +45,7 @@ class FootballApp : Application() {
         primaryStage?.isResizable = false
         primaryStage?.show()
 
-        val runner = GameRunner(team1, team2, turns = 10)
+        val runner = GameRunner(team1, team2, turns = 15)
         runner.play()
 
         val transitionsManager = TransitionsManager()

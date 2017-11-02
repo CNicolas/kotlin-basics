@@ -29,7 +29,7 @@ fun getMaxCoordinates(from: Coordinates, aim: Coordinates, maxDistance: Double):
 }
 
 fun hasBall(player: Player): Boolean {
-    val maxDistanceToTouch = 5
+    val maxDistanceToTouch = 15
     val diffX = Math.abs(player.position.x - Ball.instance.position.x)
     val diffY = Math.abs(player.position.y - Ball.instance.position.y)
 

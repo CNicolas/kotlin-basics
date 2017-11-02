@@ -3,8 +3,8 @@ package football.strategy
 import football.FieldContext
 import football.player.Player
 import helpers.Coordinates
+import helpers.GameSide
 import helpers.ShootingStrength
-import helpers.Side
 import helpers.getMaxCoordinates
 
 abstract class AbstractPlayerStrategy : PlayerStrategy {
@@ -17,15 +17,15 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
     }
 
     protected fun getOpponentGoalsCenter(player: Player): Coordinates {
-        return when (player.team.side) {
-            Side.LEFT -> getGoalCenter(Side.RIGHT)
-            else -> getGoalCenter(Side.LEFT)
+        return when (player.team.gameSide) {
+            GameSide.HOME -> getGoalCenter(GameSide.AWAY)
+            else -> getGoalCenter(GameSide.HOME)
         }
     }
 
-    protected fun getGoalCenter(side: Side): Coordinates {
-        return when (side) {
-            Side.LEFT -> Coordinates(0.0, FieldContext.height / 2)
+    protected fun getGoalCenter(gameSide: GameSide): Coordinates {
+        return when (gameSide) {
+            GameSide.HOME -> Coordinates(0.0, FieldContext.height / 2)
             else -> Coordinates(FieldContext.width, FieldContext.height / 2)
         }
     }
