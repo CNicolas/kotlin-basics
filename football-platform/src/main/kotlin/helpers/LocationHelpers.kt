@@ -8,25 +8,22 @@ fun distance(from: Coordinates, to: Coordinates): Double {
     return Math.sqrt(Math.pow(to.x - from.x, 2.0) + Math.pow(to.y - from.y, 2.0))
 }
 
-fun moveTowards(from: Coordinates, aim: Coordinates, maxDistance: Double): Coordinates {
+fun moveTowards(from: Coordinates, aim: Coordinates, maxDistance: Double = FieldContext.moveDistanceByTurn): Coordinates {
     var toX = from.x
     var toY = from.y
 
     for (count in 0 until 1000) {
         val currentDistanceTowardsObjective = distance(from, Coordinates(toX, toY))
 
-        val isArrived = Math.abs(maxDistance - currentDistanceTowardsObjective) == 0.0
+        val isArrived = Math.abs(maxDistance - currentDistanceTowardsObjective) < 2.0 || Coordinates(toX, toY) == aim
         if (isArrived) {
             return Coordinates(toX, toY)
         }
 
-        when {
-            toX < aim.x -> toX += 1
-            toX > aim.x -> toX -= 1
-            toY < aim.y -> toY += 1
-            toY > aim.y -> toY -= 1
-            else -> return Coordinates(toX, toY)
-        }
+        if (toX < aim.x) toX += 1
+        if (toX > aim.x) toX -= 1
+        if (toY < aim.y) toY += 1
+        if (toY > aim.y) toY -= 1
     }
 
     return Coordinates(toX, toY)

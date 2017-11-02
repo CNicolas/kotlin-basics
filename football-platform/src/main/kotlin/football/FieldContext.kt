@@ -13,7 +13,7 @@ class FieldContext {
 
         val movingSpeed = 70.0
         val shootingDistance = 30.0
-        val moveDistanceByTurn = 75.0
+        val moveDistanceByTurn = 50.0
 
         val grassColor = Color.FORESTGREEN
         val linesColor = Color.WHITE

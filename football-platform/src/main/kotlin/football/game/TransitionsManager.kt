@@ -57,11 +57,6 @@ class TransitionsManager {
         transition.toX = to.x
         transition.toY = to.y
 
-//        transition.setOnFinished {
-//            player.circle.translateX = to.x
-//            player.circle.translateY = to.y
-//        }
-
         return transition
     }
 
@@ -72,11 +67,6 @@ class TransitionsManager {
         val transition = TranslateTransition(Duration(duration), ball.circle)
         transition.toX = to.x
         transition.toY = to.y
-
-//        transition.setOnFinished {
-//            ball.circle.translateX = to.x
-//            ball.circle.translateY = to.y
-//        }
 
         return transition
     }

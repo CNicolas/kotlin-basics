@@ -29,7 +29,7 @@ class FootballApp : Application() {
 
         rootPane.children.add(Ball.instance.circle)
 
-        val team1 = Team(Color.BLUE, Side.LEFT, DumbRusher(), StandStillStrategy())
+        val team1 = Team(Color.BLUE, Side.LEFT, DumbRusher(), DumbRusher())
         val team2 = Team(Color.RED, Side.RIGHT, StandStillStrategy(), StandStillStrategy())
 
         rootPane.children.add(team1.player1.circle)
