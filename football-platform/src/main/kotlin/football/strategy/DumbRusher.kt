@@ -1,7 +1,7 @@
 package football.strategy
 
-import football.Ball
 import football.FieldContext
+import football.game.Ball
 import football.player.Player
 import helpers.Coordinates
 import helpers.getOpponentGoalsCenter

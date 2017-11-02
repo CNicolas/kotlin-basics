@@ -1,6 +1,5 @@
-package main
+package football.game
 
-import football.Ball
 import football.FieldContext
 import football.player.Player
 import football.player.Team
@@ -9,6 +8,8 @@ import helpers.hasBall
 import helpers.moveTowards
 
 class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns: Int = 100000) {
+    val states: MutableList<State> = mutableListOf()
+
     fun play() {
         var turn = turns
         var scoreReached = false
@@ -29,6 +30,7 @@ class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns
 
     private fun doPlayerTurn(player: Player): Boolean {
         player.position = player.moveTo()
+        addState()
 
         if (hasBall(player)) {
             pushBall(player.shootTo())
@@ -41,6 +43,7 @@ class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns
     private fun pushBall(aim: Coordinates) {
         synchronized(Ball.instance) {
             Ball.instance.position = moveTowards(Ball.instance.position, aim, FieldContext.shootingDistance)
+            addState()
         }
     }
 
@@ -61,5 +64,9 @@ class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns
 
         team1.resetPositions()
         team2.resetPositions()
+    }
+
+    private fun addState() {
+        states.add(State(team1.clone(), team2.clone(), Ball.instance.clone()))
     }
 }

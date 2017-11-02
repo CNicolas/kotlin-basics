@@ -5,7 +5,7 @@ import helpers.Coordinates
 import helpers.Side
 import javafx.scene.paint.Color
 
-class Team(val color: Color, val side: Side, strategy1: PlayerStrategy, strategy2: PlayerStrategy) {
+class Team(val color: Color, val side: Side, private val strategy1: PlayerStrategy, private val strategy2: PlayerStrategy) {
     var player1: Player = Player(this, strategy1)
     var player2: Player = Player(this, strategy2)
 
@@ -26,18 +26,23 @@ class Team(val color: Color, val side: Side, strategy1: PlayerStrategy, strategy
             }
         }
 
-        player1.position = player1InitialPosition
-        player2.position = player2InitialPosition
+        resetPositions()
     }
 
     fun resetPositions() {
-        player1.position = player1InitialPosition
-        player2.position = player2InitialPosition
+        player1.setInitialPosition(player1InitialPosition)
+        player2.setInitialPosition(player2InitialPosition)
+    }
+
+    fun clone(): Team {
+        val team = Team(color, side, strategy1, strategy2)
+        team.player1 = player1.clone()
+        team.player2 = player2.clone()
+
+        return team
     }
 
     override fun toString(): String {
-        return "Team($side, score = $score)"
+        return "Team($side, $score, [$player1, $player2])"
     }
-
-
 }

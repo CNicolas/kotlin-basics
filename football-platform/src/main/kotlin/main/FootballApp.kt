@@ -1,7 +1,9 @@
 package main
 
-import football.Ball
 import football.FieldContext
+import football.game.Ball
+import football.game.GameRunner
+import football.game.TransitionsManager
 import football.player.Team
 import football.strategy.DumbRusher
 import football.strategy.StandStillStrategy
@@ -41,7 +43,10 @@ class FootballApp : Application() {
         primaryStage?.isResizable = false
         primaryStage?.show()
 
-        val runner = GameRunner(team1, team2, turns = 20)
+        val runner = GameRunner(team1, team2, turns = 4)
         runner.play()
+
+        val transitionsManager = TransitionsManager()
+        transitionsManager.play(runner.states)
     }
 }
