@@ -8,7 +8,7 @@ import helpers.GameSide
 import helpers.ShootingStrength
 import helpers.SideInTeam
 
-class DumbRusher(override val side: SideInTeam) : AbstractPlayerStrategy() {
+class DumbRusherRunWithBall(override val side: SideInTeam) : AbstractPlayerStrategy() {
     override var initialPosition = Coordinates()
 
     override fun move(player: Player): Coordinates {

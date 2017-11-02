@@ -6,7 +6,7 @@ import football.game.GameRunner
 import football.game.TransitionsManager
 import football.player.Team
 import football.strategy.DoesNothing
-import football.strategy.DumbRusher
+import football.strategy.DumbRusherPushBall
 import football.strategy.FixedGoal
 import helpers.GameSide
 import helpers.SideInTeam
@@ -31,7 +31,7 @@ class FootballApp : Application() {
 
         rootPane.children.add(Ball.instance.circle)
 
-        val team1 = Team(Color.BLUE, GameSide.HOME, FixedGoal(), DumbRusher(SideInTeam.UP))
+        val team1 = Team(Color.BLUE, GameSide.HOME, FixedGoal(), DumbRusherPushBall(SideInTeam.UP))
         val team2 = Team(Color.RED, GameSide.AWAY, DoesNothing(SideInTeam.UP), DoesNothing(SideInTeam.DOWN))
 
         rootPane.children.add(team1.player1.circle)
