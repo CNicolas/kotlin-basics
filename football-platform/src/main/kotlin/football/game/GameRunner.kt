@@ -43,10 +43,10 @@ class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns
     }
 
     private fun score(): Int {
-        if (Ball.instance.position.x == 0.0) {
+        if (Ball.instance.position.x <= 0.0) {
             team2.score++
             resetAllPositions()
-        } else if (Ball.instance.position.x == FieldContext.width) {
+        } else if (Ball.instance.position.x >= FieldContext.width) {
             team1.score++
             resetAllPositions()
         }

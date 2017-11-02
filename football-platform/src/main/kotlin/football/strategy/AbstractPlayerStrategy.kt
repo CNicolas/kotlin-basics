@@ -13,7 +13,21 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
     }
 
     protected fun shootTowards(from: Coordinates, aim: Coordinates, strength: ShootingStrength): Coordinates {
-        return getMaxCoordinates(from, aim, FieldContext.shootingDistance * strength.strengthPercentage)
+        val trueX = when {
+            aim.x < from.x -> aim.x - from.x
+            aim.x > from.x -> aim.x + from.x
+            else -> aim.x
+        }
+
+        val trueY = when {
+            aim.y < from.y -> aim.y - from.y
+            aim.y > from.y -> aim.y + from.y
+            else -> aim.y
+        }
+
+        val trueAim = Coordinates(trueX, trueY)
+
+        return getMaxCoordinates(from, trueAim, FieldContext.shootingDistance * strength.strengthPercentage)
     }
 
     protected fun getOpponentGoalsCenter(player: Player): Coordinates {
