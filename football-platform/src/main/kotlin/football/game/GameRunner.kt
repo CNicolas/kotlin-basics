@@ -18,8 +18,13 @@ class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns
             when {
                 doPlayerTurn(team1.player1) -> scoreReached = true
                 doPlayerTurn(team1.player2) -> scoreReached = true
+                doPlayerTurn(team1.player3) -> scoreReached = true
+                doPlayerTurn(team1.player4) -> scoreReached = true
+
                 doPlayerTurn(team2.player1) -> scoreReached = true
                 doPlayerTurn(team2.player2) -> scoreReached = true
+                doPlayerTurn(team2.player3) -> scoreReached = true
+                doPlayerTurn(team2.player4) -> scoreReached = true
             }
 
             turn--
@@ -28,17 +33,19 @@ class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns
         println("$team1 vs $team2")
     }
 
-    private fun doPlayerTurn(player: Player): Boolean {
-        player.position = player.moveTo()
-        addState()
+    private fun doPlayerTurn(player: Player?): Boolean {
+        if (player != null) {
+            player.position = player.moveTo()
+            addState()
 
-        if (hasBall(player)) {
-            synchronized(Ball.instance) {
-                Ball.instance.position = player.shootTo()
-                addState()
+            if (hasBall(player)) {
+                synchronized(Ball.instance) {
+                    Ball.instance.position = player.shootTo()
+                    addState()
+                }
+
+                return score() == score
             }
-
-            return score() == score
         }
 
         return false

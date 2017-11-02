@@ -4,33 +4,47 @@ import football.strategy.PlayerStrategy
 import helpers.GameSide
 import javafx.scene.paint.Color
 
-class Team(val color: Color, val gameSide: GameSide, private val strategy1: PlayerStrategy, private val strategy2: PlayerStrategy) {
-    var player1: Player = Player(this, strategy1)
-    var player2: Player = Player(this, strategy2)
+class Team(val color: Color, val gameSide: GameSide, private val strategies: List<PlayerStrategy>) {
+    var player1: Player = Player(this, strategies[0])
+    var player2: Player? = null
+    var player3: Player? = null
+    var player4: Player? = null
 
     var score = 0
 
     init {
-        strategy1.setInitialPosition(gameSide)
-        strategy2.setInitialPosition(gameSide)
+        if (strategies.size > 1) {
+            player2 = Player(this, strategies[1])
+            if (strategies.size > 2) {
+                player3 = Player(this, strategies[2])
+                if (strategies.size > 3) {
+                    player4 = Player(this, strategies[3])
+                }
+            }
+        }
+        strategies.map { it.setInitialPosition(gameSide) }
 
         resetPositions()
     }
 
     fun resetPositions() {
-        player1.setInitialPosition(strategy1.initialPosition)
-        player2.setInitialPosition(strategy2.initialPosition)
+        player1.setInitialPosition(player1.strategy.initialPosition)
+        player2?.setInitialPosition(player2?.strategy!!.initialPosition)
+        player3?.setInitialPosition(player3?.strategy!!.initialPosition)
+        player4?.setInitialPosition(player4?.strategy!!.initialPosition)
     }
 
     fun clone(): Team {
-        val team = Team(color, gameSide, strategy1, strategy2)
+        val team = Team(color, gameSide, strategies)
         team.player1 = player1.clone()
-        team.player2 = player2.clone()
+        team.player2 = player2?.clone()
+        team.player3 = player3?.clone()
+        team.player4 = player4?.clone()
 
         return team
     }
 
     override fun toString(): String {
-        return "Team($gameSide, $score, [$player1, $player2])"
+        return "Team($gameSide, $score, [$player1, $player2, $player3, $player4])"
     }
 }

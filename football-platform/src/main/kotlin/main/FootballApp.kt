@@ -31,13 +31,18 @@ class FootballApp : Application() {
 
         rootPane.children.add(Ball.instance.circle)
 
-        val team1 = Team(Color.BLUE, GameSide.HOME, FixedGoal(), DumbRusherPushBall(SideInTeam.UP))
-        val team2 = Team(Color.RED, GameSide.AWAY, DoesNothing(SideInTeam.UP), DoesNothing(SideInTeam.DOWN))
+        val team1 = Team(Color.BLUE, GameSide.HOME, listOf(FixedGoal(), DumbRusherPushBall(SideInTeam.UP), DoesNothing(SideInTeam.DOWN)))
+        val team2 = Team(Color.RED, GameSide.AWAY, listOf(DoesNothing(SideInTeam.UP), DoesNothing(SideInTeam.DOWN)))
 
         rootPane.children.add(team1.player1.circle)
-        rootPane.children.add(team1.player2.circle)
+        if (team1.player2 !== null) rootPane.children.add(team1.player2!!.circle)
+        if (team1.player3 !== null) rootPane.children.add(team1.player3!!.circle)
+        if (team1.player4 !== null) rootPane.children.add(team1.player4!!.circle)
+
         rootPane.children.add(team2.player1.circle)
-        rootPane.children.add(team2.player2.circle)
+        if (team2.player2 !== null) rootPane.children.add(team2.player2!!.circle)
+        if (team2.player3 !== null) rootPane.children.add(team2.player3!!.circle)
+        if (team2.player4 !== null) rootPane.children.add(team2.player4!!.circle)
 
         primaryStage?.title = "Football"
         primaryStage?.scene = Scene(rootPane, FieldContext.width - 10, FieldContext.height - 10, FieldContext.grassColor)

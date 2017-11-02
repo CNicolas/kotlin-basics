@@ -2,6 +2,7 @@ package football.game
 
 import football.FieldContext
 import football.player.Player
+import football.player.Team
 import helpers.Coordinates
 import helpers.distance
 import javafx.animation.TranslateTransition
@@ -19,18 +20,9 @@ class TransitionsManager {
             if (state.shouldAnimate) {
                 val nextState = states[i + 1]
 
-                if (state.team1.player1.position != nextState.team1.player1.position) {
-                    transitions.add(movePlayer(state.team1.player1, nextState.team1.player1.position))
-                }
-                if (state.team1.player2.position != nextState.team1.player2.position) {
-                    transitions.add(movePlayer(state.team1.player2, nextState.team1.player2.position))
-                }
-                if (state.team2.player1.position != nextState.team2.player1.position) {
-                    transitions.add(movePlayer(state.team2.player1, nextState.team2.player1.position))
-                }
-                if (state.team2.player2.position != nextState.team2.player2.position) {
-                    transitions.add(movePlayer(state.team2.player2, nextState.team2.player2.position))
-                }
+                transitions.addAll(createTeamTransitions(state.team1, nextState.team1))
+                transitions.addAll(createTeamTransitions(state.team2, nextState.team2))
+
                 if (state.ball.position != nextState.ball.position) {
                     transitions.add(moveBall(state.ball, nextState.ball.position))
                 }
@@ -50,6 +42,31 @@ class TransitionsManager {
         }
 
         transitions[0].play()
+    }
+
+    private fun createTeamTransitions(teamBefore: Team, teamAfter: Team): List<TranslateTransition> {
+        val transitions = mutableListOf<TranslateTransition>()
+
+        if (teamBefore.player1.position != teamAfter.player1.position) {
+            transitions.add(movePlayer(teamBefore.player1, teamAfter.player1.position))
+        }
+        if (teamBefore.player2 !== null && teamAfter.player2 !== null) {
+            if (teamBefore.player2!!.position != teamAfter.player2!!.position) {
+                transitions.add(movePlayer(teamBefore.player2!!, teamAfter.player2!!.position))
+            }
+        }
+        if (teamBefore.player3 !== null && teamAfter.player3 !== null) {
+            if (teamBefore.player3!!.position != teamAfter.player3!!.position) {
+                transitions.add(movePlayer(teamBefore.player3!!, teamAfter.player3!!.position))
+            }
+        }
+        if (teamBefore.player4 !== null && teamAfter.player4 !== null) {
+            if (teamBefore.player4!!.position != teamAfter.player4!!.position) {
+                transitions.add(movePlayer(teamBefore.player4!!, teamAfter.player4!!.position))
+            }
+        }
+
+        return transitions
     }
 
     private fun movePlayer(player: Player, to: Coordinates): TranslateTransition {
