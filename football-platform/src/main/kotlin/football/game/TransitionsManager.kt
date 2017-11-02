@@ -15,22 +15,25 @@ class TransitionsManager {
 
         for (i in 0 until states.size - 1) {
             val state = states[i]
-            val nextState = states[i + 1]
 
-            if (state.team1.player1.position != nextState.team1.player1.position) {
-                transitions.add(movePlayer(state.team1.player1, nextState.team1.player1.position))
-            }
-            if (state.team1.player2.position != nextState.team1.player2.position) {
-                transitions.add(movePlayer(state.team1.player2, nextState.team1.player2.position))
-            }
-            if (state.team2.player1.position != nextState.team2.player1.position) {
-                transitions.add(movePlayer(state.team2.player1, nextState.team2.player1.position))
-            }
-            if (state.team2.player2.position != nextState.team2.player2.position) {
-                transitions.add(movePlayer(state.team2.player2, nextState.team2.player2.position))
-            }
-            if (state.ball.position != nextState.ball.position) {
-                transitions.add(moveBall(state.ball, nextState.ball.position))
+            if (state.shouldAnimate) {
+                val nextState = states[i + 1]
+
+                if (state.team1.player1.position != nextState.team1.player1.position) {
+                    transitions.add(movePlayer(state.team1.player1, nextState.team1.player1.position))
+                }
+                if (state.team1.player2.position != nextState.team1.player2.position) {
+                    transitions.add(movePlayer(state.team1.player2, nextState.team1.player2.position))
+                }
+                if (state.team2.player1.position != nextState.team2.player1.position) {
+                    transitions.add(movePlayer(state.team2.player1, nextState.team2.player1.position))
+                }
+                if (state.team2.player2.position != nextState.team2.player2.position) {
+                    transitions.add(movePlayer(state.team2.player2, nextState.team2.player2.position))
+                }
+                if (state.ball.position != nextState.ball.position) {
+                    transitions.add(moveBall(state.ball, nextState.ball.position))
+                }
             }
         }
 

@@ -59,9 +59,11 @@ class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns
 
         team1.resetPositions()
         team2.resetPositions()
+
+        addState(false)
     }
 
-    private fun addState() {
-        states.add(State(team1.clone(), team2.clone(), Ball.instance.clone()))
+    private fun addState(shouldAnimate: Boolean = true) {
+        states.add(State(team1.clone(), team2.clone(), Ball.instance.clone(), shouldAnimate))
     }
 }
