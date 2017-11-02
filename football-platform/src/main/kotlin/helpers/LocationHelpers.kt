@@ -1,6 +1,5 @@
 package helpers
 
-import football.FieldContext
 import football.game.Ball
 import football.player.Player
 
@@ -8,7 +7,7 @@ fun distance(from: Coordinates, to: Coordinates): Double {
     return Math.sqrt(Math.pow(to.x - from.x, 2.0) + Math.pow(to.y - from.y, 2.0))
 }
 
-fun distanceTowards(from: Coordinates, aim: Coordinates, maxDistance: Double = FieldContext.moveDistanceByTurn): Coordinates {
+fun getMaxCoordinates(from: Coordinates, aim: Coordinates, maxDistance: Double): Coordinates {
     var toX = from.x
     var toY = from.y
 
@@ -35,18 +34,4 @@ fun hasBall(player: Player): Boolean {
     val diffY = Math.abs(player.position.y - Ball.instance.position.y)
 
     return diffX < maxDistanceToTouch && diffY < maxDistanceToTouch
-}
-
-fun getOpponentGoalsCenter(player: Player): Coordinates {
-    return when (player.team.side) {
-        Side.LEFT -> getGoalCenter(Side.RIGHT)
-        else -> getGoalCenter(Side.LEFT)
-    }
-}
-
-fun getGoalCenter(side: Side): Coordinates {
-    return when (side) {
-        Side.LEFT -> Coordinates(0.0, FieldContext.height / 2)
-        else -> Coordinates(FieldContext.width, FieldContext.height / 2)
-    }
 }
