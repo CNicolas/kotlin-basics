@@ -11,8 +11,8 @@ class FieldContext {
         val width: Double = 500.0
         val height: Double = 300.0
 
-        val movingSpeed = 70.0
-        val shootingDistance = 30.0
+        val movingSpeed = 100.0
+        val shootingDistance = 50.0
         val moveDistanceByTurn = 50.0
 
         val grassColor = Color.FORESTGREEN

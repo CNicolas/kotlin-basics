@@ -3,9 +3,7 @@ package football.game
 import football.FieldContext
 import football.player.Player
 import football.player.Team
-import helpers.Coordinates
 import helpers.hasBall
-import helpers.moveTowards
 
 class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns: Int = 100000) {
     val states: MutableList<State> = mutableListOf()
@@ -33,18 +31,15 @@ class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns
         addState()
 
         if (hasBall(player)) {
-            pushBall(player.shootTo())
+            synchronized(Ball.instance) {
+                Ball.instance.position = player.shootTo()
+                addState()
+            }
+
             return score() == score
         }
 
         return false
-    }
-
-    private fun pushBall(aim: Coordinates) {
-        synchronized(Ball.instance) {
-            Ball.instance.position = moveTowards(Ball.instance.position, aim, FieldContext.shootingDistance)
-            addState()
-        }
     }
 
     private fun score(): Int {

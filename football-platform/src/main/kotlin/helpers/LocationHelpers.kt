@@ -8,7 +8,7 @@ fun distance(from: Coordinates, to: Coordinates): Double {
     return Math.sqrt(Math.pow(to.x - from.x, 2.0) + Math.pow(to.y - from.y, 2.0))
 }
 
-fun moveTowards(from: Coordinates, aim: Coordinates, maxDistance: Double = FieldContext.moveDistanceByTurn): Coordinates {
+fun distanceTowards(from: Coordinates, aim: Coordinates, maxDistance: Double = FieldContext.moveDistanceByTurn): Coordinates {
     var toX = from.x
     var toY = from.y
 
