@@ -5,10 +5,12 @@ import football.player.Player
 import football.player.Team
 import helpers.hasBall
 
-class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns: Int = 100000) {
+class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns: Int = 200) {
     val states: MutableList<State> = mutableListOf()
 
     fun play() {
+        states.clear()
+
         var turn = turns
         var scoreReached = false
 
