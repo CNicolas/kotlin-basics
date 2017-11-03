@@ -7,9 +7,9 @@ class TournamentTest {
     @Test
     fun should_initialize_tournament_of_5_games() {
         val tournament = Tournament()
-        val games = tournament.createTournament(5)
+        val teams = tournament.createTournament(5)
 
-        games.map { game: Game -> "${game.home.strategies} vs ${game.away.strategies}" }
+        teams.map { team: Team -> "${team.strategies}" }
                 .forEach { println(it) }
     }
 }

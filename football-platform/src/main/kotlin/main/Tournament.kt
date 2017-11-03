@@ -1,7 +1,5 @@
 package main
 
-import football.game.Game
-import football.game.GameSide
 import football.game.Team
 import football.player.SideInTeam
 import football.player.SideInTeam.*
@@ -18,22 +16,20 @@ import javafx.scene.paint.Color
 import java.util.*
 
 class Tournament {
-    fun createTournament(gamesCount: Int): List<Game> {
+    fun createTournament(teamsCount: Int): List<Team> {
         val r = Random()
 
-        val listOfGames = mutableListOf<Game>()
+        val listOfTeams = mutableListOf<Team>()
 
-        for (i in 0 until gamesCount) {
-            val home = Team(Color.BLUE, createRandomTeam(r.nextInt(4)))
-            home.gameSide = GameSide.HOME
+        for (i in 0 until teamsCount) {
+            val team = Team(Color.BLACK, createRandomTeam(r.nextInt(4)))
 
-            val away = Team(Color.RED, createRandomTeam(r.nextInt(4)))
-            away.gameSide = GameSide.AWAY
-
-            listOfGames.add(Game(home, away))
+            if (listOfTeams.indexOfFirst { it.strategies == team.strategies } == -1) {
+                listOfTeams.add(team)
+            }
         }
 
-        return listOfGames
+        return listOfTeams
     }
 
     private fun createRandomTeam(numberOfPlayers: Int): List<PlayerStrategy> {
