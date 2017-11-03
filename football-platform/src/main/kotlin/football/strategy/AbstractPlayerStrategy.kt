@@ -58,4 +58,7 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
 
         return isInSurfaceByX && isInSurfaceByY
     }
+
+    abstract fun setInitialX(gameSide: GameSide): Double
+    abstract fun setInitialY(): Double
 }

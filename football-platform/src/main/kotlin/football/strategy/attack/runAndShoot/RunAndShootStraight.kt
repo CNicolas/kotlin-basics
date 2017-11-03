@@ -37,14 +37,14 @@ class RunAndShootStraight(override val side: SideInTeam) : AbstractPlayerStrateg
         return initialPosition
     }
 
-    private fun setInitialX(gameSide: GameSide): Double {
+    override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
             GameSide.HOME -> FieldContext.width / 3
             else -> (2 * FieldContext.width) / 3
         }
     }
 
-    private fun setInitialY(): Double {
+    override fun setInitialY(): Double {
         return when (side) {
             SideInTeam.UP -> FieldContext.height / 3
             SideInTeam.DOWN -> (2 * FieldContext.height) / 3

@@ -34,12 +34,12 @@ class DefenderFollowingBall : AbstractPlayerStrategy() {
         return initialPosition
     }
 
-    private fun setInitialX(gameSide: GameSide): Double {
+    override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
             GameSide.HOME -> 100.0
             else -> FieldContext.width - 100.0
         }
     }
 
-    private fun setInitialY(): Double = FieldContext.height / 2
+    override fun setInitialY(): Double = FieldContext.height / 2
 }

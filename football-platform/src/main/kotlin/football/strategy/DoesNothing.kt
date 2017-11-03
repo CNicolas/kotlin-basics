@@ -35,14 +35,14 @@ class DoesNothing(override val side: SideInTeam) : AbstractPlayerStrategy() {
         return initialPosition
     }
 
-    private fun setInitialX(gameSide: GameSide): Double {
+    override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
             GameSide.HOME -> FieldContext.width / 4
             else -> (3 * FieldContext.width) / 4
         }
     }
 
-    private fun setInitialY(): Double {
+    override fun setInitialY(): Double {
         return when (side) {
             SideInTeam.UP -> FieldContext.height / 4
             SideInTeam.DOWN -> (3 * FieldContext.height) / 4
