@@ -27,7 +27,7 @@ class TeamFactory {
         return Team(color, side, listOf(FixedGoalKeeper(), RunAndShootStraight(UP)))
     }
 
-    fun DumbRusherRunWithBallUP_DumbRusherRunWithBallDOWN(color: Color, side: GameSide): Team {
+    fun DumbRusherRunUP_DumbRusherRunDOWN(color: Color, side: GameSide): Team {
         return Team(color, side, listOf(DumbRusherRun(UP), DumbRusherRun(DOWN)))
     }
 

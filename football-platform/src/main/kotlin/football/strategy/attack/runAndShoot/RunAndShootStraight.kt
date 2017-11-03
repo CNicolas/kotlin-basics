@@ -10,8 +10,6 @@ import helpers.ShootingStrength
 import helpers.SideInTeam
 
 class RunAndShootStraight(override val side: SideInTeam) : AbstractPlayerStrategy() {
-    override var initialPosition = Coordinates()
-
     override fun move(player: Player): Coordinates {
         val destination = Ball.instance.position
 

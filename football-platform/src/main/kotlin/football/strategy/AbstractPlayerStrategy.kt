@@ -12,6 +12,8 @@ import helpers.ShootingStrength
 import helpers.getMaxCoordinates
 
 abstract class AbstractPlayerStrategy : PlayerStrategy {
+    override var initialPosition: Coordinates = Coordinates()
+
     protected fun moveTowards(from: Coordinates, aim: Coordinates): Coordinates {
         return getMaxCoordinates(from, aim, moveDistanceByTurn)
     }
@@ -61,4 +63,8 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
 
     abstract fun setInitialX(gameSide: GameSide): Double
     abstract fun setInitialY(): Double
+
+    override fun toString(): String = javaClass.simpleName
+
+
 }

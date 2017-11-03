@@ -4,7 +4,7 @@ import football.strategy.PlayerStrategy
 import helpers.GameSide
 import javafx.scene.paint.Color
 
-class Team(val color: Color, val gameSide: GameSide, private val strategies: List<PlayerStrategy>) {
+class Team(val color: Color, val gameSide: GameSide, val strategies: List<PlayerStrategy>) {
     var player1: Player = Player(this, strategies[0])
     var player2: Player? = null
     var player3: Player? = null

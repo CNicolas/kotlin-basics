@@ -7,8 +7,6 @@ import helpers.GameSide
 import helpers.SideInTeam
 
 class DoesNothing(override val side: SideInTeam) : AbstractPlayerStrategy() {
-    override var initialPosition = Coordinates()
-
     init {
         val x = FieldContext.width / 4
         var y = FieldContext.height / 2

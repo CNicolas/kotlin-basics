@@ -28,15 +28,10 @@ class GameRunnerTest {
 
     @Test
     fun full_DumbRusherRunWithBall_on_each_side() {
-        val team1 = factory.DumbRusherRunWithBallUP_DumbRusherRunWithBallDOWN(Color.BLUE, GameSide.HOME)
-        val team2 = factory.DumbRusherRunWithBallUP_DumbRusherRunWithBallDOWN(Color.RED, GameSide.AWAY)
+        val team1 = factory.DumbRusherRunUP_DumbRusherRunDOWN(Color.BLUE, GameSide.HOME)
+        val team2 = factory.DumbRusherRunUP_DumbRusherRunDOWN(Color.RED, GameSide.AWAY)
 
         val runner = GameRunner(team1, team2)
-        runner.play()
-
-        assertThat(team1.score).isEqualTo(0)
-        assertThat(team2.score).isEqualTo(0)
-
         runner.play()
 
         assertThat(team1.score).isEqualTo(0)

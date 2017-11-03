@@ -11,7 +11,6 @@ import helpers.SideInTeam
 
 class DefenderFollowingBall : AbstractPlayerStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
-    override var initialPosition = Coordinates()
 
     override fun move(player: Player): Coordinates {
         val destination = Coordinates(initialPosition.x, Ball.instance.position.y)

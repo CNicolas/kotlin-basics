@@ -10,7 +10,6 @@ import helpers.SideInTeam
 
 class FixedGoalKeeper : AbstractPlayerStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
-    override var initialPosition = Coordinates()
 
     override fun move(player: Player): Coordinates = moveTowards(player.position, initialPosition)
 
