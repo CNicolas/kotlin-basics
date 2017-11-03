@@ -4,12 +4,8 @@ import football.FieldContext
 import football.game.Ball
 import football.game.GameRunner
 import football.game.TransitionsManager
-import football.player.Team
-import football.strategy.DoesNothing
-import football.strategy.DumbRusherPushBall
-import football.strategy.FixedGoal
+import football.player.TeamFactory
 import helpers.GameSide
-import helpers.SideInTeam
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
@@ -31,8 +27,9 @@ class FootballApp : Application() {
 
         rootPane.children.add(Ball.instance.circle)
 
-        val team1 = Team(Color.BLUE, GameSide.HOME, listOf(FixedGoal(), DumbRusherPushBall(SideInTeam.UP), DoesNothing(SideInTeam.DOWN)))
-        val team2 = Team(Color.RED, GameSide.AWAY, listOf(DoesNothing(SideInTeam.UP), DoesNothing(SideInTeam.DOWN)))
+        val factory = TeamFactory()
+        val team1 = factory.FixedGoalKeeper_DumbRusherRunWithBallUP_DumbRusherRunWithBallDOWN(Color.BLUE, GameSide.HOME)
+        val team2 = factory.DoesNothingUP_DoesNothingDOWN(Color.RED, GameSide.AWAY)
 
         rootPane.children.add(team1.player1.circle)
         if (team1.player2 !== null) rootPane.children.add(team1.player2!!.circle)

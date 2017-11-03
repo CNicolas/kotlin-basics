@@ -1,21 +1,18 @@
 package football.game
 
-import football.player.Team
-import football.strategy.DoesNothing
-import football.strategy.DumbRusherPushBall
-import football.strategy.DumbRusherRunWithBall
-import football.strategy.FixedGoal
+import football.player.TeamFactory
 import helpers.GameSide
-import helpers.SideInTeam
 import javafx.scene.paint.Color
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 
 class GameRunnerTest {
+    private val factory: TeamFactory = TeamFactory()
+
     @Test
     fun simple_test() {
-        val team1 = Team(Color.BLUE, GameSide.HOME, listOf(FixedGoal(), DumbRusherPushBall(SideInTeam.UP)))
-        val team2 = Team(Color.RED, GameSide.AWAY, listOf(DoesNothing(SideInTeam.UP), DoesNothing(SideInTeam.DOWN)))
+        val team1 = factory.FixedGoalKeeper_DumbRusherRunWithBallUP(Color.BLUE, GameSide.HOME)
+        val team2 = factory.DoesNothingUP_DoesNothingDOWN(Color.RED, GameSide.AWAY)
 
         val runner = GameRunner(team1, team2)
         runner.play()
@@ -26,8 +23,8 @@ class GameRunnerTest {
 
     @Test
     fun full_DumbRusherRunWithBall_on_each_side() {
-        val team1 = Team(Color.BLUE, GameSide.HOME, listOf(DumbRusherRunWithBall(SideInTeam.UP), DumbRusherRunWithBall(SideInTeam.DOWN)))
-        val team2 = Team(Color.RED, GameSide.AWAY, listOf(DumbRusherRunWithBall(SideInTeam.UP), DumbRusherRunWithBall(SideInTeam.DOWN)))
+        val team1 = factory.DumbRusherRunWithBallUP_DumbRusherRunWithBallDOWN(Color.BLUE, GameSide.HOME)
+        val team2 = factory.DumbRusherRunWithBallUP_DumbRusherRunWithBallDOWN(Color.RED, GameSide.AWAY)
 
         val runner = GameRunner(team1, team2)
         runner.play()

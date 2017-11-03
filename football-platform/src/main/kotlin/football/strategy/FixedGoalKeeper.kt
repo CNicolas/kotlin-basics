@@ -7,7 +7,7 @@ import helpers.GameSide
 import helpers.ShootingStrength
 import helpers.SideInTeam
 
-class FixedGoal : AbstractPlayerStrategy() {
+class FixedGoalKeeper : AbstractPlayerStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
     override var initialPosition = Coordinates()
 
