@@ -1,6 +1,7 @@
 package football.player
 
-import football.strategy.PlayerStrategy
+import football.game.Team
+import football.player.strategy.PlayerStrategy
 import helpers.Coordinates
 import javafx.scene.shape.Circle
 

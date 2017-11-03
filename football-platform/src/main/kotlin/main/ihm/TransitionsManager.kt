@@ -1,8 +1,9 @@
-package football.game
+package main.ihm
 
+import football.Ball
 import football.FieldContext
+import football.game.Team
 import football.player.Player
-import football.player.Team
 import helpers.Coordinates
 import helpers.distance
 import javafx.animation.TranslateTransition

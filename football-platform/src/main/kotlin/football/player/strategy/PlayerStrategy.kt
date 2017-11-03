@@ -1,9 +1,9 @@
-package football.strategy
+package football.player.strategy
 
+import football.game.GameSide
 import football.player.Player
+import football.player.SideInTeam
 import helpers.Coordinates
-import helpers.GameSide
-import helpers.SideInTeam
 
 interface PlayerStrategy {
     val side: SideInTeam

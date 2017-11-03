@@ -1,6 +1,6 @@
 package football.game
 
-import football.player.Team
+import main.Tournament
 import org.testng.annotations.Test
 
 class TournamentTest {

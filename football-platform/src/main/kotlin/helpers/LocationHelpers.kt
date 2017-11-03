@@ -1,6 +1,6 @@
 package helpers
 
-import football.game.Ball
+import football.Ball
 import football.player.Player
 
 fun distance(from: Coordinates, to: Coordinates): Double {

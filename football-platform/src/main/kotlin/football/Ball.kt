@@ -1,6 +1,5 @@
-package football.game
+package football
 
-import football.FieldContext
 import helpers.Coordinates
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle

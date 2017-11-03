@@ -1,15 +1,15 @@
-package football.strategy.attack.runAndShoot
+package football.player.strategy.attack.dumbRushers
 
+import football.Ball
 import football.FieldContext
-import football.game.Ball
+import football.game.GameSide
 import football.player.Player
-import football.strategy.AbstractPlayerStrategy
+import football.player.ShootingStrength
+import football.player.SideInTeam
+import football.player.strategy.AbstractPlayerStrategy
 import helpers.Coordinates
-import helpers.GameSide
-import helpers.ShootingStrength
-import helpers.SideInTeam
 
-class PushBallAndShootStraight(override val side: SideInTeam) : AbstractPlayerStrategy() {
+abstract class DumbRusher(private val strength: ShootingStrength) : AbstractPlayerStrategy() {
     override fun move(player: Player): Coordinates {
         val destination = Ball.instance.position
 
@@ -18,10 +18,6 @@ class PushBallAndShootStraight(override val side: SideInTeam) : AbstractPlayerSt
 
     override fun shoot(player: Player): Coordinates {
         val destination = getOpponentGoalsCenter(player)
-        val strength = when (isInOpponentSurface(player)) {
-            true -> ShootingStrength.SHOOT
-            false -> ShootingStrength.NORMAL
-        }
 
         return shootTowards(player.position, destination, strength)
     }

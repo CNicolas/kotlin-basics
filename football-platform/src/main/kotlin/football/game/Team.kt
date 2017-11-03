@@ -1,7 +1,7 @@
-package football.player
+package football.game
 
-import football.strategy.PlayerStrategy
-import helpers.GameSide
+import football.player.Player
+import football.player.strategy.PlayerStrategy
 import javafx.scene.paint.Color
 
 class Team(val color: Color, val gameSide: GameSide, val strategies: List<PlayerStrategy>) {

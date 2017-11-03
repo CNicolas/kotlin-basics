@@ -1,9 +1,11 @@
-package football.game
+package main
 
+import football.Ball
 import football.FieldContext
+import football.game.Team
 import football.player.Player
-import football.player.Team
 import helpers.hasBall
+import main.ihm.State
 
 class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns: Int = 200) {
     val states: MutableList<State> = mutableListOf()

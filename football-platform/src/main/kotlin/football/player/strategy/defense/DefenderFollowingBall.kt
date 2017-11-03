@@ -1,18 +1,22 @@
-package football.strategy.defense
+package football.player.strategy.defense
 
+import football.Ball
 import football.FieldContext
+import football.game.GameSide
 import football.player.Player
-import football.strategy.AbstractPlayerStrategy
+import football.player.ShootingStrength
+import football.player.SideInTeam
+import football.player.strategy.AbstractPlayerStrategy
 import helpers.Coordinates
-import helpers.GameSide
-import helpers.ShootingStrength
-import helpers.SideInTeam
 
-class FixedGoalKeeper : AbstractPlayerStrategy() {
+class DefenderFollowingBall : AbstractPlayerStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
 
-    override fun move(player: Player): Coordinates = moveTowards(player.position, initialPosition)
+    override fun move(player: Player): Coordinates {
+        val destination = Coordinates(initialPosition.x, Ball.instance.position.y)
 
+        return moveTowards(player.position, destination)
+    }
 
     override fun shoot(player: Player): Coordinates {
         val destination = getOpponentGoalsCenter(player)
@@ -31,8 +35,8 @@ class FixedGoalKeeper : AbstractPlayerStrategy() {
 
     override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
-            GameSide.HOME -> 30.0
-            else -> FieldContext.width - 30.0
+            GameSide.HOME -> 100.0
+            else -> FieldContext.width - 100.0
         }
     }
 

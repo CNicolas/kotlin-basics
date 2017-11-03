@@ -1,5 +1,7 @@
 package main
 
+import main.ihm.FootballApp
+
 class Main {
     companion object {
         @JvmStatic

@@ -1,8 +1,8 @@
 package football.game
 
 import football.player.TeamFactory
-import helpers.GameSide
 import javafx.scene.paint.Color
+import main.GameRunner
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 

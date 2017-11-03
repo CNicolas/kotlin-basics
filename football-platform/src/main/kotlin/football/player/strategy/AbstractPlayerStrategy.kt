@@ -1,14 +1,14 @@
-package football.strategy
+package football.player.strategy
 
 import football.FieldContext.Companion.height
 import football.FieldContext.Companion.moveDistanceByTurn
 import football.FieldContext.Companion.shootingDistance
 import football.FieldContext.Companion.surfaceSize
 import football.FieldContext.Companion.width
+import football.game.GameSide
 import football.player.Player
+import football.player.ShootingStrength
 import helpers.Coordinates
-import helpers.GameSide
-import helpers.ShootingStrength
 import helpers.getMaxCoordinates
 
 abstract class AbstractPlayerStrategy : PlayerStrategy {

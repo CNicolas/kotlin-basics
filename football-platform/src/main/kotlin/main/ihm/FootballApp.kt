@@ -1,16 +1,15 @@
-package main
+package main.ihm
 
+import football.Ball
 import football.FieldContext
-import football.game.Ball
-import football.game.GameRunner
-import football.game.TransitionsManager
+import football.game.GameSide
 import football.player.TeamFactory
-import helpers.GameSide
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
 import javafx.scene.paint.Color
 import javafx.stage.Stage
+import main.GameRunner
 
 class FootballApp : Application() {
     fun mainStart(args: Array<String>) {
