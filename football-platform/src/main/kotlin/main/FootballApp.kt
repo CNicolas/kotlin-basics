@@ -28,8 +28,8 @@ class FootballApp : Application() {
         rootPane.children.add(Ball.instance.circle)
 
         val factory = TeamFactory()
-        val team1 = factory.FixedGoalKeeper_DumbRusherRunWithBallUP_DumbRusherRunWithBallDOWN(Color.BLUE, GameSide.HOME)
-        val team2 = factory.DoesNothingUP_DoesNothingDOWN(Color.RED, GameSide.AWAY)
+        val team1 = factory.DoesNothingUP_DoesNothingDOWN(Color.BLUE, GameSide.HOME)
+        val team2 = factory.FixedGoalKeeper_RunAndShootStraightUP(Color.RED, GameSide.AWAY)
 
         rootPane.children.add(team1.player1.circle)
         if (team1.player2 !== null) rootPane.children.add(team1.player2!!.circle)

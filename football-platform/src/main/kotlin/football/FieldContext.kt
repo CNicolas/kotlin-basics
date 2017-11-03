@@ -10,6 +10,7 @@ class FieldContext {
     companion object {
         val width: Double = 500.0
         val height: Double = 300.0
+        val surfaceSize: Double = 75.0
 
         val movingSpeed = 100.0
         val shootingDistance = 50.0
@@ -20,8 +21,8 @@ class FieldContext {
 
         val mediane = Line(width / 2, 0.0, width / 2, height)
         val centerRing = Circle(width / 2, height / 2, 50.0, Color.TRANSPARENT)
-        val leftSurface = Rectangle(-1.0, 100.0, 50.0, 100.0)
-        val rightSurface = Rectangle(width - 49, 100.0, 50.0, 100.0)
+        val leftSurface = Rectangle(-1.0, height / 2 - surfaceSize, surfaceSize, (2 * surfaceSize))
+        val rightSurface = Rectangle(width - (surfaceSize - 1), height / 2 - surfaceSize, surfaceSize, (2 * surfaceSize))
 
         val ballInitialPosition = Coordinates(width / 2, height / 2)
 
