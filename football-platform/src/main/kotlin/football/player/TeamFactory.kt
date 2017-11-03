@@ -1,8 +1,8 @@
 package football.player
 
 import football.strategy.DoesNothing
-import football.strategy.DumbRusherRunWithBall
 import football.strategy.FixedGoalKeeper
+import football.strategy.dumbRushers.DumbRusherRunWithBall
 import helpers.GameSide
 import helpers.SideInTeam.*
 import javafx.scene.paint.Color

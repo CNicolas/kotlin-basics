@@ -1,8 +1,9 @@
-package football.strategy
+package football.strategy.dumbRushers
 
 import football.FieldContext
 import football.game.Ball
 import football.player.Player
+import football.strategy.AbstractPlayerStrategy
 import helpers.Coordinates
 import helpers.GameSide
 import helpers.ShootingStrength
