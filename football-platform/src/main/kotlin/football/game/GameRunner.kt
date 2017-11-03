@@ -10,6 +10,10 @@ class GameRunner(val team1: Team, val team2: Team, val score: Int = 3, val turns
 
     fun play() {
         states.clear()
+        team1.resetPositions()
+        team2.resetPositions()
+        team1.score = 0
+        team2.score = 0
 
         var turn = turns
         var scoreReached = false

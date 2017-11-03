@@ -12,7 +12,7 @@ class FieldContext {
         val height: Double = 300.0
         val surfaceSize: Double = 75.0
 
-        val movingSpeed = 100.0
+        val movingSpeed = 200.0
         val shootingDistance = 50.0
         val moveDistanceByTurn = 50.0
 
