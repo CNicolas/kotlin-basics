@@ -1,7 +1,8 @@
-package football.strategy
+package football.strategy.defense
 
 import football.FieldContext
 import football.player.Player
+import football.strategy.AbstractPlayerStrategy
 import helpers.Coordinates
 import helpers.GameSide
 import helpers.ShootingStrength

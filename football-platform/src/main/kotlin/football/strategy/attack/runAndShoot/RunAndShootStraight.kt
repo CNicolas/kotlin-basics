@@ -1,4 +1,4 @@
-package football.strategy.dumbRushers
+package football.strategy.attack.runAndShoot
 
 import football.FieldContext
 import football.game.Ball
@@ -9,7 +9,7 @@ import helpers.GameSide
 import helpers.ShootingStrength
 import helpers.SideInTeam
 
-class DumbRusherRunWithBall(override val side: SideInTeam) : AbstractPlayerStrategy() {
+class RunAndShootStraight(override val side: SideInTeam) : AbstractPlayerStrategy() {
     override var initialPosition = Coordinates()
 
     override fun move(player: Player): Coordinates {
@@ -20,8 +20,12 @@ class DumbRusherRunWithBall(override val side: SideInTeam) : AbstractPlayerStrat
 
     override fun shoot(player: Player): Coordinates {
         val destination = getOpponentGoalsCenter(player)
+        val strength = when (isInOpponentSurface(player)) {
+            true -> ShootingStrength.SHOOT
+            false -> ShootingStrength.RUN
+        }
 
-        return shootTowards(player.position, destination, ShootingStrength.RUN)
+        return shootTowards(player.position, destination, strength)
     }
 
     override fun setInitialPosition(gameSide: GameSide): Coordinates {
