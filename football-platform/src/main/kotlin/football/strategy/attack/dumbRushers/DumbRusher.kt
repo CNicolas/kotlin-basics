@@ -9,7 +9,7 @@ import helpers.GameSide
 import helpers.ShootingStrength
 import helpers.SideInTeam
 
-class DumbRusherRunWithBall(override val side: SideInTeam) : AbstractPlayerStrategy() {
+abstract class DumbRusher(private val strength: ShootingStrength) : AbstractPlayerStrategy() {
     override var initialPosition = Coordinates()
 
     override fun move(player: Player): Coordinates {
@@ -21,7 +21,7 @@ class DumbRusherRunWithBall(override val side: SideInTeam) : AbstractPlayerStrat
     override fun shoot(player: Player): Coordinates {
         val destination = getOpponentGoalsCenter(player)
 
-        return shootTowards(player.position, destination, ShootingStrength.RUN)
+        return shootTowards(player.position, destination, strength)
     }
 
     override fun setInitialPosition(gameSide: GameSide): Coordinates {
