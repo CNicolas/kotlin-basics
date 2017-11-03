@@ -24,8 +24,12 @@ class Tournament {
         val listOfGames = mutableListOf<Game>()
 
         for (i in 0 until gamesCount) {
-            val home = Team(Color.BLUE, GameSide.HOME, createRandomTeam(r.nextInt(4)))
-            val away = Team(Color.RED, GameSide.AWAY, createRandomTeam(r.nextInt(4)))
+            val home = Team(Color.BLUE, createRandomTeam(r.nextInt(4)))
+            home.gameSide = GameSide.HOME
+
+            val away = Team(Color.RED, createRandomTeam(r.nextInt(4)))
+            away.gameSide = GameSide.AWAY
+
             listOfGames.add(Game(home, away))
         }
 

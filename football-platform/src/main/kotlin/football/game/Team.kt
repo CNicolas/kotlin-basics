@@ -4,7 +4,13 @@ import football.player.Player
 import football.player.strategy.PlayerStrategy
 import javafx.scene.paint.Color
 
-class Team(val color: Color, val gameSide: GameSide, val strategies: List<PlayerStrategy>) {
+class Team(val color: Color, val strategies: List<PlayerStrategy>) {
+    var gameSide: GameSide = GameSide.HOME
+        set(value) {
+            field = value
+            strategies.map { it.setInitialPosition(field) }
+        }
+
     var player1: Player = Player(this, strategies[0])
     var player2: Player? = null
     var player3: Player? = null
@@ -22,7 +28,6 @@ class Team(val color: Color, val gameSide: GameSide, val strategies: List<Player
                 }
             }
         }
-        strategies.map { it.setInitialPosition(gameSide) }
 
         resetPositions()
     }
@@ -35,7 +40,8 @@ class Team(val color: Color, val gameSide: GameSide, val strategies: List<Player
     }
 
     fun clone(): Team {
-        val team = Team(color, gameSide, strategies)
+        val team = Team(color, strategies)
+        team.gameSide = gameSide
         team.player1 = player1.clone()
         team.player2 = player2?.clone()
         team.player3 = player3?.clone()
