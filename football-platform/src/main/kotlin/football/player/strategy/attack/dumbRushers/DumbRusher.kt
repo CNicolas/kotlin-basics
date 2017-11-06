@@ -42,7 +42,7 @@ abstract class DumbRusher(private val strength: ShootingStrength) : AbstractPlay
         return when (side) {
             SideInTeam.UP -> FieldContext.height / 3
             SideInTeam.DOWN -> (2 * FieldContext.height) / 3
-            else -> FieldContext.width / 2
+            else -> FieldContext.height / 2
         }
     }
 }

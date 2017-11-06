@@ -41,11 +41,12 @@ class Team(val color: Color, val strategies: List<PlayerStrategy>) {
 
     fun clone(): Team {
         val team = Team(color, strategies)
-        team.gameSide = gameSide
         team.player1 = player1.clone()
         team.player2 = player2?.clone()
         team.player3 = player3?.clone()
         team.player4 = player4?.clone()
+        team.gameSide = gameSide
+        team.score = score
 
         return team
     }

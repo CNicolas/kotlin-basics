@@ -37,4 +37,16 @@ class GameRunnerTest {
         assertThat(team1.score).isEqualTo(0)
         assertThat(team2.score).isEqualTo(0)
     }
+
+    @Test
+    fun team_away_should_win() {
+        val team1 = factory.DoesNothingUP_DoesNothingDOWN(Color.BLUE, GameSide.HOME)
+        val team2 = factory.DumbRusherRunUP_DumbRusherRunDOWN(Color.RED, GameSide.AWAY)
+
+        val runner = GameRunner(team1, team2)
+        runner.play()
+
+        assertThat(team1.score).isEqualTo(0)
+        assertThat(team2.score).isEqualTo(3)
+    }
 }
