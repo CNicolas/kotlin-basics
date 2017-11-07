@@ -5,7 +5,6 @@ import football.FieldContext
 import football.game.GameSide
 import football.game.Team
 import football.player.SideInTeam
-import football.player.strategy.DoesNothing
 import football.player.strategy.attack.dumbRushers.DumbRusherRun
 import javafx.application.Application
 import javafx.scene.Scene
@@ -55,7 +54,8 @@ class FootballApp : Application() {
     }
 
     private fun createTeams(): Pair<Team, Team> {
-        val home = Team(Color.BLUE, listOf(DoesNothing(SideInTeam.UP)))
+        val home = Team(Color.BLUE, listOf(DumbRusherRun(SideInTeam.UP)))
+        home.gameSide = GameSide.HOME
         val away = Team(Color.RED, listOf(DumbRusherRun(SideInTeam.CENTER)))
         away.gameSide = GameSide.AWAY
 

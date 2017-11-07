@@ -35,18 +35,25 @@ class TournamentTest {
         val teams = tournament.createTournament(5)
 
         val leaderBoard = tournament.playTournament(teams)
-        println("Games played : ${leaderBoard.gamesPlayed}")
         leaderBoard.leaderBoard.map { leaderBoardElement -> "${leaderBoardElement.team.strategies} : ${leaderBoardElement.score}" }
                 .forEach { println(it) }
+
+        println()
+        println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
+        println("${leaderBoard.getWinner().strategies}")
     }
 
     @Test
-    fun should_play_tournament_of_20_teams_and_print_best_team() {
+    fun should_play_tournament_of_20_teams() {
         val tournament = Tournament()
         val teams = tournament.createTournament(20)
 
         val leaderBoard = tournament.playTournament(teams)
+        leaderBoard.leaderBoard.map { leaderBoardElement -> "${leaderBoardElement.team.strategies} : ${leaderBoardElement.score}" }
+                .forEach { println(it) }
+
+        println()
         println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
-        println(leaderBoard.getWinner().strategies)
+        println("${leaderBoard.getWinner().strategies}")
     }
 }

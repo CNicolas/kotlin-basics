@@ -5,6 +5,7 @@ import javafx.scene.paint.Color
 import main.GameRunner
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
+import java.util.*
 
 class GameRunnerTest {
     private val factory: TeamFactory = TeamFactory()
@@ -48,5 +49,12 @@ class GameRunnerTest {
 
         assertThat(team1.score).isEqualTo(0)
         assertThat(team2.score).isEqualTo(3)
+    }
+
+    @Test
+    fun shuffle_list() {
+        val list = listOf(0, 1, 2, 3, 4, 5, 6, 7)
+        Collections.shuffle(list)
+        println(list)
     }
 }

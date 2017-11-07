@@ -7,6 +7,8 @@ import football.game.Team
 import football.player.Player
 import helpers.hasBall
 import main.ihm.State
+import java.util.*
+import kotlin.collections.HashMap
 
 class GameRunner(val home: Team, val away: Team, val score: Int = 3, val turns: Int = 200) {
     val states: MutableList<State> = mutableListOf()
@@ -20,27 +22,23 @@ class GameRunner(val home: Team, val away: Team, val score: Int = 3, val turns: 
 
         var turn = turns
         var scoreReached = false
+        val playersByNumber = makeMapBetweenPlayerAndNumber()
+        val order = listOf(0, 1, 2, 3, 4, 5, 6, 7)
 
         while (turn > 0 && !scoreReached) {
-            when {
-                doPlayerTurn(home.player1) -> scoreReached = true
-                doPlayerTurn(home.player2) -> scoreReached = true
-                doPlayerTurn(home.player3) -> scoreReached = true
-                doPlayerTurn(home.player4) -> scoreReached = true
+            Collections.shuffle(order)
 
-                doPlayerTurn(away.player1) -> scoreReached = true
-                doPlayerTurn(away.player2) -> scoreReached = true
-                doPlayerTurn(away.player3) -> scoreReached = true
-                doPlayerTurn(away.player4) -> scoreReached = true
+            for (i in order) {
+                if (doPlayerTurn(playersByNumber[order[i]])) {
+                    scoreReached = true
+                    break
+                }
             }
 
             turn--
         }
 
-        val finalScore = Score.calculate(home, away)
-//        println("${home.strategies} vs ${away.strategies} : $finalScore\n")
-
-        return finalScore
+        return Score.calculate(home, away)
     }
 
     private fun doPlayerTurn(player: Player?): Boolean {
@@ -84,5 +82,21 @@ class GameRunner(val home: Team, val away: Team, val score: Int = 3, val turns: 
 
     private fun addState(shouldAnimate: Boolean = true) {
         states.add(State(home.clone(), away.clone(), Ball.instance.clone(), shouldAnimate))
+    }
+
+    private fun makeMapBetweenPlayerAndNumber(): Map<Int, Player?> {
+        val playersByNumber = HashMap<Int, Player?>()
+
+        playersByNumber.put(0, home.player1)
+        playersByNumber.put(1, home.player2)
+        playersByNumber.put(2, home.player3)
+        playersByNumber.put(3, home.player4)
+
+        playersByNumber.put(4, away.player1)
+        playersByNumber.put(5, away.player2)
+        playersByNumber.put(6, away.player3)
+        playersByNumber.put(7, away.player4)
+
+        return playersByNumber
     }
 }
