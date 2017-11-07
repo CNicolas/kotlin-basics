@@ -1,5 +1,7 @@
-package main
+package main.tournament
 
+import football.game.GameSide
+import football.game.Score
 import football.game.Team
 import football.player.SideInTeam
 import football.player.SideInTeam.*
@@ -13,9 +15,49 @@ import football.player.strategy.attack.runAndShoot.RunAndShootStraight
 import football.player.strategy.defense.DefenderFollowingBall
 import football.player.strategy.defense.FixedGoalKeeper
 import javafx.scene.paint.Color
+import main.GameRunner
 import java.util.*
+import kotlin.collections.HashMap
 
 class Tournament {
+    fun playTournament(teams: List<Team>): Pair<Int, Map<Team, Int>> {
+        val resultsByTeamIndex: MutableMap<Int, Int> = HashMap()
+        for (i in 0 until teams.size) {
+            resultsByTeamIndex.put(i, 0)
+        }
+
+        var gamesPlayed = 0
+        for (homeIndex in 0 until teams.size) {
+            for (awayIndex in 0 until teams.size) {
+                if (homeIndex != awayIndex) {
+                    teams[homeIndex].gameSide = GameSide.HOME
+                    val home = teams[homeIndex].clone()
+                    home.resetPositions()
+
+                    teams[awayIndex].gameSide = GameSide.AWAY
+                    val away = teams[awayIndex].clone()
+                    away.resetPositions()
+
+                    val runner = GameRunner(home, away)
+                    val score = runner.play()
+
+                    when (score) {
+                        Score.HOME_WON -> resultsByTeamIndex[homeIndex] = resultsByTeamIndex[homeIndex]!! + 3
+                        Score.AWAY_WON -> resultsByTeamIndex[awayIndex] = resultsByTeamIndex[awayIndex]!! + 3
+                        else -> {
+                            resultsByTeamIndex[homeIndex] = resultsByTeamIndex[homeIndex]!! + 1
+                            resultsByTeamIndex[awayIndex] = resultsByTeamIndex[awayIndex]!! + 1
+                        }
+                    }
+
+                    gamesPlayed++
+                }
+            }
+        }
+
+        return Pair(gamesPlayed, resultsByTeamIndex.mapKeys { entry -> teams[entry.key] })
+    }
+
     fun createTournament(teamsCount: Int): List<Team> {
         val r = Random()
 
@@ -24,7 +66,7 @@ class Tournament {
         for (i in 0 until teamsCount) {
             val team = Team(Color.BLACK, createRandomTeam(r.nextInt(4)))
 
-            if (listOfTeams.indexOfFirst { it.strategies == team.strategies } == -1) {
+            if (!listOfTeams.any { areTeamsEqual(it, team) }) {
                 listOfTeams.add(team)
             }
         }
@@ -69,5 +111,17 @@ class Tournament {
 
             else -> DoesNothing(randomSideInTeam)
         }
+    }
+
+    private fun areTeamsEqual(teamHome: Team, teamAway: Team): Boolean {
+        if (teamHome.strategies.size == teamAway.strategies.size) {
+            val equalStrategies = (0 until teamHome.strategies.size).count {
+                teamHome.strategies[it].javaClass.simpleName == teamAway.strategies[it].javaClass.simpleName
+            }
+
+            return equalStrategies == teamHome.strategies.size
+        }
+
+        return false
     }
 }

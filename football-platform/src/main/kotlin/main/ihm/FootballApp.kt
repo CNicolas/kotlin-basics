@@ -3,7 +3,10 @@ package main.ihm
 import football.Ball
 import football.FieldContext
 import football.game.GameSide
-import football.player.TeamFactory
+import football.game.Team
+import football.player.SideInTeam
+import football.player.strategy.DoesNothing
+import football.player.strategy.attack.dumbRushers.DumbRusherRun
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
@@ -26,9 +29,7 @@ class FootballApp : Application() {
 
         rootPane.children.add(Ball.instance.circle)
 
-        val factory = TeamFactory()
-        val team1 = factory.Only_DefenderFollowingBall(Color.BLUE, GameSide.HOME)
-        val team2 = factory.FixedGoalKeeper_RunAndShootStraightUP(Color.RED, GameSide.AWAY)
+        val (team1, team2) = createTeams()
 
         rootPane.children.add(team1.player1.circle)
         if (team1.player2 !== null) rootPane.children.add(team1.player2!!.circle)
@@ -51,5 +52,13 @@ class FootballApp : Application() {
 
         val transitionsManager = TransitionsManager()
         transitionsManager.play(runner.states)
+    }
+
+    private fun createTeams(): Pair<Team, Team> {
+        val home = Team(Color.BLUE, listOf(DoesNothing(SideInTeam.UP)))
+        val away = Team(Color.RED, listOf(DumbRusherRun(SideInTeam.CENTER)))
+        away.gameSide = GameSide.AWAY
+
+        return Pair(home, away)
     }
 }
