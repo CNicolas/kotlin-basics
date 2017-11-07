@@ -23,32 +23,30 @@ class TournamentTest {
         val winner = Team(Color.RED, listOf(DumbRusherRun(SideInTeam.CENTER)))
 
         val tournament = Tournament()
-        val results = tournament.playTournament(listOf(loser, winner))
-        println("Games played : ${results.first}")
-        results.second.map { entry -> "${entry.key.strategies} : ${entry.value}" }
+        val leaderBoard = tournament.playTournament(listOf(loser, winner))
+        println("Games played : ${leaderBoard.gamesPlayed}")
+        leaderBoard.leaderBoard.map { leaderBoardElement -> "${leaderBoardElement.team.strategies} : ${leaderBoardElement.score}" }
                 .forEach { println(it) }
     }
 
     @Test
-    fun should_play_tournament_of_5_games() {
+    fun should_play_tournament_of_5_teams() {
         val tournament = Tournament()
         val teams = tournament.createTournament(5)
 
-        val results = tournament.playTournament(teams)
-        println("Games played : ${results.first}")
-        results.second.map { entry -> "${entry.key.strategies} : ${entry.value}" }
+        val leaderBoard = tournament.playTournament(teams)
+        println("Games played : ${leaderBoard.gamesPlayed}")
+        leaderBoard.leaderBoard.map { leaderBoardElement -> "${leaderBoardElement.team.strategies} : ${leaderBoardElement.score}" }
                 .forEach { println(it) }
     }
 
     @Test
-    fun should_play_tournament_of_20_games_and_print_best_team() {
+    fun should_play_tournament_of_20_teams_and_print_best_team() {
         val tournament = Tournament()
         val teams = tournament.createTournament(20)
 
-        val results = tournament.playTournament(teams)
-        println("Games played : ${results.first}")
-//        results.second.map { entry -> "${entry.key.strategies} : ${entry.value}" }
-//                .forEach { println(it) }
-
+        val leaderBoard = tournament.playTournament(teams)
+        println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
+        println(leaderBoard.getWinner().strategies)
     }
 }

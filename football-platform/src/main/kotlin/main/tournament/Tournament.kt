@@ -17,16 +17,11 @@ import football.player.strategy.defense.FixedGoalKeeper
 import javafx.scene.paint.Color
 import main.GameRunner
 import java.util.*
-import kotlin.collections.HashMap
 
 class Tournament {
-    fun playTournament(teams: List<Team>): Pair<Int, Map<Team, Int>> {
-        val resultsByTeamIndex: MutableMap<Int, Int> = HashMap()
-        for (i in 0 until teams.size) {
-            resultsByTeamIndex.put(i, 0)
-        }
+    fun playTournament(teams: List<Team>): TournamentLeaderBoard {
+        val leaderBoard = TournamentLeaderBoard(teams)
 
-        var gamesPlayed = 0
         for (homeIndex in 0 until teams.size) {
             for (awayIndex in 0 until teams.size) {
                 if (homeIndex != awayIndex) {
@@ -42,20 +37,17 @@ class Tournament {
                     val score = runner.play()
 
                     when (score) {
-                        Score.HOME_WON -> resultsByTeamIndex[homeIndex] = resultsByTeamIndex[homeIndex]!! + 3
-                        Score.AWAY_WON -> resultsByTeamIndex[awayIndex] = resultsByTeamIndex[awayIndex]!! + 3
-                        else -> {
-                            resultsByTeamIndex[homeIndex] = resultsByTeamIndex[homeIndex]!! + 1
-                            resultsByTeamIndex[awayIndex] = resultsByTeamIndex[awayIndex]!! + 1
-                        }
+                        Score.HOME_WON -> leaderBoard.win(homeIndex)
+                        Score.AWAY_WON -> leaderBoard.win(awayIndex)
+                        else -> leaderBoard.draw(homeIndex, awayIndex)
                     }
 
-                    gamesPlayed++
+                    leaderBoard.gamesPlayed++
                 }
             }
         }
 
-        return Pair(gamesPlayed, resultsByTeamIndex.mapKeys { entry -> teams[entry.key] })
+        return leaderBoard
     }
 
     fun createTournament(teamsCount: Int): List<Team> {
