@@ -37,8 +37,14 @@ class Tournament {
                     val score = runner.play()
 
                     when (score) {
-                        Score.HOME_WON -> leaderBoard.win(homeIndex)
-                        Score.AWAY_WON -> leaderBoard.win(awayIndex)
+                        Score.HOME_WON -> {
+                            leaderBoard.win(homeIndex)
+                            leaderBoard.lose(awayIndex)
+                        }
+                        Score.AWAY_WON -> {
+                            leaderBoard.win(awayIndex)
+                            leaderBoard.lose(homeIndex)
+                        }
                         else -> leaderBoard.draw(homeIndex, awayIndex)
                     }
 

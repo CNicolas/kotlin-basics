@@ -35,9 +35,8 @@ class TournamentTest {
         val teams = tournament.createTournament(5)
 
         val leaderBoard = tournament.playTournament(teams)
-        leaderBoard.leaderBoard.map { leaderBoardElement -> "${leaderBoardElement.team.strategies} : ${leaderBoardElement.score}" }
-                .forEach { println(it) }
 
+        println(leaderBoard)
         println()
         println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
         println("${leaderBoard.getWinner().team.strategies}")
@@ -49,9 +48,8 @@ class TournamentTest {
         val teams = tournament.createTournament()
 
         val leaderBoard = tournament.playTournament(teams)
-        leaderBoard.leaderBoard.map { leaderBoardElement -> "${leaderBoardElement.team.strategies} : ${leaderBoardElement.score}" }
-                .forEach { println(it) }
 
+        println(leaderBoard)
         println()
         println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
         println("${leaderBoard.getWinner().team.strategies}")
