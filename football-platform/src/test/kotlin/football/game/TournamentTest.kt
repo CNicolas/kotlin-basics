@@ -40,13 +40,13 @@ class TournamentTest {
 
         println()
         println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
-        println("${leaderBoard.getWinner().strategies}")
+        println("${leaderBoard.getWinner().team.strategies}")
     }
 
     @Test
-    fun should_play_tournament_of_20_teams() {
+    fun should_play_tournament_with_every_possible_team() {
         val tournament = Tournament()
-        val teams = tournament.createTournament(20)
+        val teams = tournament.createTournament()
 
         val leaderBoard = tournament.playTournament(teams)
         leaderBoard.leaderBoard.map { leaderBoardElement -> "${leaderBoardElement.team.strategies} : ${leaderBoardElement.score}" }
@@ -54,6 +54,6 @@ class TournamentTest {
 
         println()
         println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
-        println("${leaderBoard.getWinner().strategies}")
+        println("${leaderBoard.getWinner().team.strategies}")
     }
 }

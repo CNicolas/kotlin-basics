@@ -19,8 +19,8 @@ import main.GameRunner
 import java.util.*
 
 class Tournament {
-    fun playTournament(teams: List<Team>): TournamentLeaderBoard {
-        val leaderBoard = TournamentLeaderBoard(teams)
+    fun playTournament(teams: List<Team>): LeaderBoard {
+        val leaderBoard = LeaderBoard(teams)
 
         for (homeIndex in 0 until teams.size) {
             for (awayIndex in 0 until teams.size) {
@@ -42,20 +42,22 @@ class Tournament {
                         else -> leaderBoard.draw(homeIndex, awayIndex)
                     }
 
-                    leaderBoard.gamesPlayed++
+                    leaderBoard.oneMoreGamePlayed()
                 }
             }
         }
 
+        leaderBoard.orderDescendingByScore()
+
         return leaderBoard
     }
 
-    fun createTournament(teamsCount: Int): List<Team> {
+    fun createTournament(teamsCount: Int = Int.MAX_VALUE): List<Team> {
         val r = Random()
+        val effectiveTeamsCount = Math.min(teamsCount, 17 * 4)
 
         val listOfTeams = mutableListOf<Team>()
-
-        for (i in 0 until teamsCount) {
+        while (listOfTeams.size < effectiveTeamsCount) {
             val team = Team(Color.BLACK, createRandomTeam(r.nextInt(4)))
 
             if (!listOfTeams.any { areTeamsEqual(it, team) }) {

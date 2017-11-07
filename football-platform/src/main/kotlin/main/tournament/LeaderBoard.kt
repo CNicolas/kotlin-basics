@@ -2,10 +2,12 @@ package main.tournament
 
 import football.game.Team
 
-class TournamentLeaderBoard(teamsList: List<Team>) {
+class LeaderBoard(teamsList: List<Team>) {
     var gamesPlayed: Int = 0
-    val leaderBoard: List<LeaderBoardElement>
+        private set
+    var leaderBoard: List<LeaderBoardElement>
             = teamsList.mapIndexed { index, team -> LeaderBoardElement(index, team, 0) }
+        private set
 
     fun win(index: Int) {
         leaderBoard[index].score += 3
@@ -16,9 +18,15 @@ class TournamentLeaderBoard(teamsList: List<Team>) {
         leaderBoard[index2].score += 1
     }
 
-    fun getWinner(): Team =
+    fun getWinner(): LeaderBoardElement =
             leaderBoard.sortedByDescending { leaderBoardElement -> leaderBoardElement.score }
                     .first()
-                    .team
 
+    fun oneMoreGamePlayed() {
+        gamesPlayed++
+    }
+
+    fun orderDescendingByScore() {
+        leaderBoard = leaderBoard.sortedByDescending { it.score }
+    }
 }
