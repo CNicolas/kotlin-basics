@@ -8,6 +8,7 @@ import football.game.GameSide.HOME
 import football.game.Score
 import football.game.Team
 import football.player.Player
+import helpers.doesBallEnterCage
 import helpers.hasBall
 import main.ihm.State
 import java.util.*
@@ -51,37 +52,27 @@ class GameRunner(val home: Team, val away: Team, val turns: Int = 200, val score
 
             if (hasBall(player)) {
                 synchronized(Ball.instance) {
-                    Ball.instance.position = player.shootTo()
+                    val futureBallPosition = player.shootTo()
+                    val ballEnteredCage = doesBallEnterCage(futureBallPosition)
+
+                    Ball.instance.position = futureBallPosition
                     addState()
+
+                    if (ballEnteredCage is GameSide) {
+                        when (ballEnteredCage) {
+                            HOME -> away.score++
+                            AWAY -> home.score++
+                        }
+
+                        resetAllPositions()
+                    }
                 }
 
-                return score() == score
+                return Math.max(home.score, away.score) == score
             }
         }
 
         return false
-    }
-
-    private fun score(): Int {
-        if (hasSideScoredGoal(HOME)) {
-            home.score++
-            resetAllPositions()
-        } else if (hasSideScoredGoal(AWAY)) {
-            away.score++
-            resetAllPositions()
-        }
-
-        return Math.max(home.score, away.score)
-    }
-
-    private fun hasSideScoredGoal(side: GameSide): Boolean {
-        val isBetweenCageBound = Ball.instance.position.y > FieldContext.height / 2 - FieldContext.cageSize / 2
-                && Ball.instance.position.y < FieldContext.height / 2 + FieldContext.cageSize / 2
-
-        return when (side) {
-            HOME -> isBetweenCageBound && Ball.instance.position.x >= FieldContext.width
-            AWAY -> isBetweenCageBound && Ball.instance.position.x <= 0.0
-        }
     }
 
     private fun resetAllPositions() {

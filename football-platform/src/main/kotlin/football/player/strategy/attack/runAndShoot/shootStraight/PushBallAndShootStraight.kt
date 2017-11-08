@@ -37,16 +37,16 @@ class PushBallAndShootStraight(override val side: SideInTeam) : AbstractPlayerSt
 
     override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
-            GameSide.HOME -> FieldContext.width / 3
-            else -> (2 * FieldContext.width) / 3
+            GameSide.HOME -> FieldContext.fieldTotalWidth / 3
+            else -> (2 * FieldContext.fieldTotalWidth) / 3
         }
     }
 
     override fun setInitialY(): Double {
         return when (side) {
-            SideInTeam.UP -> FieldContext.height / 3
-            SideInTeam.DOWN -> (2 * FieldContext.height) / 3
-            else -> FieldContext.width / 2
+            SideInTeam.UP -> FieldContext.fieldTotalHeight / 3
+            SideInTeam.DOWN -> (2 * FieldContext.fieldTotalHeight) / 3
+            else -> FieldContext.fieldHalfWidth
         }
     }
 }

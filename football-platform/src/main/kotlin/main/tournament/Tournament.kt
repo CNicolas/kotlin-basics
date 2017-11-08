@@ -12,6 +12,7 @@ import football.player.strategy.attack.dumbRushers.DumbRusherNormal
 import football.player.strategy.attack.dumbRushers.DumbRusherRun
 import football.player.strategy.attack.dumbRushers.DumbRusherShoot
 import football.player.strategy.attack.runAndShoot.shootOblique.RunAndShootObliqueToOtherSideOfTeam
+import football.player.strategy.attack.runAndShoot.shootOblique.RunZigZag
 import football.player.strategy.attack.runAndShoot.shootStraight.PushBallAndShootStraight
 import football.player.strategy.attack.runAndShoot.shootStraight.RunAndShootStraight
 import football.player.strategy.defense.DefenderFollowingBall
@@ -93,7 +94,7 @@ class Tournament {
         val r = Random()
 
         val randomSideInTeam = SideInTeam.values()[r.nextInt(SideInTeam.values().size)]
-        val strategyNumber = r.nextInt(20)
+        val strategyNumber = r.nextInt(23)
 
         return when (strategyNumber) {
             0 -> FixedGoalKeeper()
@@ -116,6 +117,9 @@ class Tournament {
             17 -> RunAndShootObliqueToOtherSideOfTeam(UP)
             18 -> RunAndShootObliqueToOtherSideOfTeam(CENTER)
             19 -> RunAndShootObliqueToOtherSideOfTeam(DOWN)
+            20 -> RunZigZag(UP)
+            21 -> RunZigZag(CENTER)
+            22 -> RunZigZag(DOWN)
 
             else -> DoesNothing(randomSideInTeam)
         }

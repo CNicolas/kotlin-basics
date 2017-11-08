@@ -32,9 +32,9 @@ class FixedGoalKeeper : AbstractPlayerStrategy() {
     override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
             GameSide.HOME -> 30.0
-            else -> FieldContext.width - 30.0
+            else -> FieldContext.fieldTotalWidth - 30.0
         }
     }
 
-    override fun setInitialY(): Double = FieldContext.height / 2
+    override fun setInitialY(): Double = FieldContext.fieldHalfHeight
 }

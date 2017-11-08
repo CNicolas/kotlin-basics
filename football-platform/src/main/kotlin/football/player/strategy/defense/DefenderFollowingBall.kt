@@ -36,9 +36,9 @@ class DefenderFollowingBall : AbstractPlayerStrategy() {
     override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
             GameSide.HOME -> 100.0
-            else -> FieldContext.width - 100.0
+            else -> FieldContext.fieldTotalWidth - 100.0
         }
     }
 
-    override fun setInitialY(): Double = FieldContext.height / 2
+    override fun setInitialY(): Double = FieldContext.fieldHalfHeight
 }

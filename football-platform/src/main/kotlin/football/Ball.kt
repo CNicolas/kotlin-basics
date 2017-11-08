@@ -9,7 +9,7 @@ class Ball private constructor() {
     var position: Coordinates = Coordinates()
 
     init {
-        position = Coordinates(FieldContext.width / 2, FieldContext.height / 2)
+        position = Coordinates(FieldContext.fieldHalfWidth, FieldContext.fieldHalfHeight)
 
         circle.translateX = position.x
         circle.translateY = position.y
