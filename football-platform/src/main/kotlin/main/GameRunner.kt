@@ -2,6 +2,9 @@ package main
 
 import football.Ball
 import football.FieldContext
+import football.game.GameSide
+import football.game.GameSide.AWAY
+import football.game.GameSide.HOME
 import football.game.Score
 import football.game.Team
 import football.player.Player
@@ -10,7 +13,7 @@ import main.ihm.State
 import java.util.*
 import kotlin.collections.HashMap
 
-class GameRunner(val home: Team, val away: Team, val score: Int = 3, val turns: Int = 200) {
+class GameRunner(val home: Team, val away: Team, val turns: Int = 200, val score: Int = 3) {
     val states: MutableList<State> = mutableListOf()
 
     fun play(): Score {
@@ -60,15 +63,25 @@ class GameRunner(val home: Team, val away: Team, val score: Int = 3, val turns: 
     }
 
     private fun score(): Int {
-        if (Ball.instance.position.x <= 0.0) {
-            away.score++
-            resetAllPositions()
-        } else if (Ball.instance.position.x >= FieldContext.width) {
+        if (hasSideScoredGoal(HOME)) {
             home.score++
+            resetAllPositions()
+        } else if (hasSideScoredGoal(AWAY)) {
+            away.score++
             resetAllPositions()
         }
 
         return Math.max(home.score, away.score)
+    }
+
+    private fun hasSideScoredGoal(side: GameSide): Boolean {
+        val isBetweenCageBound = Ball.instance.position.y > FieldContext.height / 2 - FieldContext.cageSize / 2
+                && Ball.instance.position.y < FieldContext.height / 2 + FieldContext.cageSize / 2
+
+        return when (side) {
+            HOME -> isBetweenCageBound && Ball.instance.position.x >= FieldContext.width
+            AWAY -> isBetweenCageBound && Ball.instance.position.x <= 0.0
+        }
     }
 
     private fun resetAllPositions() {

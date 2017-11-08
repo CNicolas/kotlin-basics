@@ -4,11 +4,9 @@ import football.Ball
 import football.FieldContext
 import football.game.GameSide
 import football.game.Team
-import football.player.SideInTeam
-import football.player.strategy.attack.dumbRushers.DumbRusherNormal
-import football.player.strategy.attack.dumbRushers.DumbRusherRun
-import football.player.strategy.attack.dumbRushers.DumbRusherShoot
-import football.player.strategy.attack.runAndShoot.PushBallAndShootStraight
+import football.player.SideInTeam.UP
+import football.player.strategy.attack.runAndShoot.shootOblique.RunAndShootObliqueToOtherSideOfTeam
+import football.player.strategy.defense.FixedGoalKeeper
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
@@ -28,6 +26,8 @@ class FootballApp : Application() {
         rootPane.children.add(FieldContext.centerRing)
         rootPane.children.add(FieldContext.leftSurface)
         rootPane.children.add(FieldContext.rightSurface)
+        rootPane.children.add(FieldContext.leftCage)
+        rootPane.children.add(FieldContext.rightCage)
 
         rootPane.children.add(Ball.instance.circle)
 
@@ -57,9 +57,9 @@ class FootballApp : Application() {
     }
 
     private fun createTeams(): Pair<Team, Team> {
-        val home = Team(Color.BLUE, listOf(DumbRusherShoot(SideInTeam.UP), PushBallAndShootStraight(SideInTeam.CENTER), DumbRusherRun(SideInTeam.DOWN), DumbRusherShoot(SideInTeam.DOWN)))
+        val home = Team(Color.BLUE, listOf(FixedGoalKeeper()))
         home.gameSide = GameSide.HOME
-        val away = Team(Color.RED, listOf(DumbRusherRun(SideInTeam.DOWN), DumbRusherShoot(SideInTeam.DOWN), DumbRusherNormal(SideInTeam.UP), DumbRusherShoot(SideInTeam.DOWN)))
+        val away = Team(Color.RED, listOf(RunAndShootObliqueToOtherSideOfTeam(UP)))
         away.gameSide = GameSide.AWAY
 
         return Pair(home, away)

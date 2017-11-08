@@ -7,7 +7,7 @@ import football.player.strategy.DoesNothing
 import football.player.strategy.attack.dumbRushers.DumbRusherNormal
 import football.player.strategy.attack.dumbRushers.DumbRusherRun
 import football.player.strategy.attack.dumbRushers.DumbRusherShoot
-import football.player.strategy.attack.runAndShoot.RunAndShootStraight
+import football.player.strategy.attack.runAndShoot.shootStraight.RunAndShootStraight
 import football.player.strategy.defense.DefenderFollowingBall
 import football.player.strategy.defense.FixedGoalKeeper
 import javafx.scene.paint.Color

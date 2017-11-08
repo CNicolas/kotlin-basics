@@ -11,18 +11,21 @@ class FieldContext {
         val width: Double = 500.0
         val height: Double = 300.0
         val surfaceSize: Double = 75.0
+        val cageSize: Double = 25.0
 
         val movingSpeed = 200.0
         val shootingDistance = 50.0
         val moveDistanceByTurn = 50.0
 
-        val grassColor = Color.FORESTGREEN
-        val linesColor = Color.WHITE
+        val grassColor = Color.FORESTGREEN!!
+        val linesColor = Color.WHITE!!
 
         val mediane = Line(width / 2, 0.0, width / 2, height)
         val centerRing = Circle(width / 2, height / 2, 50.0, Color.TRANSPARENT)
         val leftSurface = Rectangle(-1.0, height / 2 - surfaceSize, surfaceSize, (2 * surfaceSize))
         val rightSurface = Rectangle(width - (surfaceSize - 1), height / 2 - surfaceSize, surfaceSize, (2 * surfaceSize))
+        val leftCage = Rectangle(-(2 * cageSize / 3), height / 2 - cageSize, cageSize, (2 * cageSize))
+        val rightCage = Rectangle(width - (cageSize - (2 * cageSize / 3)), height / 2 - cageSize, cageSize, (2 * cageSize))
 
         val ballInitialPosition = Coordinates(width / 2, height / 2)
 
@@ -38,6 +41,14 @@ class FieldContext {
             rightSurface.stroke = linesColor
             rightSurface.strokeWidth = 1.0
             rightSurface.fill = Color.TRANSPARENT
+
+            leftCage.stroke = linesColor
+            leftCage.strokeWidth = 1.0
+            leftCage.fill = Color.TRANSPARENT
+
+            rightCage.stroke = linesColor
+            rightCage.strokeWidth = 1.0
+            rightCage.fill = Color.TRANSPARENT
         }
     }
 }

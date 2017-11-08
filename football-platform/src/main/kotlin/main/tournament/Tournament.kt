@@ -11,8 +11,9 @@ import football.player.strategy.PlayerStrategy
 import football.player.strategy.attack.dumbRushers.DumbRusherNormal
 import football.player.strategy.attack.dumbRushers.DumbRusherRun
 import football.player.strategy.attack.dumbRushers.DumbRusherShoot
-import football.player.strategy.attack.runAndShoot.PushBallAndShootStraight
-import football.player.strategy.attack.runAndShoot.RunAndShootStraight
+import football.player.strategy.attack.runAndShoot.shootOblique.RunAndShootObliqueToOtherSideOfTeam
+import football.player.strategy.attack.runAndShoot.shootStraight.PushBallAndShootStraight
+import football.player.strategy.attack.runAndShoot.shootStraight.RunAndShootStraight
 import football.player.strategy.defense.DefenderFollowingBall
 import football.player.strategy.defense.FixedGoalKeeper
 import javafx.scene.paint.Color
@@ -64,7 +65,7 @@ class Tournament {
 
     fun createTournament(teamsCount: Int = Int.MAX_VALUE): List<Team> {
         val r = Random()
-        val effectiveTeamsCount = Math.min(teamsCount, 17 * 4)
+        val effectiveTeamsCount = Math.min(teamsCount, 20 * 4)
 
         val listOfTeams = mutableListOf<Team>()
         while (listOfTeams.size < effectiveTeamsCount) {
@@ -112,6 +113,9 @@ class Tournament {
             14 -> DumbRusherShoot(UP)
             15 -> DumbRusherShoot(CENTER)
             16 -> DumbRusherShoot(DOWN)
+            17 -> RunAndShootObliqueToOtherSideOfTeam(UP)
+            18 -> RunAndShootObliqueToOtherSideOfTeam(CENTER)
+            19 -> RunAndShootObliqueToOtherSideOfTeam(DOWN)
 
             else -> DoesNothing(randomSideInTeam)
         }
