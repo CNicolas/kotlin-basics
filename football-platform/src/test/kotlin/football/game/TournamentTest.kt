@@ -5,6 +5,7 @@ import football.player.strategy.DoesNothing
 import football.player.strategy.attack.dumbRushers.DumbRusherRun
 import javafx.scene.paint.Color
 import main.tournament.Tournament
+import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
 
 class TournamentTest {
@@ -15,6 +16,8 @@ class TournamentTest {
 
         teams.map { team: Team -> "${team.strategies}" }
                 .forEach { println(it) }
+
+        assertThat(tournament).isNotNull()
     }
 
     @Test
@@ -24,9 +27,13 @@ class TournamentTest {
 
         val tournament = Tournament()
         val leaderBoard = tournament.playTournament(listOf(loser, winner))
+
         println("Games played : ${leaderBoard.gamesPlayed}")
         leaderBoard.leaderBoard.map { leaderBoardElement -> "${leaderBoardElement.team.strategies} : ${leaderBoardElement.score}" }
                 .forEach { println(it) }
+
+        assertThat(leaderBoard.getWinner().score).isEqualTo(6)
+        assertThat(leaderBoard.getWinner().team.strategies).isEqualTo(winner.strategies)
     }
 
     @Test

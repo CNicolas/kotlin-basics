@@ -1,11 +1,10 @@
 package football.player.strategy
 
+import football.FieldContext
 import football.FieldContext.Companion.fieldHalfHeight
-import football.FieldContext.Companion.fieldTotalHeight
 import football.FieldContext.Companion.fieldTotalWidth
 import football.FieldContext.Companion.moveDistanceByTurn
 import football.FieldContext.Companion.shootingDistance
-import football.FieldContext.Companion.surfaceSize
 import football.game.GameSide
 import football.game.GameSide.AWAY
 import football.game.GameSide.HOME
@@ -24,7 +23,7 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
 
     protected fun shootTowards(from: Coordinates, aim: Coordinates, strength: ShootingStrength): Coordinates {
         val linearFunction = extractFunctionOfLine(from, aim)
-        val variation = 100
+        val variation = 10
 
         val trueX = when {
             aim.x < from.x -> aim.x - variation
@@ -34,7 +33,7 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
 
         val trueY = linearFunction(trueX)
 
-        return getMaxCoordinates(from, Coordinates(trueX, trueY), shootingDistance * strength.strengthPercentage)
+        return getMaxCoordinates(from, Coordinates(trueX, trueY), shootingDistance * strength.strengthMultiplier)
     }
 
     protected fun getOpponentGoalsCenter(player: Player): Coordinates {
@@ -53,11 +52,12 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
 
     protected fun isInOpponentSurface(player: Player): Boolean {
         val isInSurfaceByX = when (player.team.gameSide) {
-            HOME -> player.position.x > fieldTotalWidth - surfaceSize
-            else -> player.position.x < surfaceSize
+            HOME -> player.position.x > FieldContext.rightSurface.x
+            AWAY -> player.position.x < FieldContext.leftSurface.width
         }
 
-        val isInSurfaceByY = player.position.y > surfaceSize && player.position.y < fieldTotalHeight - surfaceSize
+        val isInSurfaceByY = player.position.y > FieldContext.rightSurface.y
+                && player.position.y < FieldContext.rightSurface.height
 
         return isInSurfaceByX && isInSurfaceByY
     }

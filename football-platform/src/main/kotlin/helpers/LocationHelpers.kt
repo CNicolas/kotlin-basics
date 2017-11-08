@@ -1,13 +1,16 @@
 package helpers
 
 import football.Ball
+import football.FieldContext
 import football.FieldContext.Companion.cageHalfSize
 import football.FieldContext.Companion.fieldHalfHeight
 import football.FieldContext.Companion.fieldTotalWidth
+import football.FieldContext.Companion.maxDistanceToTouch
 import football.game.GameSide
 import football.game.GameSide.AWAY
 import football.game.GameSide.HOME
 import football.player.Player
+import football.player.ShootingStrength
 
 fun distance(from: Coordinates, to: Coordinates): Double {
     return Math.sqrt(Math.pow(to.x - from.x, 2.0) + Math.pow(to.y - from.y, 2.0))
@@ -35,7 +38,6 @@ fun getMaxCoordinates(from: Coordinates, aim: Coordinates, maxDistance: Double):
 }
 
 fun hasBall(player: Player): Boolean {
-    val maxDistanceToTouch = 15
     val diffX = Math.abs(player.position.x - Ball.instance.position.x)
     val diffY = Math.abs(player.position.y - Ball.instance.position.y)
 
@@ -53,6 +55,28 @@ fun doesBallEnterCage(futureBallPosition: Coordinates): Any {
         afterAwayLine -> if (crossLineInCage(AWAY, linearFunction)) AWAY else false
         else -> false
     }
+}
+
+fun isThereAPlayerOnBallsWay(futureBallPosition: Coordinates, players: List<Player>): Any {
+    val linearFunction = extractFunctionOfLine(Ball.instance.position, futureBallPosition)
+
+    for (i in 0 until players.size) {
+        val player = players[i]
+
+        val distanceCrossedByBall = distance(Ball.instance.position, futureBallPosition)
+        val isClearance = Math.abs(distanceCrossedByBall - (FieldContext.shootingDistance * ShootingStrength.CLEARANCE.strengthMultiplier)) < FieldContext.shootingDistance
+        val ballLineYForPlayer = linearFunction(player.position.x)
+
+        val playerIsSomewhereOnTheBallsWay = Math.abs(ballLineYForPlayer - player.position.y) < maxDistanceToTouch
+
+        if (playerIsSomewhereOnTheBallsWay
+                && !isClearance
+                && distance(player.position, futureBallPosition) <= distanceCrossedByBall) {
+            return player.position
+        }
+    }
+
+    return false
 }
 
 private fun crossLineInCage(side: GameSide, linearFunction: (Double) -> Double): Boolean {

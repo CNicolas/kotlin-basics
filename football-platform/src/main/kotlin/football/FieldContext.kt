@@ -23,6 +23,7 @@ class FieldContext {
         val movingSpeed = 200.0
         val shootingDistance = 50.0
         val moveDistanceByTurn = 50.0
+        val maxDistanceToTouch = 5
 
         val grassColor = Color.FORESTGREEN!!
         private val linesColor = Color.WHITE!!
@@ -39,11 +40,11 @@ class FieldContext {
 
         val leftSurface = Rectangle(-1.0,
                 fieldHalfHeight - surfaceHalfSize,
-                surfaceHalfSize,
+                surfaceHalfSize + 15,
                 surfaceSize)
-        val rightSurface = Rectangle(fieldTotalWidth - (surfaceHalfSize - 1),
+        val rightSurface = Rectangle(fieldTotalWidth - (surfaceHalfSize - 1 + 15),
                 fieldHalfHeight - surfaceHalfSize,
-                surfaceHalfSize,
+                surfaceHalfSize + 15,
                 surfaceSize)
 
         val leftCage = Rectangle(-(cageHalfSize / 2),

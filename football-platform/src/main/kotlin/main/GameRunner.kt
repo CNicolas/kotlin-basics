@@ -8,13 +8,18 @@ import football.game.GameSide.HOME
 import football.game.Score
 import football.game.Team
 import football.player.Player
+import helpers.Coordinates
 import helpers.doesBallEnterCage
 import helpers.hasBall
+import helpers.isThereAPlayerOnBallsWay
 import main.ihm.State
 import java.util.*
 import kotlin.collections.HashMap
 
-class GameRunner(val home: Team, val away: Team, val turns: Int = 200, val score: Int = 3) {
+class GameRunner(private val home: Team,
+                 private val away: Team,
+                 private val turns: Int = 200,
+                 private val score: Int = 3) {
     val states: MutableList<State> = mutableListOf()
 
     fun play(): Score {
@@ -33,7 +38,13 @@ class GameRunner(val home: Team, val away: Team, val turns: Int = 200, val score
             Collections.shuffle(order)
 
             for (i in order) {
-                if (doPlayerTurn(playersByNumber[order[i]])) {
+                val currentPlayerNumber = order[i]
+                val otherPlayers = playersByNumber.filterKeys { it != currentPlayerNumber }
+                        .filterValues { it !== null }
+                        .values
+                        .map { it!! }
+
+                if (doPlayerTurn(playersByNumber[currentPlayerNumber], otherPlayers)) {
                     scoreReached = true
                     break
                 }
@@ -45,7 +56,7 @@ class GameRunner(val home: Team, val away: Team, val turns: Int = 200, val score
         return Score.calculate(home, away)
     }
 
-    private fun doPlayerTurn(player: Player?): Boolean {
+    private fun doPlayerTurn(player: Player?, otherPlayers: List<Player>): Boolean {
         if (player != null) {
             player.position = player.moveTo()
             addState()
@@ -54,8 +65,13 @@ class GameRunner(val home: Team, val away: Team, val turns: Int = 200, val score
                 synchronized(Ball.instance) {
                     val futureBallPosition = player.shootTo()
                     val ballEnteredCage = doesBallEnterCage(futureBallPosition)
+                    val playerOnBallsWay = isThereAPlayerOnBallsWay(futureBallPosition, otherPlayers)
 
-                    Ball.instance.position = futureBallPosition
+                    if (playerOnBallsWay is Coordinates) {
+                        Ball.instance.position = playerOnBallsWay
+                    } else {
+                        Ball.instance.position = futureBallPosition
+                    }
                     addState()
 
                     if (ballEnteredCage is GameSide) {
