@@ -1,14 +1,14 @@
 package football.game
 
-enum class Score {
-    HOME_WON, AWAY_WON, DRAW;
+import football.game.FinalScoreStatus.*
 
+class Score(val status: FinalScoreStatus, val homeGoals: Int, val awayGoals: Int) {
     companion object {
         fun calculate(home: Team, away: Team): Score {
             return when {
-                home.score > away.score -> HOME_WON
-                home.score < away.score -> AWAY_WON
-                else -> DRAW
+                home.score > away.score -> Score(HOME_WON, home.score, away.score)
+                home.score < away.score -> Score(AWAY_WON, home.score, away.score)
+                else -> Score(DRAW, home.score, away.score)
             }
         }
     }

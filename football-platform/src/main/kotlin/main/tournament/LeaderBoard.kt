@@ -26,6 +26,14 @@ class LeaderBoard(teamsList: List<Team>) {
         leaderBoard[index].losses++
     }
 
+    fun addGoals(homeIndex: Int, homeGoals: Int, awayIndex: Int, awayGoals: Int) {
+        leaderBoard[homeIndex].goalsFor += homeGoals
+        leaderBoard[homeIndex].goalsAgainst += awayGoals
+
+        leaderBoard[awayIndex].goalsFor += awayGoals
+        leaderBoard[awayIndex].goalsAgainst += homeGoals
+    }
+
     fun getWinner(): LeaderBoardElement =
             leaderBoard.sortedByDescending { leaderBoardElement -> leaderBoardElement.score }
                     .first()
@@ -46,7 +54,7 @@ class LeaderBoard(teamsList: List<Team>) {
                 .mapIndexed { index, elem -> "${(index + 1).toString().padEnd(3)} | $elem" }
                 .joinToString("\n")
 
-        outputString = "Pos | ${"Team".padEnd(maxPadding!!)} | Pts | W   | D   | L  \n" + outputString
+        outputString = "Pos | ${"Team".padEnd(maxPadding!!)} | Pts | W   | D   | L   | GF   | GA   | Diff \n" + outputString
 
         return outputString
     }

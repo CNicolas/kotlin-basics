@@ -1,7 +1,8 @@
 package main.tournament
 
+import football.game.FinalScoreStatus.AWAY_WON
+import football.game.FinalScoreStatus.HOME_WON
 import football.game.GameSide
-import football.game.Score
 import football.game.Team
 import football.player.SideInTeam
 import football.player.SideInTeam.*
@@ -36,17 +37,20 @@ class Tournament {
                     val runner = GameRunner(home, away)
                     val score = runner.play()
 
-                    when (score) {
-                        Score.HOME_WON -> {
+                    when (score.status) {
+                        HOME_WON -> {
                             leaderBoard.win(homeIndex)
                             leaderBoard.lose(awayIndex)
                         }
-                        Score.AWAY_WON -> {
+                        AWAY_WON -> {
                             leaderBoard.win(awayIndex)
                             leaderBoard.lose(homeIndex)
                         }
-                        else -> leaderBoard.draw(homeIndex, awayIndex)
+                        else -> {
+                            leaderBoard.draw(homeIndex, awayIndex)
+                        }
                     }
+                    leaderBoard.addGoals(homeIndex, score.homeGoals, awayIndex, score.awayGoals)
 
                     leaderBoard.oneMoreGamePlayed()
                 }
