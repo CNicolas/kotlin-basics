@@ -12,10 +12,6 @@ import football.game.GameSide.HOME
 import football.player.Player
 import football.player.ShootingStrength
 
-fun distance(from: Coordinates, to: Coordinates): Double {
-    return Math.sqrt(Math.pow(to.x - from.x, 2.0) + Math.pow(to.y - from.y, 2.0))
-}
-
 fun getMaxCoordinates(from: Coordinates, aim: Coordinates, maxDistance: Double): Coordinates {
     var toX = from.x
     var toY = from.y

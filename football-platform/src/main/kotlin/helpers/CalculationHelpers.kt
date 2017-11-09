@@ -1,6 +1,8 @@
 package helpers
 
-fun calculateFunctionOfX(x: Double, coef: Double, originOrdinate: Double) = coef * x + originOrdinate
+fun distance(from: Coordinates, to: Coordinates): Double {
+    return Math.sqrt(Math.pow(to.x - from.x, 2.0) + Math.pow(to.y - from.y, 2.0))
+}
 
 fun extractFunctionOfLine(from: Coordinates, to: Coordinates): (Double) -> Double {
     val coef = (from.y - to.y) / (from.x - to.x)
