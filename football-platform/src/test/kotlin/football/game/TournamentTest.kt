@@ -50,6 +50,19 @@ class TournamentTest {
     }
 
     @Test
+    fun should_play_tournament_of_20_teams() {
+        val tournament = Tournament()
+        val teams = tournament.createTournament(20)
+
+        val leaderBoard = tournament.playTournament(teams)
+
+        println(leaderBoard)
+        println()
+        println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
+        println("${leaderBoard.getWinner().team.strategies}")
+    }
+
+    @Test
     fun should_play_tournament_with_every_possible_team() {
         val tournament = Tournament()
         val teams = tournament.createTournament()

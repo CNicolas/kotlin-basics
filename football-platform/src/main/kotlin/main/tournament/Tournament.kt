@@ -17,6 +17,7 @@ import football.player.strategy.attack.runAndShoot.shootStraight.PushBallAndShoo
 import football.player.strategy.attack.runAndShoot.shootStraight.RunAndShootStraight
 import football.player.strategy.defense.DefenderFollowingBall
 import football.player.strategy.defense.FixedGoalKeeper
+import football.player.strategy.midfield.StayAtShootDistanceOfTheBall
 import javafx.scene.paint.Color
 import main.GameRunner
 import java.util.*
@@ -94,7 +95,7 @@ class Tournament {
         val r = Random()
 
         val randomSideInTeam = SideInTeam.values()[r.nextInt(SideInTeam.values().size)]
-        val strategyNumber = r.nextInt(23)
+        val strategyNumber = r.nextInt(24)
 
         return when (strategyNumber) {
             0 -> FixedGoalKeeper()
@@ -120,6 +121,7 @@ class Tournament {
             20 -> RunZigZag(UP)
             21 -> RunZigZag(CENTER)
             22 -> RunZigZag(DOWN)
+            23 -> StayAtShootDistanceOfTheBall()
 
             else -> DoesNothing(randomSideInTeam)
         }
