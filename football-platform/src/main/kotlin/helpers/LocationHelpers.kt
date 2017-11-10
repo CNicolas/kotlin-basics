@@ -19,7 +19,7 @@ fun getMaxCoordinates(from: Coordinates, aim: Coordinates, maxDistance: Double):
     for (count in 0 until 1000) {
         val currentDistanceTowardsObjective = distance(from, Coordinates(toX, toY))
 
-        val isArrived = Math.abs(maxDistance - currentDistanceTowardsObjective) < 2.0 || Coordinates(toX, toY) == aim
+        val isArrived = Math.abs(maxDistance - currentDistanceTowardsObjective) < 1 || Coordinates(toX, toY) == aim
         if (isArrived) {
             return Coordinates(toX, toY)
         }
