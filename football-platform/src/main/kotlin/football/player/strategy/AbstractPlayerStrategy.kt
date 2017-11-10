@@ -4,7 +4,6 @@ import football.FieldContext
 import football.FieldContext.Companion.fieldHalfHeight
 import football.FieldContext.Companion.fieldTotalWidth
 import football.FieldContext.Companion.moveDistanceByTurn
-import football.FieldContext.Companion.shootingDistance
 import football.game.GameSide
 import football.game.GameSide.AWAY
 import football.game.GameSide.HOME
@@ -33,7 +32,7 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
 
         val trueY = linearFunction(trueX)
 
-        return getMaxCoordinates(from, Coordinates(trueX, trueY), shootingDistance * strength.strengthMultiplier)
+        return getMaxCoordinates(from, Coordinates(trueX, trueY), strength.distance)
     }
 
     protected fun getOpponentGoalsCenter(player: Player): Coordinates {
@@ -60,6 +59,15 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
                 && player.position.y < FieldContext.rightSurface.height
 
         return isInSurfaceByX && isInSurfaceByY
+    }
+
+    override fun setInitialPosition(gameSide: GameSide): Coordinates {
+        val x = setInitialX(gameSide)
+        val y = setInitialY()
+
+        initialPosition = Coordinates(x, y)
+
+        return initialPosition
     }
 
     abstract fun setInitialX(gameSide: GameSide): Double

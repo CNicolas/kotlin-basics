@@ -20,15 +20,6 @@ class FixedGoalKeeper : AbstractPlayerStrategy() {
         return shootTowards(player.position, destination, ShootingStrength.CLEARANCE)
     }
 
-    override fun setInitialPosition(gameSide: GameSide): Coordinates {
-        val x = setInitialX(gameSide)
-        val y = setInitialY()
-
-        initialPosition = Coordinates(x, y)
-
-        return initialPosition
-    }
-
     override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
             GameSide.HOME -> 30.0

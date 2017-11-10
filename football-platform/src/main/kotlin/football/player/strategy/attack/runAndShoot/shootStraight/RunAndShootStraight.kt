@@ -26,15 +26,6 @@ class RunAndShootStraight(override val side: SideInTeam) : AbstractPlayerStrateg
         return shootTowards(player.position, destination, strength)
     }
 
-    override fun setInitialPosition(gameSide: GameSide): Coordinates {
-        val x = setInitialX(gameSide)
-        val y = setInitialY()
-
-        initialPosition = Coordinates(x, y)
-
-        return initialPosition
-    }
-
     override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
             GameSide.HOME -> FieldContext.fieldTotalWidth / 3

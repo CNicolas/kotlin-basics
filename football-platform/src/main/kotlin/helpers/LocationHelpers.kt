@@ -60,7 +60,7 @@ fun isThereAPlayerOnBallsWay(futureBallPosition: Coordinates, players: List<Play
         val player = players[i]
 
         val distanceCrossedByBall = distance(Ball.instance.position, futureBallPosition)
-        val isClearance = Math.abs(distanceCrossedByBall - (FieldContext.shootingDistance * ShootingStrength.CLEARANCE.strengthMultiplier)) < FieldContext.shootingDistance
+        val isClearance = Math.abs(distanceCrossedByBall - (ShootingStrength.CLEARANCE.distance)) < FieldContext.shootingDistance
         val ballLineYForPlayer = linearFunction(player.position.x)
 
         val playerIsSomewhereOnTheBallsWay = Math.abs(ballLineYForPlayer - player.position.y) < maxDistanceToTouch

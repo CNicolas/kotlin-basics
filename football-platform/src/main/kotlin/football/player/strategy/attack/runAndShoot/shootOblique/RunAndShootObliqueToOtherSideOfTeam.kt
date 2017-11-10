@@ -41,15 +41,6 @@ class RunAndShootObliqueToOtherSideOfTeam(override val side: SideInTeam) : Abstr
         return shootTowards(player.position, aim, strength)
     }
 
-    override fun setInitialPosition(gameSide: GameSide): Coordinates {
-        val x = setInitialX(gameSide)
-        val y = setInitialY()
-
-        initialPosition = Coordinates(x, y)
-
-        return initialPosition
-    }
-
     override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
             HOME -> FieldContext.fieldTotalWidth / 3
