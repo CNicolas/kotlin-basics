@@ -9,6 +9,7 @@ import football.game.GameSide.AWAY
 import football.game.GameSide.HOME
 import football.player.Player
 import football.player.ShootingStrength
+import football.player.SideInTeam
 import helpers.Coordinates
 import helpers.extractFunctionOfLine
 import helpers.getMaxCoordinates
@@ -49,18 +50,6 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
         }
     }
 
-    protected fun isInOpponentSurface(player: Player): Boolean {
-        val isInSurfaceByX = when (player.team.gameSide) {
-            HOME -> player.position.x > FieldContext.rightSurface.x
-            AWAY -> player.position.x < FieldContext.leftSurface.width
-        }
-
-        val isInSurfaceByY = player.position.y > FieldContext.rightSurface.y
-                && player.position.y < FieldContext.rightSurface.height
-
-        return isInSurfaceByX && isInSurfaceByY
-    }
-
     override fun setInitialPosition(gameSide: GameSide): Coordinates {
         val x = setInitialX(gameSide)
         val y = setInitialY()
@@ -68,6 +57,21 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
         initialPosition = Coordinates(x, y)
 
         return initialPosition
+    }
+
+    protected fun isInTeamHalfField(player: Player): Boolean {
+        return when (player.team.gameSide) {
+            HOME -> player.position.x <= FieldContext.fieldHalfWidth
+            AWAY -> player.position.x >= FieldContext.fieldHalfWidth
+        }
+    }
+
+    protected fun getFieldSide(player: Player): SideInTeam {
+        return when {
+            player.position.y < FieldContext.fieldHalfWidth -> SideInTeam.UP
+            player.position.y > FieldContext.fieldHalfHeight -> SideInTeam.DOWN
+            else -> SideInTeam.CENTER
+        }
     }
 
     abstract fun setInitialX(gameSide: GameSide): Double

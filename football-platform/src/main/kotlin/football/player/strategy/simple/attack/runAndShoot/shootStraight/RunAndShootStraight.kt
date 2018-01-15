@@ -6,10 +6,10 @@ import football.game.GameSide
 import football.player.Player
 import football.player.ShootingStrength
 import football.player.SideInTeam
-import football.player.strategy.AbstractPlayerStrategy
+import football.player.strategy.AttackStrategy
 import helpers.Coordinates
 
-class RunAndShootStraight(override val side: SideInTeam) : AbstractPlayerStrategy() {
+class RunAndShootStraight(override val side: SideInTeam) : AttackStrategy() {
     override fun move(player: Player): Coordinates {
         val destination = Ball.instance.position
 

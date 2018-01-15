@@ -1,4 +1,4 @@
-package football.player.strategy.simple.attack.runAndShoot.shootOblique
+package football.player.strategy.simple.attack.runAndShoot.cross
 
 import football.Ball
 import football.FieldContext
@@ -28,12 +28,12 @@ class RunZigZag(override val side: SideInTeam) : AttackStrategy() {
 
         val destinationY = when (isInOpponentSurface(player)) {
             true -> when (direction) {
-                true -> opponentsGoalCenter.y + (FieldContext.cageSize / 3)
-                false -> opponentsGoalCenter.y - (FieldContext.cageSize / 3)
+                true -> opponentsGoalCenter.y + (FieldContext.cageHeight / 3)
+                false -> opponentsGoalCenter.y - (FieldContext.cageHeight / 3)
             }
             false -> when (direction) {
-                true -> opponentsGoalCenter.y + FieldContext.cageSize
-                false -> opponentsGoalCenter.y - FieldContext.cageSize
+                true -> opponentsGoalCenter.y + FieldContext.cageHeight
+                false -> opponentsGoalCenter.y - FieldContext.cageHeight
             }
         }
         direction = !direction

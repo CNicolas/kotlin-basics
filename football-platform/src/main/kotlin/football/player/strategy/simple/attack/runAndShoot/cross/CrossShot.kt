@@ -1,4 +1,4 @@
-package football.player.strategy.simple.attack.runAndShoot.shootOblique
+package football.player.strategy.simple.attack.runAndShoot.cross
 
 import football.Ball
 import football.FieldContext
@@ -10,7 +10,7 @@ import football.player.strategy.AttackStrategy
 import helpers.Coordinates
 import java.util.*
 
-class RunAndShootObliqueToOtherSideOfTeam(override val side: SideInTeam) : AttackStrategy() {
+class CrossShot(override val side: SideInTeam) : AttackStrategy() {
     override fun move(player: Player): Coordinates {
         val destination = Ball.instance.position
 
@@ -18,7 +18,7 @@ class RunAndShootObliqueToOtherSideOfTeam(override val side: SideInTeam) : Attac
     }
 
     override fun shoot(player: Player): Coordinates {
-        val variation = FieldContext.cageHalfSize
+        val variation = FieldContext.cageWidth / 2
         val destinationVariation = Random().nextBoolean()
         val opponentsGoalCenter = getOpponentGoalsCenter(player)
 

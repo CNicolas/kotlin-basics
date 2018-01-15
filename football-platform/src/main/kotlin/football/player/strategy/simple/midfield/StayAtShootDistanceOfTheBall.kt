@@ -16,7 +16,7 @@ class StayAtShootDistanceOfTheBall : AbstractPlayerStrategy() {
     override fun move(player: Player): Coordinates {
         val distanceOfTheBall = ShootingStrength.SHOOT.distance
         val toX = if (player.team.gameSide == GameSide.HOME) {
-            Math.max(Ball.instance.position.x - distanceOfTheBall, FieldContext.surfaceSize)
+            Math.max(Ball.instance.position.x - distanceOfTheBall, FieldContext.surfaceHeight)
         } else {
             Math.min(Ball.instance.position.x + distanceOfTheBall, FieldContext.fieldTotalWidth)
         }

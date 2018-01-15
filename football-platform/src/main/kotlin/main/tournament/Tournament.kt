@@ -7,12 +7,14 @@ import football.game.Team
 import football.player.SideInTeam
 import football.player.SideInTeam.*
 import football.player.strategy.PlayerStrategy
+import football.player.strategy.combinated.attack.RunStraightAndCrossShot
+import football.player.strategy.combinated.attack.ZigZagAndCrossShot
 import football.player.strategy.simple.DoesNothing
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherNormal
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherRun
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherShoot
-import football.player.strategy.simple.attack.runAndShoot.shootOblique.RunAndShootObliqueToOtherSideOfTeam
-import football.player.strategy.simple.attack.runAndShoot.shootOblique.RunZigZag
+import football.player.strategy.simple.attack.runAndShoot.cross.CrossShot
+import football.player.strategy.simple.attack.runAndShoot.cross.RunZigZag
 import football.player.strategy.simple.attack.runAndShoot.shootStraight.PushBallAndShootStraight
 import football.player.strategy.simple.attack.runAndShoot.shootStraight.RunAndShootStraight
 import football.player.strategy.simple.defense.DefenderFollowingBall
@@ -95,7 +97,7 @@ class Tournament {
         val r = Random()
 
         val randomSideInTeam = SideInTeam.values()[r.nextInt(SideInTeam.values().size)]
-        val strategyNumber = r.nextInt(24)
+        val strategyNumber = r.nextInt(30)
 
         return when (strategyNumber) {
             0 -> FixedGoalKeeper()
@@ -115,13 +117,19 @@ class Tournament {
             14 -> DumbRusherShoot(UP)
             15 -> DumbRusherShoot(CENTER)
             16 -> DumbRusherShoot(DOWN)
-            17 -> RunAndShootObliqueToOtherSideOfTeam(UP)
-            18 -> RunAndShootObliqueToOtherSideOfTeam(CENTER)
-            19 -> RunAndShootObliqueToOtherSideOfTeam(DOWN)
+            17 -> CrossShot(UP)
+            18 -> CrossShot(CENTER)
+            19 -> CrossShot(DOWN)
             20 -> RunZigZag(UP)
             21 -> RunZigZag(CENTER)
             22 -> RunZigZag(DOWN)
             23 -> StayAtShootDistanceOfTheBall()
+            24 -> RunStraightAndCrossShot(UP)
+            25 -> RunStraightAndCrossShot(CENTER)
+            26 -> RunStraightAndCrossShot(DOWN)
+            27 -> ZigZagAndCrossShot(UP)
+            28 -> ZigZagAndCrossShot(CENTER)
+            29 -> ZigZagAndCrossShot(DOWN)
 
             else -> DoesNothing(randomSideInTeam)
         }

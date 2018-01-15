@@ -5,8 +5,8 @@ import football.FieldContext
 import football.game.GameSide
 import football.game.Team
 import football.player.SideInTeam.DOWN
-import football.player.strategy.simple.attack.runAndShoot.shootOblique.RunZigZag
-import football.player.strategy.simple.midfield.StayAtShootDistanceOfTheBall
+import football.player.strategy.combinated.attack.RunStraightAndCrossShot
+import football.player.strategy.simple.defense.DefenderFollowingBall
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
@@ -49,7 +49,7 @@ class FootballApp : Application() {
         primaryStage?.title = "Football"
         primaryStage?.scene = Scene(rootPane, FieldContext.fieldTotalWidth - 10, FieldContext.fieldTotalHeight - 10, FieldContext.grassColor)
         primaryStage?.x = primaryScreenBounds.minX + primaryScreenBounds.width - FieldContext.fieldTotalWidth - 10
-        primaryStage?.y = primaryScreenBounds.minY + primaryScreenBounds.height - FieldContext.fieldTotalHeight - 10
+        primaryStage?.y = primaryScreenBounds.minY + primaryScreenBounds.height - FieldContext.fieldTotalHeight - 20
         primaryStage?.isResizable = false
         primaryStage?.show()
 
@@ -61,9 +61,9 @@ class FootballApp : Application() {
     }
 
     private fun createTeams(): Pair<Team, Team> {
-        val home = Team(Color.BLUE, listOf(RunZigZag(DOWN)))
+        val home = Team(Color.BLUE, listOf(RunStraightAndCrossShot(DOWN)))
         home.gameSide = GameSide.HOME
-        val away = Team(Color.RED, listOf(StayAtShootDistanceOfTheBall()))
+        val away = Team(Color.RED, listOf(DefenderFollowingBall()))
         away.gameSide = GameSide.AWAY
 
         return Pair(home, away)

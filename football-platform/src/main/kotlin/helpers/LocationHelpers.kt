@@ -2,7 +2,7 @@ package helpers
 
 import football.Ball
 import football.FieldContext
-import football.FieldContext.Companion.cageHalfSize
+import football.FieldContext.Companion.cageWidth
 import football.FieldContext.Companion.fieldHalfHeight
 import football.FieldContext.Companion.fieldTotalWidth
 import football.FieldContext.Companion.maxDistanceToTouch
@@ -81,5 +81,5 @@ private fun crossLineInCage(side: GameSide, linearFunction: (Double) -> Double):
         AWAY -> linearFunction(fieldTotalWidth)
     }
 
-    return yWhenCrossLine > fieldHalfHeight - cageHalfSize && yWhenCrossLine < fieldHalfHeight + cageHalfSize
+    return yWhenCrossLine > fieldHalfHeight - cageWidth && yWhenCrossLine < fieldHalfHeight + cageWidth
 }

@@ -1,10 +1,29 @@
 package football.player.strategy
 
+import football.Ball
 import football.FieldContext
 import football.game.GameSide
+import football.player.Player
+import football.player.ShootingStrength
 import football.player.SideInTeam
+import helpers.distance
 
 abstract class AttackStrategy : AbstractPlayerStrategy() {
+    protected fun isInOpponentSurface(player: Player): Boolean {
+        val isInSurfaceByX = when (player.team.gameSide) {
+            GameSide.HOME -> player.position.x >= FieldContext.rightSurface.x
+            GameSide.AWAY -> player.position.x <= FieldContext.leftSurface.width
+        }
+
+        val isInSurfaceByY = player.position.y >= FieldContext.rightSurface.y
+                && player.position.y <= FieldContext.rightSurface.height
+
+        return isInSurfaceByX && isInSurfaceByY
+    }
+
+    protected fun isAtShootingDistanceOfOpponentGoalCenter(player: Player): Boolean =
+            ShootingStrength.SHOOT.distance > distance(Ball.instance.position, getOpponentGoalsCenter(player))
+
     override fun setInitialX(gameSide: GameSide): Double {
         return when (gameSide) {
             GameSide.HOME -> FieldContext.fieldTotalWidth / 3
