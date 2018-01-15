@@ -10,6 +10,7 @@ import football.player.strategy.PlayerStrategy
 import football.player.strategy.combined.attack.RunStraightAndCrossShot
 import football.player.strategy.combined.attack.ZigZagAndCrossShot
 import football.player.strategy.simple.DoesNothing
+import football.player.strategy.simple.attack.camper.FollowBallHorizontally
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherNormal
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherRun
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherShoot
@@ -26,6 +27,8 @@ import main.GameRunner
 import java.util.*
 
 class Tournament {
+    private val strategiesCount = 33
+
     fun playTournament(teams: List<Team>): LeaderBoard {
         val leaderBoard = LeaderBoard(teams)
 
@@ -70,7 +73,7 @@ class Tournament {
 
     fun createTournament(teamsCount: Int = Int.MAX_VALUE): List<Team> {
         val r = Random()
-        val effectiveTeamsCount = Math.min(teamsCount, 20 * 4)
+        val effectiveTeamsCount = Math.min(teamsCount, strategiesCount * 4)
 
         val listOfTeams = mutableListOf<Team>()
         while (listOfTeams.size < effectiveTeamsCount) {
@@ -98,7 +101,7 @@ class Tournament {
         val r = Random()
 
         val randomSideInTeam = SideInTeam.values()[r.nextInt(SideInTeam.values().size)]
-        val strategyNumber = r.nextInt(32)
+        val strategyNumber = r.nextInt(strategiesCount)
 
         return when (strategyNumber) {
             0 -> FixedGoalKeeper()
@@ -133,6 +136,7 @@ class Tournament {
             29 -> ZigZagAndCrossShot(DOWN)
             30 -> Overtake(UP)
             31 -> Overtake(DOWN)
+            32 -> FollowBallHorizontally()
 
             else -> DoesNothing(randomSideInTeam)
         }
