@@ -13,7 +13,6 @@ class FixedGoalKeeper : AbstractPlayerStrategy() {
 
     override fun moveWithoutBall(player: Player): Coordinates = moveTowards(player.position, initialPosition)
 
-
     override fun shoot(player: Player): Coordinates {
         val destination = getOpponentGoalsCenter(player)
 
