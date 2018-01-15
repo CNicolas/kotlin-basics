@@ -20,7 +20,7 @@ abstract class AttackStrategy : AbstractPlayerStrategy() {
         return when (side) {
             SideInTeam.UP -> FieldContext.fieldTotalHeight / 3
             SideInTeam.DOWN -> (2 * FieldContext.fieldTotalHeight) / 3
-            else -> FieldContext.fieldHalfWidth
+            else -> FieldContext.fieldHalfHeight
         }
     }
 
