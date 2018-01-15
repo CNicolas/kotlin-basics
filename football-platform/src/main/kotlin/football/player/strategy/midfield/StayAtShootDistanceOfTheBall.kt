@@ -14,8 +14,14 @@ class StayAtShootDistanceOfTheBall : AbstractPlayerStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
 
     override fun move(player: Player): Coordinates {
-        val destination =
-                getMaxCoordinates(Ball.instance.position, player.position, ShootingStrength.SHOOT.distance)
+        val distanceOfTheBall = ShootingStrength.SHOOT.distance
+        val toX = if (player.team.gameSide == GameSide.HOME) {
+            Math.max(Ball.instance.position.x - distanceOfTheBall, FieldContext.surfaceSize)
+        } else {
+            Math.min(Ball.instance.position.x + distanceOfTheBall, FieldContext.fieldTotalWidth)
+        }
+
+        val destination = getMaxCoordinates(Ball.instance.position, Coordinates(toX, Ball.instance.position.y), distanceOfTheBall)
 
         return moveTowards(player.position, destination)
     }
@@ -30,7 +36,7 @@ class StayAtShootDistanceOfTheBall : AbstractPlayerStrategy() {
         val distanceFromFieldCenter = FieldContext.fieldTotalWidth / 5
         return when (gameSide) {
             GameSide.HOME -> FieldContext.fieldHalfWidth - distanceFromFieldCenter
-            else -> FieldContext.fieldTotalWidth + distanceFromFieldCenter
+            else -> FieldContext.fieldHalfWidth + distanceFromFieldCenter
         }
     }
 
