@@ -1,4 +1,4 @@
-package football.player.strategy.simple.attack.camper
+package football.player.strategy.simple.midfield
 
 import football.Ball
 import football.player.Player

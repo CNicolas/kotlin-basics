@@ -6,7 +6,7 @@ import football.game.GameSide
 import football.game.Team
 import football.player.SideInTeam.UP
 import football.player.strategy.combined.attack.ZigZagAndCrossShot
-import football.player.strategy.simple.attack.camper.FollowBallHorizontally
+import football.player.strategy.simple.midfield.FollowBallHorizontally
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
