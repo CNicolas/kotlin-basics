@@ -1,4 +1,4 @@
-package football.player.strategy.combinated.attack
+package football.player.strategy.combined.attack
 
 import football.player.Player
 import football.player.SideInTeam

@@ -7,13 +7,14 @@ import football.game.Team
 import football.player.SideInTeam
 import football.player.SideInTeam.*
 import football.player.strategy.PlayerStrategy
-import football.player.strategy.combinated.attack.RunStraightAndCrossShot
-import football.player.strategy.combinated.attack.ZigZagAndCrossShot
+import football.player.strategy.combined.attack.RunStraightAndCrossShot
+import football.player.strategy.combined.attack.ZigZagAndCrossShot
 import football.player.strategy.simple.DoesNothing
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherNormal
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherRun
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherShoot
 import football.player.strategy.simple.attack.runAndShoot.cross.CrossShot
+import football.player.strategy.simple.attack.runAndShoot.cross.Overtake
 import football.player.strategy.simple.attack.runAndShoot.cross.RunZigZag
 import football.player.strategy.simple.attack.runAndShoot.shootStraight.PushBallAndShootStraight
 import football.player.strategy.simple.attack.runAndShoot.shootStraight.RunAndShootStraight
@@ -97,7 +98,7 @@ class Tournament {
         val r = Random()
 
         val randomSideInTeam = SideInTeam.values()[r.nextInt(SideInTeam.values().size)]
-        val strategyNumber = r.nextInt(30)
+        val strategyNumber = r.nextInt(32)
 
         return when (strategyNumber) {
             0 -> FixedGoalKeeper()
@@ -130,6 +131,8 @@ class Tournament {
             27 -> ZigZagAndCrossShot(UP)
             28 -> ZigZagAndCrossShot(CENTER)
             29 -> ZigZagAndCrossShot(DOWN)
+            30 -> Overtake(UP)
+            31 -> Overtake(DOWN)
 
             else -> DoesNothing(randomSideInTeam)
         }
