@@ -10,6 +10,7 @@ import football.player.strategy.PlayerStrategy
 import football.player.strategy.combined.attack.RunStraightAndCrossShot
 import football.player.strategy.combined.attack.ZigZagAndCrossShot
 import football.player.strategy.simple.DoesNothing
+import football.player.strategy.simple.attack.camper.FollowBallHorizontally
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherNormal
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherRun
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherShoot
@@ -20,7 +21,6 @@ import football.player.strategy.simple.attack.runAndShoot.shootStraight.PushBall
 import football.player.strategy.simple.attack.runAndShoot.shootStraight.RunAndShootStraight
 import football.player.strategy.simple.defense.DefenderFollowingBall
 import football.player.strategy.simple.defense.FixedGoalKeeper
-import football.player.strategy.simple.midfield.FollowBallHorizontally
 import football.player.strategy.simple.midfield.StayAtShootDistanceOfTheBall
 import javafx.scene.paint.Color
 import main.GameRunner
