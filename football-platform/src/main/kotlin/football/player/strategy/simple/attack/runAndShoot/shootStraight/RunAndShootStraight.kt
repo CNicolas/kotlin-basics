@@ -1,4 +1,4 @@
-package football.player.strategy.attack.runAndShoot.shootStraight
+package football.player.strategy.simple.attack.runAndShoot.shootStraight
 
 import football.Ball
 import football.FieldContext

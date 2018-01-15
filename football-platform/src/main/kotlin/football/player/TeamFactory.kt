@@ -3,13 +3,13 @@ package football.player
 import football.game.GameSide
 import football.game.Team
 import football.player.SideInTeam.*
-import football.player.strategy.DoesNothing
-import football.player.strategy.attack.dumbRushers.DumbRusherNormal
-import football.player.strategy.attack.dumbRushers.DumbRusherRun
-import football.player.strategy.attack.dumbRushers.DumbRusherShoot
-import football.player.strategy.attack.runAndShoot.shootStraight.RunAndShootStraight
-import football.player.strategy.defense.DefenderFollowingBall
-import football.player.strategy.defense.FixedGoalKeeper
+import football.player.strategy.simple.DoesNothing
+import football.player.strategy.simple.attack.dumbRushers.DumbRusherNormal
+import football.player.strategy.simple.attack.dumbRushers.DumbRusherRun
+import football.player.strategy.simple.attack.dumbRushers.DumbRusherShoot
+import football.player.strategy.simple.attack.runAndShoot.shootStraight.RunAndShootStraight
+import football.player.strategy.simple.defense.DefenderFollowingBall
+import football.player.strategy.simple.defense.FixedGoalKeeper
 import javafx.scene.paint.Color
 
 class TeamFactory {

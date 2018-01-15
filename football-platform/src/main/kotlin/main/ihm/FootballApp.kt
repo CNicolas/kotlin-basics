@@ -4,13 +4,14 @@ import football.Ball
 import football.FieldContext
 import football.game.GameSide
 import football.game.Team
-import football.player.SideInTeam.UP
-import football.player.strategy.attack.dumbRushers.DumbRusherShoot
-import football.player.strategy.midfield.StayAtShootDistanceOfTheBall
+import football.player.SideInTeam.DOWN
+import football.player.strategy.simple.attack.runAndShoot.shootOblique.RunZigZag
+import football.player.strategy.simple.midfield.StayAtShootDistanceOfTheBall
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
 import javafx.scene.paint.Color
+import javafx.stage.Screen
 import javafx.stage.Stage
 import main.GameRunner
 
@@ -43,9 +44,12 @@ class FootballApp : Application() {
         if (team2.player3 !== null) rootPane.children.add(team2.player3!!.circle)
         if (team2.player4 !== null) rootPane.children.add(team2.player4!!.circle)
 
+        val primaryScreenBounds = Screen.getPrimary().visualBounds
+
         primaryStage?.title = "Football"
         primaryStage?.scene = Scene(rootPane, FieldContext.fieldTotalWidth - 10, FieldContext.fieldTotalHeight - 10, FieldContext.grassColor)
-        primaryStage?.centerOnScreen()
+        primaryStage?.x = primaryScreenBounds.minX + primaryScreenBounds.width - FieldContext.fieldTotalWidth - 10
+        primaryStage?.y = primaryScreenBounds.minY + primaryScreenBounds.height - FieldContext.fieldTotalHeight - 10
         primaryStage?.isResizable = false
         primaryStage?.show()
 
@@ -57,9 +61,9 @@ class FootballApp : Application() {
     }
 
     private fun createTeams(): Pair<Team, Team> {
-        val home = Team(Color.BLUE, listOf(StayAtShootDistanceOfTheBall()))
+        val home = Team(Color.BLUE, listOf(RunZigZag(DOWN)))
         home.gameSide = GameSide.HOME
-        val away = Team(Color.RED, listOf(DumbRusherShoot(UP)))
+        val away = Team(Color.RED, listOf(StayAtShootDistanceOfTheBall()))
         away.gameSide = GameSide.AWAY
 
         return Pair(home, away)

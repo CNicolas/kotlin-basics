@@ -1,4 +1,4 @@
-package football.player.strategy.midfield
+package football.player.strategy.simple.midfield
 
 import football.Ball
 import football.FieldContext

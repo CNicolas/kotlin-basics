@@ -1,9 +1,10 @@
-package football.player.strategy
+package football.player.strategy.simple
 
 import football.FieldContext
 import football.game.GameSide
 import football.player.Player
 import football.player.SideInTeam
+import football.player.strategy.AbstractPlayerStrategy
 import helpers.Coordinates
 
 class DoesNothing(override val side: SideInTeam) : AbstractPlayerStrategy() {

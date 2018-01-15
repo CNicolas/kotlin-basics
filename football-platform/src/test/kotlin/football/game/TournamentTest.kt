@@ -1,8 +1,8 @@
 package football.game
 
 import football.player.SideInTeam
-import football.player.strategy.DoesNothing
-import football.player.strategy.attack.dumbRushers.DumbRusherRun
+import football.player.strategy.simple.DoesNothing
+import football.player.strategy.simple.attack.dumbRushers.DumbRusherRun
 import javafx.scene.paint.Color
 import main.tournament.Tournament
 import org.assertj.core.api.Assertions.assertThat

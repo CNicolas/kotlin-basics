@@ -1,17 +1,16 @@
-package football.player.strategy.attack.runAndShoot.shootOblique
+package football.player.strategy.simple.attack.runAndShoot.shootOblique
 
 import football.Ball
 import football.FieldContext
-import football.game.GameSide
 import football.player.Player
 import football.player.ShootingStrength
 import football.player.SideInTeam
 import football.player.SideInTeam.*
-import football.player.strategy.AbstractPlayerStrategy
+import football.player.strategy.AttackStrategy
 import helpers.Coordinates
 import java.util.*
 
-class RunZigZag(override val side: SideInTeam) : AbstractPlayerStrategy() {
+class RunZigZag(override val side: SideInTeam) : AttackStrategy() {
     private var direction = when (side) {
         DOWN -> true
         UP -> false
@@ -41,20 +40,5 @@ class RunZigZag(override val side: SideInTeam) : AbstractPlayerStrategy() {
 
         val aim = Coordinates(opponentsGoalCenter.x, destinationY)
         return shootTowards(player.position, aim, ShootingStrength.NORMAL)
-    }
-
-    override fun setInitialX(gameSide: GameSide): Double {
-        return when (gameSide) {
-            GameSide.HOME -> FieldContext.fieldTotalWidth / 3
-            else -> (2 * FieldContext.fieldTotalWidth) / 3
-        }
-    }
-
-    override fun setInitialY(): Double {
-        return when (side) {
-            UP -> FieldContext.fieldTotalHeight / 3
-            DOWN -> (2 * FieldContext.fieldTotalHeight) / 3
-            else -> FieldContext.fieldHalfWidth
-        }
     }
 }
