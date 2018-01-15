@@ -14,11 +14,11 @@ class FieldContext {
         val fieldTotalHeight: Double = 300.0
         val fieldHalfHeight: Double = fieldTotalHeight / 2
 
-        val surfaceSize: Double = 150.0
-        val surfaceHalfSize: Double = surfaceSize / 2
+        val surfaceHeight: Double = 150.0
+        val surfaceWidth: Double = surfaceHeight / 2
 
-        val cageSize: Double = 50.0
-        val cageHalfSize: Double = cageSize / 2
+        val cageHeight: Double = 50.0
+        val cageWidth: Double = cageHeight / 2
 
         val movingSpeed = 200.0
         val shootingDistance = 50.0
@@ -39,22 +39,22 @@ class FieldContext {
                 Color.TRANSPARENT)
 
         val leftSurface = Rectangle(-1.0,
-                fieldHalfHeight - surfaceHalfSize,
-                surfaceHalfSize + 15,
-                surfaceSize)
-        val rightSurface = Rectangle(fieldTotalWidth - (surfaceHalfSize - 1 + 15),
-                fieldHalfHeight - surfaceHalfSize,
-                surfaceHalfSize + 15,
-                surfaceSize)
+                fieldHalfHeight - surfaceWidth,
+                surfaceWidth + 15,
+                surfaceHeight)
+        val rightSurface = Rectangle(fieldTotalWidth - (surfaceWidth - 1 + 15),
+                fieldHalfHeight - surfaceWidth,
+                surfaceWidth + 15,
+                surfaceHeight)
 
-        val leftCage = Rectangle(-(cageHalfSize / 2),
-                fieldHalfHeight - cageHalfSize,
-                cageHalfSize,
-                cageSize)
-        val rightCage = Rectangle(fieldTotalWidth - (cageHalfSize - cageHalfSize / 2),
-                fieldHalfHeight - cageHalfSize,
-                cageHalfSize,
-                cageSize)
+        val leftCage = Rectangle(-(cageWidth / 2),
+                fieldHalfHeight - cageWidth,
+                cageWidth,
+                cageHeight)
+        val rightCage = Rectangle(fieldTotalWidth - (cageWidth - cageWidth / 2),
+                fieldHalfHeight - cageWidth,
+                cageWidth,
+                cageHeight)
 
         val ballInitialPosition = Coordinates(fieldHalfWidth, fieldHalfHeight)
 
