@@ -11,7 +11,7 @@ import helpers.Coordinates
 class FixedGoalKeeper : AbstractPlayerStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
 
-    override fun move(player: Player): Coordinates = moveTowards(player.position, initialPosition)
+    override fun moveWithoutBall(player: Player): Coordinates = moveTowards(player.position, initialPosition)
 
 
     override fun shoot(player: Player): Coordinates {

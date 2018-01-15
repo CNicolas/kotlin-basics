@@ -7,7 +7,7 @@ import football.player.strategy.AttackStrategy
 import helpers.Coordinates
 
 abstract class DumbRusher(private val strength: ShootingStrength) : AttackStrategy() {
-    override fun move(player: Player): Coordinates = moveTowards(player.position, Ball.instance.position)
+    override fun moveWithoutBall(player: Player): Coordinates = moveTowards(player.position, Ball.instance.position)
 
     override fun shoot(player: Player): Coordinates = shootTowards(player.position, getOpponentGoalsCenter(player), strength)
 }

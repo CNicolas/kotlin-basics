@@ -11,7 +11,7 @@ import helpers.Coordinates
 import java.util.*
 
 class CrossShot(override val side: SideInTeam) : AttackStrategy() {
-    override fun move(player: Player): Coordinates {
+    override fun moveWithoutBall(player: Player): Coordinates {
         val destination = Ball.instance.position
 
         return moveTowards(player.position, destination)

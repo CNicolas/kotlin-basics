@@ -21,7 +21,7 @@ class DoesNothing(override val side: SideInTeam) : AbstractPlayerStrategy() {
         initialPosition = Coordinates(x, y)
     }
 
-    override fun move(player: Player): Coordinates = player.position
+    override fun moveWithoutBall(player: Player): Coordinates = player.position
 
     override fun shoot(player: Player): Coordinates = player.position
 

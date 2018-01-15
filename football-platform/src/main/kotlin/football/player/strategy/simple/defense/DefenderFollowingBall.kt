@@ -12,7 +12,7 @@ import helpers.Coordinates
 class DefenderFollowingBall : AbstractPlayerStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
 
-    override fun move(player: Player): Coordinates {
+    override fun moveWithoutBall(player: Player): Coordinates {
         val destination = Coordinates(initialPosition.x, Ball.instance.position.y)
 
         return moveTowards(player.position, destination)

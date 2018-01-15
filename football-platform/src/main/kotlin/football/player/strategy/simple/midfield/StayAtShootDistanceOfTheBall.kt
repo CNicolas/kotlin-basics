@@ -13,7 +13,7 @@ import helpers.getMaxCoordinates
 class StayAtShootDistanceOfTheBall : AbstractPlayerStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
 
-    override fun move(player: Player): Coordinates {
+    override fun moveWithoutBall(player: Player): Coordinates {
         val distanceOfTheBall = ShootingStrength.SHOOT.distance
         val toX = if (player.team.gameSide == GameSide.HOME) {
             Math.max(Ball.instance.position.x - distanceOfTheBall, FieldContext.surfaceHeight)

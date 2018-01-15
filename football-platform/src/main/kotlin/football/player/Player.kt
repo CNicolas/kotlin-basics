@@ -16,7 +16,7 @@ class Player(val team: Team, val strategy: PlayerStrategy) {
         circle.translateY = position.y
     }
 
-    fun moveTo(): Coordinates = strategy.move(this)
+    fun moveTo(): Coordinates = strategy.moveWithoutBall(this)
 
     fun shootTo(): Coordinates = strategy.shoot(this)
 

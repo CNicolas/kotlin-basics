@@ -9,7 +9,7 @@ interface PlayerStrategy {
     val side: SideInTeam
     var initialPosition: Coordinates
 
-    fun move(player: Player): Coordinates
+    fun moveWithoutBall(player: Player): Coordinates
     fun shoot(player: Player): Coordinates
 
     fun setInitialPosition(gameSide: GameSide): Coordinates

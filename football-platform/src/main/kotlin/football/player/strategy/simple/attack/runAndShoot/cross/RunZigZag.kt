@@ -17,7 +17,7 @@ class RunZigZag(override val side: SideInTeam) : AttackStrategy() {
         CENTER -> Random().nextBoolean()
     }
 
-    override fun move(player: Player): Coordinates {
+    override fun moveWithoutBall(player: Player): Coordinates {
         val destination = Ball.instance.position
 
         return moveTowards(player.position, destination)

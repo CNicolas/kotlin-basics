@@ -12,7 +12,7 @@ import helpers.Coordinates
 class Overtake(override val side: SideInTeam) : AttackStrategy() {
     private val corridorHeight = 50.0
 
-    override fun move(player: Player): Coordinates = moveTowards(player.position, Ball.instance.position)
+    override fun moveWithoutBall(player: Player): Coordinates = moveTowards(player.position, Ball.instance.position)
 
     override fun shoot(player: Player): Coordinates {
         return when {
@@ -34,7 +34,7 @@ class Overtake(override val side: SideInTeam) : AttackStrategy() {
 
     private fun isInCorridor(player: Player): Boolean = when (side) {
         SideInTeam.DOWN -> player.position.y >= FieldContext.fieldTotalHeight - corridorHeight
-        else -> player.position.x <= corridorHeight
+        else -> player.position.y <= corridorHeight
     }
 
     private fun corridorClosestLocation(player: Player): Coordinates {

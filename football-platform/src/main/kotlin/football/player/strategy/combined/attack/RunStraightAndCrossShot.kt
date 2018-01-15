@@ -11,8 +11,8 @@ class RunStraightAndCrossShot(override val side: SideInTeam) : AttackStrategy() 
     private val runningStrategy = DumbRusherRun(side)
     private val shootingStrategy = CrossShot(side)
 
-    override fun move(player: Player): Coordinates {
-        return runningStrategy.move(player)
+    override fun moveWithoutBall(player: Player): Coordinates {
+        return runningStrategy.moveWithoutBall(player)
     }
 
     override fun shoot(player: Player): Coordinates {
