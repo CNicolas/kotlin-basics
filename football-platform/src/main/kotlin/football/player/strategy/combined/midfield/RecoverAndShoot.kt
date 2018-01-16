@@ -5,16 +5,17 @@ import football.player.Player
 import football.player.ShootingStrength
 import football.player.SideInTeam
 import football.player.strategy.DefenderStrategy
+import football.player.strategy.combined.CombinedRunShootStrategy
 import football.player.strategy.combined.attack.ZigZagAndCrossShot
 import football.player.strategy.simple.defense.FollowClearBall
 import helpers.Coordinates
 import helpers.distance
 
-class RecoverAndShoot : DefenderStrategy() {
+class RecoverAndShoot : DefenderStrategy(), CombinedRunShootStrategy {
     override val side: SideInTeam = SideInTeam.CENTER
 
-    private val runningStrategy: FollowClearBall = FollowClearBall()
-    private val shootingStrategy: ZigZagAndCrossShot = ZigZagAndCrossShot(side)
+    override val runningStrategy: FollowClearBall = FollowClearBall()
+    override val shootingStrategy: ZigZagAndCrossShot = ZigZagAndCrossShot(side)
 
     override fun moveWithoutBall(player: Player): Coordinates {
         return when {

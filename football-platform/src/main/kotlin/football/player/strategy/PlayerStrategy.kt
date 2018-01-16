@@ -13,4 +13,6 @@ interface PlayerStrategy {
     fun shoot(player: Player): Coordinates
 
     fun setInitialPosition(gameSide: GameSide): Coordinates
+    fun setInitialX(gameSide: GameSide): Double
+    fun setInitialY(): Double
 }

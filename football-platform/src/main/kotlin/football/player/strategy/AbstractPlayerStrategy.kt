@@ -74,8 +74,5 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
         }
     }
 
-    abstract fun setInitialX(gameSide: GameSide): Double
-    abstract fun setInitialY(): Double
-
     override fun toString(): String = "${javaClass.simpleName} $side"
 }

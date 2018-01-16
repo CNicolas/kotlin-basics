@@ -149,7 +149,7 @@ class Tournament {
     private fun areTeamsEqual(teamHome: Team, teamAway: Team): Boolean {
         if (teamHome.strategies.size == teamAway.strategies.size) {
             val equalStrategies = (0 until teamHome.strategies.size).count {
-                teamHome.strategies[it].javaClass.simpleName == teamAway.strategies[it].javaClass.simpleName
+                teamHome.strategies[it].toString() == teamAway.strategies[it].toString()
             }
 
             return equalStrategies == teamHome.strategies.size
