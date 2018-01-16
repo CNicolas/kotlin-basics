@@ -6,11 +6,11 @@ import football.game.GameSide
 import football.player.Player
 import football.player.ShootingStrength
 import football.player.SideInTeam
-import football.player.strategy.AbstractPlayerStrategy
+import football.player.strategy.DefenderStrategy
 import helpers.Coordinates
 import helpers.getMaxCoordinates
 
-class StayAtShootDistanceOfTheBall : AbstractPlayerStrategy() {
+class StayAtShootDistanceOfTheBall : DefenderStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
 
     override fun moveWithoutBall(player: Player): Coordinates {
@@ -33,12 +33,11 @@ class StayAtShootDistanceOfTheBall : AbstractPlayerStrategy() {
     }
 
     override fun setInitialX(gameSide: GameSide): Double {
-        val distanceFromFieldCenter = FieldContext.fieldTotalWidth / 5
+        val distanceFromMiddle = FieldContext.fieldTotalWidth / 4
+
         return when (gameSide) {
-            GameSide.HOME -> FieldContext.fieldHalfWidth - distanceFromFieldCenter
-            else -> FieldContext.fieldHalfWidth + distanceFromFieldCenter
+            GameSide.HOME -> FieldContext.fieldHalfWidth - distanceFromMiddle
+            else -> FieldContext.fieldHalfWidth + distanceFromMiddle
         }
     }
-
-    override fun setInitialY(): Double = FieldContext.fieldHalfHeight
 }

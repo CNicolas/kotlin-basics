@@ -1,15 +1,13 @@
 package football.player.strategy.simple.defense
 
 import football.Ball
-import football.FieldContext
-import football.game.GameSide
 import football.player.Player
 import football.player.ShootingStrength
 import football.player.SideInTeam
-import football.player.strategy.AbstractPlayerStrategy
+import football.player.strategy.DefenderStrategy
 import helpers.Coordinates
 
-class FollowClearBall : AbstractPlayerStrategy() {
+class FollowClearBall : DefenderStrategy() {
     override val side: SideInTeam = SideInTeam.CENTER
 
     override fun moveWithoutBall(player: Player): Coordinates {
@@ -25,14 +23,4 @@ class FollowClearBall : AbstractPlayerStrategy() {
     }
 
     private fun isBallInHalfField(player: Player): Boolean = this.isInTeamHalfField(player.team.gameSide, Ball.instance.position)
-
-    override fun setInitialX(gameSide: GameSide): Double {
-        val distanceFromCage = FieldContext.fieldTotalWidth / 5
-        return when (gameSide) {
-            GameSide.HOME -> distanceFromCage
-            else -> FieldContext.fieldTotalWidth - distanceFromCage
-        }
-    }
-
-    override fun setInitialY(): Double = FieldContext.fieldHalfHeight
 }
