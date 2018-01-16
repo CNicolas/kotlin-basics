@@ -1,7 +1,9 @@
 package football.player.strategy
 
+import football.Ball
 import football.FieldContext
 import football.game.GameSide
+import football.player.Player
 
 abstract class DefenderStrategy : AbstractPlayerStrategy() {
     override fun setInitialX(gameSide: GameSide): Double {
@@ -14,4 +16,6 @@ abstract class DefenderStrategy : AbstractPlayerStrategy() {
     }
 
     override fun setInitialY(): Double = FieldContext.fieldHalfHeight
+
+    protected fun isBallInHalfField(player: Player): Boolean = this.isInTeamHalfField(player.team.gameSide, Ball.instance.position)
 }

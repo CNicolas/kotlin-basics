@@ -9,6 +9,7 @@ import football.player.SideInTeam.*
 import football.player.strategy.PlayerStrategy
 import football.player.strategy.combined.attack.RunStraightAndCrossShot
 import football.player.strategy.combined.attack.ZigZagAndCrossShot
+import football.player.strategy.combined.midfield.RecoverAndShoot
 import football.player.strategy.simple.DoesNothing
 import football.player.strategy.simple.attack.camper.FollowBallHorizontally
 import football.player.strategy.simple.attack.dumbRushers.DumbRusherNormal
@@ -28,7 +29,7 @@ import main.GameRunner
 import java.util.*
 
 class Tournament {
-    private val strategiesCount = 34
+    private val strategiesCount = 35
 
     fun playTournament(teams: List<Team>): LeaderBoard {
         val leaderBoard = LeaderBoard(teams)
@@ -139,6 +140,7 @@ class Tournament {
             31 -> Overtake(DOWN)
             32 -> FollowBallHorizontally()
             33 -> FollowClearBall()
+            34 -> RecoverAndShoot()
 
             else -> DoesNothing(randomSideInTeam)
         }

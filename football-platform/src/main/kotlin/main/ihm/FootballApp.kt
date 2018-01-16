@@ -5,8 +5,8 @@ import football.FieldContext
 import football.game.GameSide
 import football.game.Team
 import football.player.SideInTeam.UP
-import football.player.strategy.combined.attack.ZigZagAndCrossShot
-import football.player.strategy.simple.defense.FollowClearBall
+import football.player.strategy.combined.midfield.RecoverAndShoot
+import football.player.strategy.simple.attack.dumbRushers.DumbRusherShoot
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
@@ -61,9 +61,9 @@ class FootballApp : Application() {
     }
 
     private fun createTeams(): Pair<Team, Team> {
-        val home = Team(Color.BLUE, listOf(FollowClearBall()))
+        val home = Team(Color.BLUE, listOf(RecoverAndShoot()))
         home.gameSide = GameSide.HOME
-        val away = Team(Color.RED, listOf(ZigZagAndCrossShot(UP)))
+        val away = Team(Color.RED, listOf(DumbRusherShoot(UP)))
         away.gameSide = GameSide.AWAY
 
         return Pair(home, away)

@@ -15,12 +15,11 @@ class FollowClearBall : DefenderStrategy() {
             isBallInHalfField(player) -> Ball.instance.position
             else -> Coordinates(initialPosition.x, Ball.instance.position.y)
         }
+
         return moveTowards(player.position, destination)
     }
 
     override fun shoot(player: Player): Coordinates {
         return shootTowards(player.position, getOpponentGoalsCenter(player), ShootingStrength.CLEARANCE)
     }
-
-    private fun isBallInHalfField(player: Player): Boolean = this.isInTeamHalfField(player.team.gameSide, Ball.instance.position)
 }
