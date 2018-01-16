@@ -21,13 +21,14 @@ import football.player.strategy.simple.attack.runAndShoot.shootStraight.PushBall
 import football.player.strategy.simple.attack.runAndShoot.shootStraight.RunAndShootStraight
 import football.player.strategy.simple.defense.DefenderFollowingBall
 import football.player.strategy.simple.defense.FixedGoalKeeper
+import football.player.strategy.simple.defense.FollowClearBall
 import football.player.strategy.simple.midfield.StayAtShootDistanceOfTheBall
 import javafx.scene.paint.Color
 import main.GameRunner
 import java.util.*
 
 class Tournament {
-    private val strategiesCount = 33
+    private val strategiesCount = 34
 
     fun playTournament(teams: List<Team>): LeaderBoard {
         val leaderBoard = LeaderBoard(teams)
@@ -137,6 +138,7 @@ class Tournament {
             30 -> Overtake(UP)
             31 -> Overtake(DOWN)
             32 -> FollowBallHorizontally()
+            33 -> FollowClearBall()
 
             else -> DoesNothing(randomSideInTeam)
         }

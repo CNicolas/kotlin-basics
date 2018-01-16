@@ -59,10 +59,10 @@ abstract class AbstractPlayerStrategy : PlayerStrategy {
         return initialPosition
     }
 
-    protected fun isInTeamHalfField(player: Player): Boolean {
-        return when (player.team.gameSide) {
-            HOME -> player.position.x <= FieldContext.fieldHalfWidth
-            AWAY -> player.position.x >= FieldContext.fieldHalfWidth
+    protected fun isInTeamHalfField(teamSide: GameSide, coordinates: Coordinates): Boolean {
+        return when (teamSide) {
+            HOME -> coordinates.x <= FieldContext.fieldHalfWidth
+            AWAY -> coordinates.x >= FieldContext.fieldHalfWidth
         }
     }
 
