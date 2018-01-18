@@ -7,6 +7,7 @@ import javafx.scene.paint.Color
 import main.tournament.Tournament
 import org.assertj.core.api.Assertions.assertThat
 import org.testng.annotations.Test
+import java.util.*
 
 class TournamentTest {
     @Test
@@ -63,9 +64,11 @@ class TournamentTest {
     }
 
     @Test
-    fun should_play_tournament_with_every_possible_team() {
+    fun should_play_tournament_with_teams_of_4_players() {
         val tournament = Tournament()
-        val teams = tournament.createTournament()
+        val teams = tournament.createListOfTeams()
+
+        println(teams.size)
 
         val leaderBoard = tournament.playTournament(teams)
 
@@ -73,5 +76,28 @@ class TournamentTest {
         println()
         println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
         println("${leaderBoard.getWinner().team.strategies}")
+    }
+
+    @Test
+    fun should_play_tournament_with_300_teams_of_4_players() {
+        val tournament = Tournament()
+        val teams = tournament.createListOfTeams()
+        Collections.shuffle(teams)
+        val tournamentTeams = teams.subList(0, 300)
+
+        val leaderBoard = tournament.playTournament(tournamentTeams)
+
+        println(leaderBoard)
+        println()
+        println("Games played : ${leaderBoard.gamesPlayed}, with ${leaderBoard.leaderBoard.size} teams")
+        println("${leaderBoard.getWinner().team.strategies}")
+    }
+
+    @Test
+    fun should_create_all_possible_teams_not_randomly() {
+        val tournament = Tournament()
+        val teams = tournament.createListOfTeams()
+
+        println(teams.size)
     }
 }

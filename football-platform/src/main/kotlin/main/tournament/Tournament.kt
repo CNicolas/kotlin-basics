@@ -30,6 +30,7 @@ import java.util.*
 
 class Tournament {
     private val strategiesCount = 35
+    private val randomSideStrategiesCount = 16
 
     fun playTournament(teams: List<Team>): LeaderBoard {
         val leaderBoard = LeaderBoard(teams)
@@ -66,6 +67,8 @@ class Tournament {
                     leaderBoard.oneMoreGamePlayed()
                 }
             }
+
+            println("$homeIndex on ${teams.size}")
         }
 
         leaderBoard.orderDescendingByScore()
@@ -74,12 +77,11 @@ class Tournament {
     }
 
     fun createTournament(teamsCount: Int = Int.MAX_VALUE): List<Team> {
-        val r = Random()
         val effectiveTeamsCount = Math.min(teamsCount, strategiesCount * 4)
 
         val listOfTeams = mutableListOf<Team>()
         while (listOfTeams.size < effectiveTeamsCount) {
-            val team = Team(Color.BLACK, createRandomTeam(r.nextInt(4)))
+            val team = Team(Color.BLACK, createRandomTeam(4))
 
             if (!listOfTeams.any { areTeamsEqual(it, team) }) {
                 listOfTeams.add(team)
@@ -89,10 +91,55 @@ class Tournament {
         return listOfTeams
     }
 
+    fun createListOfTeams(): List<Team> {
+        val listOfTeams = mutableListOf<Team>()
+
+        // For One player
+//        (0 until strategiesCount).mapTo(listOfTeams) { Team(Color.BLACK, listOf(createStrategyByNumber(it))) }
+
+        // For 2 players
+//        for (strategy1 in 0 until strategiesCount) {
+//            (strategy1 until strategiesCount)
+//                    .map { strategy2 -> listOf(createStrategyByNumber(strategy1), createStrategyByNumber(strategy2)) }
+//                    .mapTo(listOfTeams) { Team(Color.BLACK, it) }
+//        }
+
+        // For 3 players
+//        for (strategy1 in 0 until strategiesCount) {
+//            for (strategy2 in strategy1 until strategiesCount) {
+//                (strategy2 until strategiesCount)
+//                        .map { strategy3 ->
+//                            listOf(createStrategyByNumber(strategy1),
+//                                    createStrategyByNumber(strategy2),
+//                                    createStrategyByNumber(strategy3))
+//                        }
+//                        .mapTo(listOfTeams) { Team(Color.BLACK, it) }
+//            }
+//        }
+
+        // For 4 players
+        for (strategy1 in 0 until randomSideStrategiesCount) {
+            for (strategy2 in strategy1 until randomSideStrategiesCount) {
+                for (strategy3 in strategy2 until randomSideStrategiesCount) {
+                    (strategy3 until randomSideStrategiesCount)
+                            .map { strategy4 ->
+                                listOf(createStrategyByNumber(strategy1),
+                                        createStrategyByNumber(strategy2),
+                                        createStrategyByNumber(strategy3),
+                                        createStrategyByNumber(strategy4))
+                            }
+                            .mapTo(listOfTeams) { Team(Color.BLACK, it) }
+                }
+            }
+        }
+
+        return listOfTeams
+    }
+
     private fun createRandomTeam(numberOfPlayers: Int): List<PlayerStrategy> {
         val res = mutableListOf<PlayerStrategy>()
 
-        for (i in 0..numberOfPlayers) {
+        for (i in 0 until numberOfPlayers) {
             res.add(createRandomStrategy())
         }
 
@@ -100,10 +147,13 @@ class Tournament {
     }
 
     private fun createRandomStrategy(): PlayerStrategy {
-        val r = Random()
+        val strategyNumber = Random().nextInt(strategiesCount)
 
-        val randomSideInTeam = SideInTeam.values()[r.nextInt(SideInTeam.values().size)]
-        val strategyNumber = r.nextInt(strategiesCount)
+        return createStrategyByNumberAndRandomSide(strategyNumber)
+    }
+
+    private fun createStrategyByNumber(strategyNumber: Int): PlayerStrategy {
+        val randomSideInTeam = SideInTeam.values()[Random().nextInt(SideInTeam.values().size)]
 
         return when (strategyNumber) {
             0 -> FixedGoalKeeper()
@@ -142,7 +192,36 @@ class Tournament {
             33 -> FollowClearBall()
             34 -> RecoverAndShoot()
 
-            else -> DoesNothing(randomSideInTeam)
+            else -> {
+                DoesNothing(randomSideInTeam)
+            }
+        }
+    }
+
+    private fun createStrategyByNumberAndRandomSide(strategyNumber: Int): PlayerStrategy {
+        val randomSideInTeam = SideInTeam.values()[Random().nextInt(SideInTeam.values().size)]
+
+        return when (strategyNumber) {
+            0 -> FixedGoalKeeper()
+            1 -> DefenderFollowingBall()
+            2 -> RunAndShootStraight(randomSideInTeam)
+            3 -> PushBallAndShootStraight(randomSideInTeam)
+            4 -> DumbRusherRun(randomSideInTeam)
+            5 -> DumbRusherNormal(randomSideInTeam)
+            6 -> DumbRusherShoot(randomSideInTeam)
+            7 -> CrossShot(randomSideInTeam)
+            8 -> RunZigZag(randomSideInTeam)
+            9 -> StayAtShootDistanceOfTheBall()
+            10 -> RunStraightAndCrossShot(randomSideInTeam)
+            11 -> ZigZagAndCrossShot(randomSideInTeam)
+            12 -> Overtake(randomSideInTeam)
+            13 -> FollowBallHorizontally()
+            14 -> FollowClearBall()
+            15 -> RecoverAndShoot()
+
+            else -> {
+                DoesNothing(randomSideInTeam)
+            }
         }
     }
 
